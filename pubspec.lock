@@ -60,6 +60,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_webview_plugin:
+    dependency: "direct main"
+    description:
+      name: flutter_webview_plugin
+      url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn/"
+    source: hosted
+    version: "0.3.5"
   fluttertoast:
     dependency: "direct main"
     description:

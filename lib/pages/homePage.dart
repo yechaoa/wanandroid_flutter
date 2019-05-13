@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:wanandroid_flutter/entity/article_entity.dart';
+import 'package:wanandroid_flutter/pages/articleDetail.dart';
+import 'package:wanandroid_flutter/res/colors.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -11,11 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List widgets = [];
-  String str = "123";
-  String name = "123";
-  String nick_name = "123";
-  String github = "123";
+  List<ArticleDataData> _datas = new List();
 
   @override
   void initState() {
@@ -26,18 +25,14 @@ class _HomePageState extends State<HomePage> {
 
   void getHttp() async {
     try {
-      Response response = await Dio().get("https://api.hencoder.com/author");
-      print(response);
-      Map<String, dynamic> user = json.decode(response.toString());
-
-      print('Howdy, ${user['name']}!');
-      print('We sent the verification link to ${user['github']}.');
+      Response response =
+          await Dio().get("https://www.wanandroid.com/article/list/1/json");
+      Map userMap = json.decode(response.toString());
+      var articleEntity = new ArticleEntity.fromJson(userMap);
+      print('------------------- ${articleEntity.data.datas[0].title}!');
 
       setState(() {
-        str = response.toString();
-        name=user['name'];
-        nick_name=user['nick_name'];
-        github=user['github'];
+        _datas = articleEntity.data.datas;
       });
     } catch (e) {
       print(e);
@@ -46,27 +41,38 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        new Padding(padding: new EdgeInsets.all(15.0), child: new Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            new Text(name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30)),
-            new Text(nick_name),
-            new Text(github),
-          ],
-        )),
-        new Padding(padding: new EdgeInsets.all(10.0), child: new Text(str)),
-        new Padding(padding: new EdgeInsets.all(10.0), child: new Text(str)),
-      ],
-    );
+    return new Scaffold(
+        body: new ListView.builder(
+            itemCount: _datas.length,
+            itemBuilder: (BuildContext context, int position) {
+              return getRow(position);
+            }));
   }
 
   Widget getRow(int i) {
-    return new Padding(
-        padding: new EdgeInsets.all(10.0),
-        child: new Text("Row ${widgets[i]["name"]}"));
+    return new GestureDetector(
+      child: new Container(
+          padding: new EdgeInsets.all(15.0),
+          child: new ListTile(
+            leading: new Icon(Icons.android),
+            title: new Text(_datas[i].title),
+            subtitle: new Row(
+              children: <Widget>[
+                new Text(_datas[i].superChapterName,
+                    style: TextStyle(color: YColors.colorAccent)),
+                new Text("      " + _datas[i].author),
+              ],
+            ),
+            trailing: new Icon(Icons.chevron_right),
+          )),
+      onTap: () {
+        Navigator.push(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => new ArticleDetail(
+                  title: _datas[i].title, url: _datas[i].link)),
+        );
+      },
+    );
   }
-
 }
