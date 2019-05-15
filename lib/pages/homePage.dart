@@ -27,13 +27,15 @@ class _HomePageState extends State<HomePage> {
 
   void getHttp() async {
     try {
-      Response response = await Dio().get("https://www.wanandroid.com/article/list/1/json");
+//      Response response = await Dio().get("https://www.wanandroid.com/article/list/1/json");
+//      Map userMap = json.decode(response.toString());
+//      var articleEntity = new ArticleEntity.fromJson(userMap);
+//      print('------------------- ${articleEntity.data.datas[0].title}!');
+
+      var response=await HttpUtil().get(Api.ARTICLE_LIST);
       Map userMap = json.decode(response.toString());
       var articleEntity = new ArticleEntity.fromJson(userMap);
-      print('------------------- ${articleEntity.data.datas[0].title}!');
-
-      var response1=await HttpUtil().get(Api.ARTICLE_LIST);
-      print('------------------- '+response1.toString());
+      print('------------------- ${articleEntity.data.datas[0].title}');
 
       setState(() {
         _datas = articleEntity.data.datas;

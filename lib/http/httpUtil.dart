@@ -79,7 +79,7 @@ class HttpUtil {
       print('get error---------$e');
       formatError(e);
     }
-    return response.data;
+    return response;
   }
 
   /*
