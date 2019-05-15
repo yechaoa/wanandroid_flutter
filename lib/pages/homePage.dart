@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/article_entity.dart';
+import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/pages/articleDetail.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
 
@@ -25,11 +27,13 @@ class _HomePageState extends State<HomePage> {
 
   void getHttp() async {
     try {
-      Response response =
-          await Dio().get("https://www.wanandroid.com/article/list/1/json");
+      Response response = await Dio().get("https://www.wanandroid.com/article/list/1/json");
       Map userMap = json.decode(response.toString());
       var articleEntity = new ArticleEntity.fromJson(userMap);
       print('------------------- ${articleEntity.data.datas[0].title}!');
+
+      var response1=await HttpUtil().get(Api.ARTICLE_LIST);
+      print('------------------- '+response1.toString());
 
       setState(() {
         _datas = articleEntity.data.datas;

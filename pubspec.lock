@@ -30,7 +30,7 @@ packages:
     source: hosted
     version: "1.14.11"
   cookie_jar:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: cookie_jar
       url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn/"
