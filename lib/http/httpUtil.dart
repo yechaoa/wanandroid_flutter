@@ -107,7 +107,10 @@ class HttpUtil {
   downloadFile(urlPath, savePath) async {
     Response response;
     try {
-      response = await dio.download(urlPath, savePath);
+      response = await dio.download(urlPath, savePath,onReceiveProgress: (int count, int total){
+        //进度
+        print("$count $total");
+      });
       print('downloadFile success---------${response.data}');
     } on DioError catch (e) {
       print('downloadFile error---------$e');
