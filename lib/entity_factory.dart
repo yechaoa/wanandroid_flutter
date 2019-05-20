@@ -1,4 +1,5 @@
 import 'package:wanandroid_flutter/entity/article_entity.dart';
+import 'package:wanandroid_flutter/entity/tree_entity.dart';
 
 class EntityFactory {
   static T generateOBJ<T>(json) {
@@ -6,6 +7,8 @@ class EntityFactory {
       return null;
     } else if (T.toString() == "ArticleEntity") {
       return ArticleEntity.fromJson(json) as T;
+    } else if (T.toString() == "TreeEntity") {
+      return TreeEntity.fromJson(json) as T;
     } else {
       return null;
     }

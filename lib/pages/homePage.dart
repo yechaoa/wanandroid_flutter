@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage> {
         body: new ListView.builder(
             itemCount: _datas.length,
             itemBuilder: (BuildContext context, int position) {
+              if (position.isOdd) return new Divider();
               return getRow(position);
             }));
   }

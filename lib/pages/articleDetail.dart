@@ -21,6 +21,7 @@ class ArticleDetail extends StatelessWidget {
               // ignore: unnecessary_brace_in_string_interps
               url: "${url}",
               appBar: new AppBar(
+                //返回键 点击关闭
                 leading: new IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {

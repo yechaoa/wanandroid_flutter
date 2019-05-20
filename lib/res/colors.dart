@@ -10,4 +10,6 @@ class YColors {
   static const Color secondaryText = Color(0xff757575);
 
   static const Color dividerColor = Color(0xffBDBDBD);
+
+  static const Color color_999 = Color(0xff999999);
 }
