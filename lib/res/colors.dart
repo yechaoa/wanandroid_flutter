@@ -12,4 +12,10 @@ class YColors {
   static const Color dividerColor = Color(0xffBDBDBD);
 
   static const Color color_999 = Color(0xff999999);
+  static const Color color_666 = Color(0xff666666);
+
+  static const Color color_f3f3f3 = Color(0xfff3f3f3);
+  static const Color color_f1f1f1 = Color(0xfff1f1f1);
+  static const Color color_fff = Color(0xffffffff);
+
 }
