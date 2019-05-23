@@ -14,4 +14,10 @@ class Api {
   //导航数据
   static const String NAVI = "navi/json";
 
+  //项目分类
+  static const String PROJECT = "project/tree/json";
+
+  //项目列表数据
+  static const String PROJECT_LIST = "project/list/1/json";
+
 }
