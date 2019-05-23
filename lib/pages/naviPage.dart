@@ -64,7 +64,7 @@ class _NaviPageState extends State<NaviPage> {
                   //height: double.infinity,
                   alignment: Alignment.topLeft,
                   padding: const EdgeInsets.all(10),
-                  color: YColors.color_f3f3f3,
+                  color: YColors.color_F9F9F9,
                   child: getChip(index), //传入一级分类下标
                 ),
               ],
@@ -80,10 +80,11 @@ class _NaviPageState extends State<NaviPage> {
       child: new Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-        color: index == i ? YColors.color_f3f3f3 : Colors.white,
+        color: index == i ? YColors.color_F9F9F9 : Colors.white,
         child: new Text(_datas[i].name,
             style: TextStyle(
                 color: index == i ? textColor : YColors.color_666,
+                fontWeight: index == i ? FontWeight.w600 : FontWeight.w400,
                 fontSize: 16)),
       ),
       onTap: () {
@@ -120,6 +121,7 @@ class _NaviPageState extends State<NaviPage> {
               );
             },
             elevation: 3,
+            backgroundColor: Colors.grey.shade200,
           );
         },
       ).toList(),
