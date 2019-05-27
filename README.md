@@ -8,6 +8,8 @@
 
 <br>
 
+先截几个图稍微看下效果：
+
 ![](https://github.com/yechaoa/wanandroid_flutter/raw/master/screenshot/1.png)
 ![](https://github.com/yechaoa/wanandroid_flutter/raw/master/screenshot/2.png)
 ![](https://github.com/yechaoa/wanandroid_flutter/raw/master/screenshot/3.png)
