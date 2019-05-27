@@ -1,16 +1,17 @@
 # wanandroid_flutter
 
-wanandroid_flutter
+玩安卓的`flutter`版本，首先感谢`鸿洋`提供的api，然后就是这个项目目前还在开发中，不过主体框架已经出来了，而且常用的`widget`也基本都用到了，后面会继续开发并完善。
 
-## Getting Started
+<br>
 
-This project is a starting point for a Flutter application.
+## 兄die 随手点个star呗
 
-A few resources to get you started if this is your first Flutter project:
+<br>
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+![](https://github.com/yechaoa/wanandroid_flutter/raw/master/screenshot/1.png)
+![](https://github.com/yechaoa/wanandroid_flutter/raw/master/screenshot/2.png)
+![](https://github.com/yechaoa/wanandroid_flutter/raw/master/screenshot/3.png)
+![](https://github.com/yechaoa/wanandroid_flutter/raw/master/screenshot/4.png)
+![](https://github.com/yechaoa/wanandroid_flutter/raw/master/screenshot/5.png)
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+<br>
