@@ -64,37 +64,30 @@ class _HomePageState extends State<HomePage> {
             height: MediaQuery.of(context).size.width / 1.8 * 0.8,
             child: Swiper(
               itemCount: bannerDatas.length,
-              //item数量
               itemBuilder: (BuildContext context, int index) {
-                //item构建
                 return new Image.network(
                   bannerDatas[index].imagePath,
                   fit: BoxFit.fill,
                 );
               },
               autoplay: true,
-              //是否自动播放
               autoplayDelay: 3000,
-              //自动播放延迟
-              autoplayDisableOnInteraction: true,
               //触发时是否停止播放
-
+              autoplayDisableOnInteraction: true,
               duration: 600,
-              //动画时间
-
-              control: new SwiperControl(),
               //默认分页按钮
-
+              control: new SwiperControl(),
               //默认指示器
               pagination: new SwiperPagination(
                 // SwiperPagination.fraction 数字1/5，默认点
-                builder: new DotSwiperPaginationBuilder(size: 8, activeSize: 12),
+                builder:
+                    new DotSwiperPaginationBuilder(size: 8, activeSize: 12),
               ),
 
-              viewportFraction: 0.8,
               //视图宽度，即显示的item的宽度屏占比
-              scale: 0.9,
+              viewportFraction: 0.8,
               //两侧item的缩放比
+              scale: 0.9,
 
               onTap: (int index) {
                 //点击事件，返回下标
