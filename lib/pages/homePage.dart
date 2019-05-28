@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/article_entity.dart';
+import 'package:wanandroid_flutter/entity/banner_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/pages/articleDetail.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
@@ -16,29 +18,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<ArticleDataData> _datas = new List();
+  List<BannerData> bannerDatas = new List();
+  List<ArticleDataData> articleDatas = new List();
+
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
+
+    _scrollController = ScrollController()..addListener(() {});
 
     getHttp();
   }
 
   void getHttp() async {
     try {
-//      Response response = await Dio().get("https://www.wanandroid.com/article/list/1/json");
-//      Map userMap = json.decode(response.toString());
-//      var articleEntity = new ArticleEntity.fromJson(userMap);
-//      print('------------------- ${articleEntity.data.datas[0].title}!');
+      //banner
+      var bannerResponse = await HttpUtil().get(Api.BANNER);
+      Map bannerMap = json.decode(bannerResponse.toString());
+      var bannerEntity = new BannerEntity.fromJson(bannerMap);
 
-      var response=await HttpUtil().get(Api.ARTICLE_LIST);
-      Map userMap = json.decode(response.toString());
-      var articleEntity = new ArticleEntity.fromJson(userMap);
-      print('------------------- ${articleEntity.data.datas[0].title}');
+      //article
+      var articleResponse = await HttpUtil().get(Api.ARTICLE_LIST);
+      Map articleMap = json.decode(articleResponse.toString());
+      var articleEntity = new ArticleEntity.fromJson(articleMap);
 
       setState(() {
-        _datas = articleEntity.data.datas;
+        bannerDatas = bannerEntity.data;
+        articleDatas = articleEntity.data.datas;
       });
     } catch (e) {
       print(e);
@@ -48,12 +56,65 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        body: new ListView.builder(
-            itemCount: _datas.length,
-            itemBuilder: (BuildContext context, int position) {
-              if (position.isOdd) return new Divider();
-              return getRow(position);
-            }));
+      body: Column(
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            //1.8是banner宽高比，0.8是viewportFraction的值
+            height: MediaQuery.of(context).size.width / 1.8 * 0.8,
+            child: Swiper(
+              itemCount: bannerDatas.length,
+              //item数量
+              itemBuilder: (BuildContext context, int index) {
+                //item构建
+                return new Image.network(
+                  bannerDatas[index].imagePath,
+                  fit: BoxFit.fill,
+                );
+              },
+              autoplay: true,
+              //是否自动播放
+              autoplayDelay: 3000,
+              //自动播放延迟
+              autoplayDisableOnInteraction: true,
+              //触发时是否停止播放
+
+              duration: 600,
+              //动画时间
+
+              control: new SwiperControl(),
+              //默认分页按钮
+
+              //默认指示器
+              pagination: new SwiperPagination(
+                // SwiperPagination.fraction 数字1/5，默认点
+                builder: new DotSwiperPaginationBuilder(size: 8, activeSize: 12),
+              ),
+
+              viewportFraction: 0.8,
+              //视图宽度，即显示的item的宽度屏占比
+              scale: 0.9,
+              //两侧item的缩放比
+
+              onTap: (int index) {
+                //点击事件，返回下标
+                print("index-----" + index.toString());
+              },
+            ),
+          ),
+          Flexible(
+            child: new ListView.builder(
+                controller: _scrollController,
+                shrinkWrap: true,
+                itemCount: articleDatas.length,
+                itemBuilder: (BuildContext context, int position) {
+                  if (position.isOdd) return new Divider();
+                  return getRow(position);
+                }),
+          )
+        ],
+      ),
+    );
   }
 
   Widget getRow(int i) {
@@ -62,12 +123,12 @@ class _HomePageState extends State<HomePage> {
           padding: new EdgeInsets.all(15.0),
           child: new ListTile(
             leading: new Icon(Icons.android),
-            title: new Text(_datas[i].title),
+            title: new Text(articleDatas[i].title),
             subtitle: new Row(
               children: <Widget>[
-                new Text(_datas[i].superChapterName,
+                new Text(articleDatas[i].superChapterName,
                     style: TextStyle(color: YColors.colorAccent)),
-                new Text("      " + _datas[i].author),
+                new Text("      " + articleDatas[i].author),
               ],
             ),
             trailing: new Icon(Icons.chevron_right),
@@ -77,9 +138,15 @@ class _HomePageState extends State<HomePage> {
           context,
           new MaterialPageRoute(
               builder: (context) => new ArticleDetail(
-                  title: _datas[i].title, url: _datas[i].link)),
+                  title: articleDatas[i].title, url: articleDatas[i].link)),
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }

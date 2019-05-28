@@ -55,6 +55,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_page_indicator:
+    dependency: transitive
+    description:
+      name: flutter_page_indicator
+      url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn/"
+    source: hosted
+    version: "0.0.3"
+  flutter_swiper:
+    dependency: "direct main"
+    description:
+      name: flutter_swiper
+      url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn/"
+    source: hosted
+    version: "1.1.6"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -156,6 +170,13 @@ packages:
       url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn/"
     source: hosted
     version: "0.2.2"
+  transformer_page_view:
+    dependency: transitive
+    description:
+      name: transformer_page_view
+      url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn/"
+    source: hosted
+    version: "0.1.6"
   typed_data:
     dependency: transitive
     description:
@@ -172,3 +193,4 @@ packages:
     version: "2.0.8"
 sdks:
   dart: ">=2.1.0 <3.0.0"
+  flutter: ">=0.1.4 <3.0.0"
