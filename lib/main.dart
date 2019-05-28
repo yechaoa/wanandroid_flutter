@@ -142,13 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
             //头像
             currentAccountPicture: GestureDetector(
               //圆形头像
-              child: CircleAvatar(
-                backgroundColor: YColors.colorPrimary,
-                child: Icon(
-                  Icons.tag_faces,
-                  size: 60,
-                  color: Colors.white,
-                ),
+              child: ClipOval(
+                child: Image.network("https://avatars3.githubusercontent.com/u/19725223?s=400&u=f399a2d73fd0445be63ee6bc1ea4a408a62454f5&v=4")
               ),
               onTap: () {
                 YToast.show(msg: "点击了头像");
