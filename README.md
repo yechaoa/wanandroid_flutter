@@ -4,7 +4,7 @@
 
 <br>
 
-## 兄die 随手点个star呗
+## 兄de 随手点个star呗
 
 <br>
 
