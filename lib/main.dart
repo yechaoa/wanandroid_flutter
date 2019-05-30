@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wanandroid_flutter/pages/about.dart';
 import 'package:wanandroid_flutter/pages/homePage.dart';
 import 'package:wanandroid_flutter/pages/naviPage.dart';
 import 'package:wanandroid_flutter/pages/projectPage.dart';
@@ -143,10 +144,14 @@ class _MyHomePageState extends State<MyHomePage> {
             currentAccountPicture: GestureDetector(
               //圆形头像
               child: ClipOval(
-                child: Image.network("https://avatars3.githubusercontent.com/u/19725223?s=400&u=f399a2d73fd0445be63ee6bc1ea4a408a62454f5&v=4")
-              ),
+                  child: Image.network(
+                      "https://avatars3.githubusercontent.com/u/19725223?s=400&u=f399a2d73fd0445be63ee6bc1ea4a408a62454f5&v=4")),
               onTap: () {
-                YToast.show(msg: "点击了头像");
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(builder: (context) => new AboutPage()),
+                );
               },
             ),
             //其他头像
@@ -156,16 +161,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.white,
               ),
             ],
-            //用户名
             accountName: Text(
               "这是名称",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
             ),
-            //用户邮箱
             accountEmail: Text("这是邮箱"),
-            onDetailsPressed: () {
-              YToast.show(msg: "详细信息");
-            },
           ),
 
           ///功能列表
@@ -182,7 +182,12 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text("关于"),
             trailing: new Icon(Icons.chevron_right),
             onTap: () {
-              YToast.show(msg: "关于");
+              //先关闭再跳转
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                new MaterialPageRoute(builder: (context) => new AboutPage()),
+              );
             },
           ),
           ListTile(
