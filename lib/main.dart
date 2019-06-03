@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroid_flutter/pages/about.dart';
 import 'package:wanandroid_flutter/pages/homePage.dart';
+import 'package:wanandroid_flutter/pages/loginPage.dart';
 import 'package:wanandroid_flutter/pages/naviPage.dart';
 import 'package:wanandroid_flutter/pages/projectPage.dart';
 import 'package:wanandroid_flutter/pages/treePage.dart';
@@ -196,6 +197,10 @@ class _MyHomePageState extends State<MyHomePage> {
             trailing: new Icon(Icons.chevron_right),
             onTap: () {
               YToast.show(msg: "分享");
+              Navigator.push(
+                context,
+                new MaterialPageRoute(builder: (context) => new LoginPage()),
+              );
             },
           ),
 
