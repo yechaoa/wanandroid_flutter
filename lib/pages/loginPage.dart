@@ -77,7 +77,7 @@ class _LoginPagePageState extends State<LoginPage>
       length: tabs.length,
       child: Container(
         alignment: Alignment.topCenter,
-        padding: EdgeInsets.only(top: 350, left: 20, right: 20),
+        padding: EdgeInsets.only(top: 150, left: 20, right: 20),
         decoration: new BoxDecoration(
           gradient: const LinearGradient(
               begin: Alignment.topCenter,
@@ -95,7 +95,7 @@ class _LoginPagePageState extends State<LoginPage>
               indicatorPadding: EdgeInsets.symmetric(vertical: -5),
               controller: controller,
               labelColor: Colors.white,
-              labelStyle: TextStyle(fontSize: 26),
+              labelStyle: TextStyle(fontSize: 30),
               unselectedLabelColor: Colors.white54,
               unselectedLabelStyle: TextStyle(fontSize: 20),
               indicatorColor: Colors.white,
@@ -110,10 +110,10 @@ class _LoginPagePageState extends State<LoginPage>
                 setState(() {
                   if (0 == i) {
                     btnText = "立即登录";
-                    visible=true;
+                    visible = true;
                   } else {
                     btnText = "立即注册";
-                    visible=false;
+                    visible = false;
                   }
                 });
               },
@@ -158,7 +158,7 @@ class _LoginPagePageState extends State<LoginPage>
                         labelText: '请输入账号',
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
                     TextField(
                       obscureText: false,
                       keyboardType: TextInputType.number, //键盘类型，即输入类型
@@ -169,7 +169,7 @@ class _LoginPagePageState extends State<LoginPage>
                         labelText: '请输入密码',
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
                     Offstage(
                       offstage: visible,
                       child: Column(
@@ -185,7 +185,7 @@ class _LoginPagePageState extends State<LoginPage>
                               labelText: '请确认密码',
                             ),
                           ),
-                          SizedBox(height: 30),
+                          SizedBox(height: 20),
                         ],
                       ),
                     ),
@@ -194,7 +194,7 @@ class _LoginPagePageState extends State<LoginPage>
                         borderRadius: BorderRadius.all(Radius.circular(50)),
                       ),
                       onPressed: () {
-                        YToast.show(msg: "登录");
+                        YToast.show(msg: btnText);
                       },
                       elevation: 5,
                       highlightElevation: 10,
