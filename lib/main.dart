@@ -11,6 +11,9 @@ import 'package:wanandroid_flutter/res/colors.dart';
 import 'package:wanandroid_flutter/res/strings.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
 
+import 'common/api.dart';
+import 'http/httpUtil.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -140,6 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget showDrawer() {
     return Drawer(
       child: ListView(
+        //ListView padding 不为空的时候，Drawer顶部的状态栏就不会有灰色背景
+        padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
             //头像
@@ -216,13 +221,48 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text("退出"),
             trailing: new Icon(Icons.chevron_right),
             onTap: () {
-              YToast.show(msg: "退出");
               //关闭drawer
               Navigator.of(context).pop();
+              showLogoutDialog();
             },
           ),
         ],
       ),
+    );
+  }
+
+  void showLogoutDialog() {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('提示'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('确认退出吗？'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('取消', style: TextStyle(color: YColors.primaryText)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('确定'),
+              onPressed: () {
+                //退出
+                HttpUtil().get(Api.LOGOUT);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
