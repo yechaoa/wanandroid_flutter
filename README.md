@@ -44,11 +44,14 @@
 - 收藏
 - 分享
 - 搜索
+- 分页
 - 登录注册
-- 体系列表点击
 - 退出登录
-- 首页ScrollController bug
+- 体系列表点击
 - 界面美化
+- 切换主题
+- 添加字体
+
 
 ## 感谢
 * [fluttertoast](https://github.com/PonnamKarthik/FlutterToast)
