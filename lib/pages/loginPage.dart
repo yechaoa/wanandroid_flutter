@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:wanandroid_flutter/common/api.dart';
-import 'package:wanandroid_flutter/entity/project_entity.dart';
-import 'package:wanandroid_flutter/entity/project_list_entity.dart';
+import 'package:wanandroid_flutter/entity/user_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
+import 'package:wanandroid_flutter/main.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
 
@@ -20,12 +20,12 @@ class _LoginPagePageState extends State<LoginPage>
   TabController controller; //tab控制器
   int _currentIndex = 0; //选中下标
 
-  List<ProjectData> _datas = new List(); //tab集合
-  List<ProjectListDataData> _listDatas = new List(); //内容集合
-
   var tabs = <Tab>[];
   String btnText = "立即登录";
   bool visible = true;
+  GlobalKey<FormState> _key = new GlobalKey();
+  bool autoValidate = false;
+  String username, password, rePassword;
 
   @override
   void initState() {
@@ -38,23 +38,6 @@ class _LoginPagePageState extends State<LoginPage>
     //初始化controller并添加监听
     controller = TabController(length: tabs.length, vsync: this);
     controller.addListener(() => _onTabChanged());
-
-    getHttp();
-  }
-
-  void getHttp() async {
-    try {
-      var response = await HttpUtil().get(Api.PROJECT);
-      Map userMap = json.decode(response.toString());
-      var projectEntity = new ProjectEntity.fromJson(userMap);
-
-      setState(() {
-        if (_datas.length != null) _datas = projectEntity.data;
-        _currentIndex = 0;
-      });
-    } catch (e) {
-      print(e);
-    }
   }
 
   ///
@@ -64,8 +47,14 @@ class _LoginPagePageState extends State<LoginPage>
     if (controller.indexIsChanging) {
       if (this.mounted) {
         //赋值 并更新数据
-        this.setState(() {
-          _currentIndex = controller.index;
+        setState(() {
+          if (0 == controller.index) {
+            btnText = "立即登录";
+            visible = true;
+          } else {
+            btnText = "立即注册";
+            visible = false;
+          }
         });
       }
     }
@@ -77,7 +66,7 @@ class _LoginPagePageState extends State<LoginPage>
       length: tabs.length,
       child: Container(
         alignment: Alignment.topCenter,
-        padding: EdgeInsets.only(top: 150, left: 20, right: 20),
+        padding: EdgeInsets.only(top: 120, left: 20, right: 20),
         decoration: new BoxDecoration(
           gradient: const LinearGradient(
               begin: Alignment.topCenter,
@@ -135,6 +124,7 @@ class _LoginPagePageState extends State<LoginPage>
     return ListView(
       children: <Widget>[
         Container(
+
           padding: EdgeInsets.all(20),
           child: Card(
             elevation: 5,
@@ -143,40 +133,60 @@ class _LoginPagePageState extends State<LoginPage>
             ),
             color: Colors.white,
             child: Padding(
-                padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(20),
+              child: Form(
+                autovalidate: autoValidate,
+                key: _key,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    TextField(
-                      obscureText: true, //是否显示密码类型
-                      keyboardType: TextInputType.number, //键盘类型，即输入类型
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      //键盘类型，即输入类型
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
                         labelText: '请输入账号',
+//                        suffixIcon: IconButton(
+//                          icon: Icon(Icons.close),
+//                          onPressed: () {},
+//                        ),
                       ),
+                      validator: validateUsername,
+                      onSaved: (text) {
+                        setState(() {
+                          username = text;
+                        });
+                      },
                     ),
                     SizedBox(height: 20),
-                    TextField(
-                      obscureText: false,
-                      keyboardType: TextInputType.number, //键盘类型，即输入类型
+                    TextFormField(
+                      obscureText: true,
+                      //是否显示密码类型
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
                         labelText: '请输入密码',
                       ),
+                      validator: validatePassword,
+                      onSaved: (text) {
+                        setState(() {
+                          password = text;
+                        });
+                      },
                     ),
                     SizedBox(height: 20),
                     Offstage(
                       offstage: visible,
                       child: Column(
                         children: <Widget>[
-                          TextField(
-                            obscureText: false,
-                            keyboardType: TextInputType.number, //键盘类型，即输入类型
+                          TextFormField(
+                            obscureText: true,
+                            keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius:
@@ -184,6 +194,12 @@ class _LoginPagePageState extends State<LoginPage>
                               ),
                               labelText: '请确认密码',
                             ),
+                            validator: visible ? null : validateRePassword,
+                            onSaved: (text) {
+                              setState(() {
+                                rePassword = text;
+                              });
+                            },
                           ),
                           SizedBox(height: 20),
                         ],
@@ -193,9 +209,6 @@ class _LoginPagePageState extends State<LoginPage>
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50)),
                       ),
-                      onPressed: () {
-                        YToast.show(msg: btnText);
-                      },
                       elevation: 5,
                       highlightElevation: 10,
                       textColor: Colors.white,
@@ -218,9 +231,22 @@ class _LoginPagePageState extends State<LoginPage>
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
+                      onPressed: () {
+                        if (_key.currentState.validate()) {
+                          _key.currentState.save();
+                          print(username + "--" + password + "**" + rePassword);
+                          doRequest();
+                        } else {
+                          setState(() {
+                            autoValidate = true;
+                          });
+                        }
+                      },
                     ),
                   ],
-                )),
+                ),
+              ),
+            ),
           ),
         )
       ],
@@ -231,5 +257,54 @@ class _LoginPagePageState extends State<LoginPage>
   void dispose() {
     super.dispose();
     controller.dispose();
+  }
+
+  String validateUsername(String value) {
+    if (value.isEmpty)
+      return "账号不能为空";
+    else if (value.length < 6) return "账号最少6位";
+    return null;
+  }
+
+  String validatePassword(String value) {
+    if (value.isEmpty)
+      return "密码不能为空";
+    else if (value.length < 6) return "密码最少6位";
+    return null;
+  }
+
+  String validateRePassword(String value) {
+    if (value.isEmpty)
+      return "确认密码不能为空";
+    else if (value.length < 6) return "确认密码最少6位";
+//    else if (value != password) return "两次密码不一致";
+    return null;
+  }
+
+  Future doRequest() async {
+    var data;
+    if (visible)
+      data = {'username': username, 'password': password};
+    else
+      data = {
+        'username': username,
+        'password': password,
+        'repassword': rePassword
+      };
+
+    var response =
+        await HttpUtil().post(visible ? Api.LOGIN : Api.REGISTER, data: data);
+    Map userMap = json.decode(response.toString());
+    var userEntity = new UserEntity.fromJson(userMap);
+    if (userEntity.errorCode == 0) {
+      YToast.show(msg: visible ? "登录成功~" : "注册成功~");
+      //跳转并关闭当前页面
+      Navigator.pushAndRemoveUntil(
+        context,
+        new MaterialPageRoute(builder: (context) => new MyHomePage()),
+        (route) => route == null,
+      );
+    } else
+      YToast.show(msg: userMap['errorMsg']);
   }
 }

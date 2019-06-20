@@ -4,6 +4,7 @@ import 'package:wanandroid_flutter/entity/navi_entity.dart';
 import 'package:wanandroid_flutter/entity/project_entity.dart';
 import 'package:wanandroid_flutter/entity/project_list_entity.dart';
 import 'package:wanandroid_flutter/entity/tree_entity.dart';
+import 'package:wanandroid_flutter/entity/user_entity.dart';
 
 class EntityFactory {
   static T generateOBJ<T>(json) {
@@ -21,6 +22,8 @@ class EntityFactory {
       return ProjectListEntity.fromJson(json) as T;
     } else if (T.toString() == "TreeEntity") {
       return TreeEntity.fromJson(json) as T;
+    } else if (T.toString() == "UserEntity") {
+      return UserEntity.fromJson(json) as T;
     } else {
       return null;
     }

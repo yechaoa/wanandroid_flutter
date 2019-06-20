@@ -36,7 +36,7 @@ class HttpUtil {
       //请求的Content-Type，默认值是[ContentType.json]. 也可以用ContentType.parse("application/x-www-form-urlencoded")
       contentType: ContentType.json,
       //表示期望以那种格式(方式)接受响应数据。接受三种类型 `json`, `stream`, `plain`, `bytes`. 默认值是 `json`,
-      responseType: ResponseType.json,
+      responseType: ResponseType.plain,
     );
 
     dio = new Dio(options);
