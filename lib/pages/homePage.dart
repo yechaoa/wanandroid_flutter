@@ -21,12 +21,14 @@ class _HomePageState extends State<HomePage> {
   List<ArticleDataData> articleDatas = new List();
 
   ScrollController _scrollController;
+  SwiperController _swiperController;
 
   @override
   void initState() {
     super.initState();
 
     _scrollController = ScrollController()..addListener(() {});
+     _swiperController = new SwiperController();
 
     getHttp();
   }
@@ -47,6 +49,9 @@ class _HomePageState extends State<HomePage> {
         bannerDatas = bannerEntity.data;
         articleDatas = articleEntity.data.datas;
       });
+
+      _swiperController.startAutoplay();
+
     } catch (e) {
       print(e);
     }
@@ -69,18 +74,20 @@ class _HomePageState extends State<HomePage> {
                   fit: BoxFit.fill,
                 );
               },
-              autoplay: true,
+              loop: false,
+              autoplay: false,
               autoplayDelay: 3000,
               //触发时是否停止播放
               autoplayDisableOnInteraction: true,
               duration: 600,
               //默认分页按钮
               control: new SwiperControl(),
+              controller: _swiperController,
               //默认指示器
               pagination: new SwiperPagination(
                 // SwiperPagination.fraction 数字1/5，默认点
                 builder:
-                    new DotSwiperPaginationBuilder(size: 8, activeSize: 12),
+                    new DotSwiperPaginationBuilder(size: 6, activeSize: 9),
               ),
 
               //视图宽度，即显示的item的宽度屏占比
@@ -115,11 +122,11 @@ class _HomePageState extends State<HomePage> {
           padding: new EdgeInsets.all(15.0),
           child: new ListTile(
             leading: new Icon(Icons.android),
-            title: new Text(articleDatas[i].title),
+            title: new Text(articleDatas[i].title,maxLines: 2,overflow: TextOverflow.ellipsis,),
             subtitle: new Row(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+                  padding: EdgeInsets.symmetric(horizontal: 6),
                   decoration: new BoxDecoration(
                     border:
                         new Border.all(color: YColors.colorPrimary, width: 1.0),
@@ -129,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                       style: TextStyle(color: YColors.colorAccent)),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 30),
+                  margin: EdgeInsets.only(left: 15),
                   child: new Text(articleDatas[i].author),
                 ),
               ],
@@ -150,6 +157,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _swiperController.stopAutoplay();
+    _swiperController.dispose();
     super.dispose();
   }
 }
