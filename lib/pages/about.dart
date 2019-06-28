@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
 
 import 'articleDetail.dart';
@@ -34,7 +35,7 @@ class AboutPage extends StatelessWidget {
                           title: Text('分享'),
                         ),
                       ),
-                      PopupMenuDivider(),//分割线
+                      PopupMenuDivider(), //分割线
                       const PopupMenuItem<String>(
                         value: "2",
                         child: ListTile(
@@ -48,7 +49,9 @@ class AboutPage extends StatelessWidget {
                   print(result);
                   switch (result) {
                     case "1":
-                      YToast.show(msg: "分享");
+                      //需要重启，不然会有 MissingPluginException(No implementation found for method getAll on channel plugins.flutter.io/share)异常
+                      Share.share(
+                          '【玩安卓Flutter版】\nhttps://github.com/yechaoa/wanandroid_flutter');
                       break;
                     case "2":
                       YToast.show(msg: "设置");
@@ -79,7 +82,8 @@ class AboutPage extends StatelessWidget {
                           padding: EdgeInsets.all(10),
                           child: Text(
                             "wanandroid_flutter V1.0",
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                         ),
                         Divider(),
@@ -125,26 +129,30 @@ class AboutPage extends StatelessWidget {
                                 "CSDN ：",
                                 style: TextStyle(fontSize: 20),
                               ),
-                              GestureDetector(
-                                child: Text(
-                                  "https://blog.csdn.net/yechaoa",
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      decorationStyle:
-                                          TextDecorationStyle.solid,
-                                      fontSize: 20,
-                                      color: Colors.blue),
+                              Expanded(
+                                child: GestureDetector(
+                                  child: Text(
+                                    "https://blog.csdn.net/yechaoa",
+                                    style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        decorationStyle:
+                                            TextDecorationStyle.solid,
+                                        fontSize: 20,
+                                        color: Colors.blue),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                        builder: (context) => new ArticleDetail(
+                                            title: "CSDN ：yechaoa",
+                                            url:
+                                                "https://blog.csdn.net/yechaoa"),
+                                      ),
+                                    );
+                                  },
                                 ),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    new MaterialPageRoute(
-                                      builder: (context) => new ArticleDetail(
-                                          title: "CSDN ：yechaoa",
-                                          url: "https://blog.csdn.net/yechaoa"),
-                                    ),
-                                  );
-                                },
                               ),
                             ],
                           ),
