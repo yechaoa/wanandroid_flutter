@@ -1,5 +1,7 @@
 class YStrings{
   static String appName="玩安卓";
+  static String proName="wanandroid_flutter";
+  static String github="https://github.com/yechaoa/wanandroid_flutter";
 
   static String home="首页";
   static String tree="体系";

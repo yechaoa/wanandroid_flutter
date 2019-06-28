@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     _scrollController = ScrollController()..addListener(() {});
-     _swiperController = new SwiperController();
+    _swiperController = new SwiperController();
 
     getHttp();
   }
@@ -51,7 +51,6 @@ class _HomePageState extends State<HomePage> {
       });
 
       _swiperController.startAutoplay();
-
     } catch (e) {
       print(e);
     }
@@ -86,8 +85,7 @@ class _HomePageState extends State<HomePage> {
               //默认指示器
               pagination: new SwiperPagination(
                 // SwiperPagination.fraction 数字1/5，默认点
-                builder:
-                    new DotSwiperPaginationBuilder(size: 6, activeSize: 9),
+                builder: new DotSwiperPaginationBuilder(size: 6, activeSize: 9),
               ),
 
               //视图宽度，即显示的item的宽度屏占比
@@ -119,27 +117,34 @@ class _HomePageState extends State<HomePage> {
   Widget getRow(int i) {
     return new GestureDetector(
       child: new Container(
-          padding: new EdgeInsets.all(15.0),
+          padding: new EdgeInsets.all(10.0),
           child: new ListTile(
             leading: new Icon(Icons.android),
-            title: new Text(articleDatas[i].title,maxLines: 2,overflow: TextOverflow.ellipsis,),
-            subtitle: new Row(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6),
-                  decoration: new BoxDecoration(
-                    border:
-                        new Border.all(color: YColors.colorPrimary, width: 1.0),
-                    borderRadius: new BorderRadius.circular((20.0)), // 圆角度
+            title: new Text(
+              articleDatas[i].title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Padding(
+              padding: EdgeInsets.only(top: 10.0),
+              child: new Row(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 6),
+                    decoration: new BoxDecoration(
+                      border: new Border.all(
+                          color: YColors.colorPrimary, width: 1.0),
+                      borderRadius: new BorderRadius.circular((20.0)), // 圆角度
+                    ),
+                    child: new Text(articleDatas[i].superChapterName,
+                        style: TextStyle(color: YColors.colorAccent)),
                   ),
-                  child: new Text(articleDatas[i].superChapterName,
-                      style: TextStyle(color: YColors.colorAccent)),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 15),
-                  child: new Text(articleDatas[i].author),
-                ),
-              ],
+                  Container(
+                    margin: EdgeInsets.only(left: 15),
+                    child: new Text(articleDatas[i].author),
+                  ),
+                ],
+              ),
             ),
             trailing: new Icon(Icons.chevron_right),
           )),

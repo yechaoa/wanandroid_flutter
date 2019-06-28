@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:share/share.dart';
 import 'package:wanandroid_flutter/pages/CollectPage.dart';
 import 'package:wanandroid_flutter/pages/about.dart';
 import 'package:wanandroid_flutter/pages/homePage.dart';
@@ -169,10 +170,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
             accountName: Text(
-              "这是名称",
+              YStrings.proName,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
             ),
-            accountEmail: Text("这是邮箱"),
+            accountEmail: Text(YStrings.github),
           ),
 
           ///功能列表
@@ -211,6 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 context,
                 new MaterialPageRoute(builder: (context) => new LoginPage()),
               );
+//              Share.share('【玩安卓Flutter版】\nhttps://github.com/yechaoa/wanandroid_flutter');
             },
           ),
 
