@@ -32,4 +32,10 @@ class Api {
   //退出登录
   static const String LOGOUT = "user/logout/json";
 
+  //搜索热词
+  static const String HOT_KEY = "hotkey/json";
+
+  //搜索
+  static const String QUERY = "article/query/0/json";
+
 }
