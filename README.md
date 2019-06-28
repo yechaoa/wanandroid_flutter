@@ -37,6 +37,8 @@
 * [Drawer](https://blog.csdn.net/yechaoa/article/details/90607772)
 * [SliverAppBar](https://blog.csdn.net/yechaoa/article/details/90701321)
 * [PopupMenuButton](https://blog.csdn.net/yechaoa/article/details/90704165)
+* [Share](https://blog.csdn.net/yechaoa/article/details/93980749)
+* [TextField](https://blog.csdn.net/yechaoa/article/details/90906689)
 
 
 ## todo
@@ -45,7 +47,7 @@
 - ~~注册~~
 - ~~退出~~
 - 收藏
-- 分享
+- ~~分享~~
 - 搜索
 - 分页
 - 体系列表点击
