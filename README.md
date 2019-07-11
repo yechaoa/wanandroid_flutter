@@ -14,11 +14,17 @@
 
 先截几个图稍微看下效果：
 
-<img src="screenshot/1.png" width="350px"/> <img src="screenshot/2.png" width="350px"/> 
+| <img src="/screenshot/1.png" width="285"/> | <img src="/screenshot/2.png" width="285"/> | <img src="/screenshot/3.png" width="285"/> |
+| :--: | :--: | :--: |
+| 侧滑菜单 | 首页 | 合并列表 |
 
-<img src="screenshot/3.png" width="350px"/> <img src="screenshot/4.png" width="350px"/> 
+| <img src="/screenshot/4.png" width="285"/> | <img src="/screenshot/5.png" width="285"/> | <img src="/screenshot/6.png" width="285"/> |
+| :--: | :--: | :--: |
+| 左右菜单 | 左右滑动列表 | 登录注册 |
 
-<img src="screenshot/5.png" width="350px"/> 
+| <img src="/screenshot/7.png" width="285"/> | <img src="/screenshot/8.png" width="285"/> |
+| :--: | :--: |
+| 搜索 | 分享 |
 
 
 <br>
