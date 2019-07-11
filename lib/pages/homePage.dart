@@ -13,12 +13,12 @@ class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
   @override
-  _HomePageState createState() => new _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<BannerData> bannerDatas = new List();
-  List<ArticleDataData> articleDatas = new List();
+  List<BannerData> bannerDatas = List();
+  List<ArticleDataData> articleDatas = List();
 
   ScrollController _scrollController;
   SwiperController _swiperController;
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     _scrollController = ScrollController()..addListener(() {});
-    _swiperController = new SwiperController();
+    _swiperController = SwiperController();
 
     getHttp();
   }
@@ -38,12 +38,12 @@ class _HomePageState extends State<HomePage> {
       //banner
       var bannerResponse = await HttpUtil().get(Api.BANNER);
       Map bannerMap = json.decode(bannerResponse.toString());
-      var bannerEntity = new BannerEntity.fromJson(bannerMap);
+      var bannerEntity = BannerEntity.fromJson(bannerMap);
 
       //article
       var articleResponse = await HttpUtil().get(Api.ARTICLE_LIST);
       Map articleMap = json.decode(articleResponse.toString());
-      var articleEntity = new ArticleEntity.fromJson(articleMap);
+      var articleEntity = ArticleEntity.fromJson(articleMap);
 
       setState(() {
         bannerDatas = bannerEntity.data;
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       body: Column(
         children: <Widget>[
           Container(
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
             child: Swiper(
               itemCount: bannerDatas.length,
               itemBuilder: (BuildContext context, int index) {
-                return new Image.network(
+                return Image.network(
                   bannerDatas[index].imagePath,
                   fit: BoxFit.fill,
                 );
@@ -80,12 +80,12 @@ class _HomePageState extends State<HomePage> {
               autoplayDisableOnInteraction: true,
               duration: 600,
               //默认分页按钮
-              control: new SwiperControl(),
+              control: SwiperControl(),
               controller: _swiperController,
               //默认指示器
-              pagination: new SwiperPagination(
+              pagination: SwiperPagination(
                 // SwiperPagination.fraction 数字1/5，默认点
-                builder: new DotSwiperPaginationBuilder(size: 6, activeSize: 9),
+                builder: DotSwiperPaginationBuilder(size: 6, activeSize: 9),
               ),
 
               //视图宽度，即显示的item的宽度屏占比
@@ -100,12 +100,12 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Flexible(
-            child: new ListView.builder(
+            child: ListView.builder(
                 controller: _scrollController,
                 shrinkWrap: true,
                 itemCount: articleDatas.length,
                 itemBuilder: (BuildContext context, int position) {
-                  if (position.isOdd) return new Divider();
+                  if (position.isOdd) Divider();
                   return getRow(position);
                 }),
           )
@@ -115,44 +115,44 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget getRow(int i) {
-    return new GestureDetector(
-      child: new Container(
-          padding: new EdgeInsets.all(10.0),
-          child: new ListTile(
-            leading: new Icon(Icons.android),
-            title: new Text(
+    return GestureDetector(
+      child: Container(
+          padding: EdgeInsets.all(10.0),
+          child: ListTile(
+            leading: Icon(Icons.android),
+            title: Text(
               articleDatas[i].title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
             subtitle: Padding(
               padding: EdgeInsets.only(top: 10.0),
-              child: new Row(
+              child: Row(
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 6),
-                    decoration: new BoxDecoration(
-                      border: new Border.all(
-                          color: YColors.colorPrimary, width: 1.0),
-                      borderRadius: new BorderRadius.circular((20.0)), // 圆角度
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: YColors.colorPrimary, width: 1.0),
+                      borderRadius: BorderRadius.circular((20.0)), // 圆角度
                     ),
-                    child: new Text(articleDatas[i].superChapterName,
+                    child: Text(articleDatas[i].superChapterName,
                         style: TextStyle(color: YColors.colorAccent)),
                   ),
                   Container(
                     margin: EdgeInsets.only(left: 15),
-                    child: new Text(articleDatas[i].author),
+                    child: Text(articleDatas[i].author),
                   ),
                 ],
               ),
             ),
-            trailing: new Icon(Icons.chevron_right),
+            trailing: Icon(Icons.chevron_right),
           )),
       onTap: () {
         Navigator.push(
           context,
-          new MaterialPageRoute(
-              builder: (context) => new ArticleDetail(
+          MaterialPageRoute(
+              builder: (context) => ArticleDetail(
                   title: articleDatas[i].title, url: articleDatas[i].link)),
         );
       },
