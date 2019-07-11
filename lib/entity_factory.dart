@@ -1,5 +1,6 @@
 import 'package:wanandroid_flutter/entity/article_entity.dart';
 import 'package:wanandroid_flutter/entity/banner_entity.dart';
+import 'package:wanandroid_flutter/entity/hot_key_entity.dart';
 import 'package:wanandroid_flutter/entity/navi_entity.dart';
 import 'package:wanandroid_flutter/entity/project_entity.dart';
 import 'package:wanandroid_flutter/entity/project_list_entity.dart';
@@ -14,6 +15,8 @@ class EntityFactory {
       return ArticleEntity.fromJson(json) as T;
     } else if (T.toString() == "BannerEntity") {
       return BannerEntity.fromJson(json) as T;
+    } else if (T.toString() == "HotKeyEntity") {
+      return HotKeyEntity.fromJson(json) as T;
     } else if (T.toString() == "NaviEntity") {
       return NaviEntity.fromJson(json) as T;
     } else if (T.toString() == "ProjectEntity") {

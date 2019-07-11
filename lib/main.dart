@@ -6,11 +6,11 @@ import 'package:wanandroid_flutter/pages/homePage.dart';
 import 'package:wanandroid_flutter/pages/loginPage.dart';
 import 'package:wanandroid_flutter/pages/naviPage.dart';
 import 'package:wanandroid_flutter/pages/projectPage.dart';
+import 'package:wanandroid_flutter/pages/searchPage.dart';
 import 'package:wanandroid_flutter/pages/treePage.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
 import 'package:wanandroid_flutter/res/strings.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
-import 'package:wanandroid_flutter/widget/SearchBarDelegate.dart';
 
 import 'common/api.dart';
 import 'http/httpUtil.dart';
@@ -67,10 +67,12 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
-            tooltip: 'search',
+            tooltip: '搜索',
             onPressed: () {
-              //3个参数：上下文，搜索代理，关键词,其中前两个必传，query可选
-              showSearch(context: context, delegate: MySearchDelegate());
+              Navigator.push(
+                context,
+                new MaterialPageRoute(builder: (context) => new SearchPage()),
+              );
             },
           ),
         ],
