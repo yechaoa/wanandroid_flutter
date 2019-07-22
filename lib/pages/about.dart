@@ -13,6 +13,7 @@ class AboutPage extends StatelessWidget {
       "cookie_jar",
       "flutter_webview_plugin",
       "flutter_swiper",
+      "share",
     ];
     return Scaffold(
       body: new CustomScrollView(
