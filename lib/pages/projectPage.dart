@@ -15,13 +15,13 @@ class ProjectPage extends StatefulWidget {
   }
 }
 
-class _ProjectPageState extends State<ProjectPage> with SingleTickerProviderStateMixin {
-
-  TabController controller;//tab控制器
+class _ProjectPageState extends State<ProjectPage>
+    with SingleTickerProviderStateMixin {
+  TabController _controller; //tab控制器
   int _currentIndex = 0; //选中下标
 
-  List<ProjectData> _datas = new List();//tab集合
-  List<ProjectListDataData> _listDatas = new List();//内容集合
+  List<ProjectData> _datas = new List(); //tab集合
+  List<ProjectListDataData> _listDatas = new List(); //内容集合
 
   @override
   void initState() {
@@ -36,16 +36,14 @@ class _ProjectPageState extends State<ProjectPage> with SingleTickerProviderStat
       var projectEntity = new ProjectEntity.fromJson(userMap);
 
       setState(() {
-        if (_datas.length != null) _datas = projectEntity.data;
-        _currentIndex = 0;
+        _datas = projectEntity.data;
       });
 
       getDetail();
 
       //初始化controller并添加监听
-      controller = TabController(length: _datas.length, vsync: this);
-      controller.addListener(() => _onTabChanged());
-
+      _controller = TabController(vsync: this, length: _datas.length);
+      _controller.addListener(() => _onTabChanged());
     } catch (e) {
       print(e);
     }
@@ -55,11 +53,11 @@ class _ProjectPageState extends State<ProjectPage> with SingleTickerProviderStat
   /// tab改变监听
   ///
   _onTabChanged() {
-    if (controller.indexIsChanging) {
+    if (_controller.indexIsChanging) {
       if (this.mounted) {
         //赋值 并更新数据
         this.setState(() {
-          _currentIndex = controller.index;
+          _currentIndex = _controller.index;
         });
         getDetail();
       }
@@ -86,20 +84,27 @@ class _ProjectPageState extends State<ProjectPage> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return new DefaultTabController(
+    return DefaultTabController(
       length: _datas.length,
-      child: new Scaffold(
-        appBar: new TabBar(
-          controller: controller,//控制器
-          labelColor: YColors.colorPrimaryDark, //选中的颜色
-          labelStyle: TextStyle(fontSize: 16), //选中的样式
-          unselectedLabelColor: YColors.color_666, //未选中的颜色
-          unselectedLabelStyle: TextStyle(fontSize: 14), //未选中的样式
-          indicatorColor: YColors.colorPrimary, //下划线颜色
-          isScrollable: true, //是否可滑动
+      child: Scaffold(
+        appBar: TabBar(
+          controller: _controller,
+          //控制器
+          labelColor: YColors.colorPrimaryDark,
+          //选中的颜色
+          labelStyle: TextStyle(fontSize: 16),
+          //选中的样式
+          unselectedLabelColor: YColors.color_666,
+          //未选中的颜色
+          unselectedLabelStyle: TextStyle(fontSize: 14),
+          //未选中的样式
+          indicatorColor: YColors.colorPrimary,
+          //下划线颜色
+          isScrollable: true,
+          //是否可滑动
           //tab标签
           tabs: _datas.map((ProjectData choice) {
-            return new Tab(
+            return Tab(
               text: choice.name,
             );
           }).toList(),
@@ -108,10 +113,10 @@ class _ProjectPageState extends State<ProjectPage> with SingleTickerProviderStat
             print(i);
           },
         ),
-        body: new TabBarView(
-          controller: controller,
+        body: TabBarView(
+          controller: _controller,
           children: _datas.map((ProjectData choice) {
-            return new ListView.builder(
+            return ListView.builder(
                 itemCount: _listDatas.length,
                 itemBuilder: (BuildContext context, int position) {
                   return getRow(position);
@@ -123,30 +128,31 @@ class _ProjectPageState extends State<ProjectPage> with SingleTickerProviderStat
   }
 
   Widget getRow(int i) {
-    return new GestureDetector(
-      child: new Container(
+    return GestureDetector(
+      child: Container(
         alignment: Alignment.topLeft,
         padding: EdgeInsets.all(10),
-        child: new Card(
+        child: Card(
           elevation: 5,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
           color: Colors.white,
           child: Padding(
             padding: EdgeInsets.all(10),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                new Expanded(
+                Expanded(
                   flex: 2,
-                  child: new Image.network(_listDatas[i].envelopePic),
+                  child: Image.network(_listDatas[i].envelopePic),
                 ),
-                new Expanded(
+                Expanded(
                   flex: 5,
-                  child: new Column(
+                  child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: new Text(
                           _listDatas[i].title,
@@ -156,9 +162,9 @@ class _ProjectPageState extends State<ProjectPage> with SingleTickerProviderStat
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      new Padding(
+                      Padding(
                         padding: EdgeInsets.all(10),
-                        child: new Text(
+                        child: Text(
                           _listDatas[i].desc,
                           style:
                               TextStyle(fontSize: 14, color: YColors.color_666),
@@ -166,21 +172,21 @@ class _ProjectPageState extends State<ProjectPage> with SingleTickerProviderStat
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      new Container(
+                      Container(
                         alignment: Alignment.bottomLeft,
                         child: Row(
                           children: <Widget>[
-                            new Expanded(
+                            Expanded(
                               flex: 1,
-                              child: new Padding(
+                              child: Padding(
                                 padding: EdgeInsets.all(10),
-                                child: new Text(_listDatas[i].niceDate,
+                                child: Text(_listDatas[i].niceDate,
                                     style: TextStyle(fontSize: 14)),
                               ),
                             ),
-                            new Padding(
+                            Padding(
                               padding: EdgeInsets.all(10),
-                              child: new Text(
+                              child: Text(
                                 _listDatas[i].author,
                                 style: TextStyle(fontSize: 14),
                                 textAlign: TextAlign.right,
@@ -211,7 +217,7 @@ class _ProjectPageState extends State<ProjectPage> with SingleTickerProviderStat
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
-    controller.dispose();
   }
 }
