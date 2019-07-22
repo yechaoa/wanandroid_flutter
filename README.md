@@ -56,7 +56,7 @@
 - ~~退出~~
 - 收藏
 - ~~分享~~
-- 搜索
+- ~~搜索~~
 - 分页
 - 体系列表点击
 - 界面美化
@@ -70,6 +70,7 @@
 * [cookie_jar](https://github.com/flutterchina/cookie_jar)
 * [flutter_webview_plugin](https://pub.dev/packages/flutter_webview_plugin#-readme-tab)
 * [flutter_swiper](https://github.com/best-flutter/flutter_swiper)
+* [share](https://github.com/flutter/plugins/tree/master/packages/share)
 
 ## 环境配置
 * [Flutter macOS 环境配置](https://blog.csdn.net/yechaoa/article/details/95389931)
