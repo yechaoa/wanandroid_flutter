@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:share/share.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
 
 // ignore: must_be_immutable
@@ -18,8 +19,7 @@ class ArticleDetail extends StatelessWidget {
       ),
       routes: {
         "/": (_) => new WebviewScaffold(
-              // ignore: unnecessary_brace_in_string_interps
-              url: "${url}",
+              url: "$url",
               appBar: new AppBar(
                 //返回键 点击关闭
                 leading: new IconButton(
@@ -27,8 +27,16 @@ class ArticleDetail extends StatelessWidget {
                     onPressed: () {
                       Navigator.maybePop(context);
                     }),
-                // ignore: unnecessary_brace_in_string_interps
-                title: new Text("${title}"),
+                title: new Text("$title"),
+                actions: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.share),
+                    tooltip: '分享',
+                    onPressed: () {
+                      Share.share('【$title】\n$url');
+                    },
+                  ),
+                ],
               ),
             ),
       },
