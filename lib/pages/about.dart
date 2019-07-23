@@ -84,7 +84,7 @@ class AboutPage extends StatelessWidget {
                           child: Text(
                             "wanandroid_flutter V1.0",
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 25, fontFamily: 'mononoki'),
                           ),
                         ),
                         Divider(),
@@ -94,7 +94,7 @@ class AboutPage extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 "Github ：",
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: 18),
                               ),
                               GestureDetector(
                                 child: Text(
@@ -103,7 +103,7 @@ class AboutPage extends StatelessWidget {
                                       decoration: TextDecoration.underline,
                                       decorationStyle:
                                           TextDecorationStyle.solid,
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       color: Colors.blue),
                                 ),
                                 onTap: () {
@@ -128,7 +128,7 @@ class AboutPage extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 "CSDN ：",
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: 18),
                               ),
                               Expanded(
                                 child: GestureDetector(
@@ -138,7 +138,7 @@ class AboutPage extends StatelessWidget {
                                         decoration: TextDecoration.underline,
                                         decorationStyle:
                                             TextDecorationStyle.solid,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                         color: Colors.blue),
                                     overflow: TextOverflow.ellipsis,
                                   ),
