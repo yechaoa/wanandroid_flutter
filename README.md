@@ -1,6 +1,6 @@
 # wanandroid_flutter
 
-玩安卓的`flutter`版本，首先感谢`鸿洋`提供的api，然后就是这个项目目前还在开发中，不过主体框架已经出来了，而且常用的`widget`也基本都用到了，后面会继续开发并完善。
+玩安卓的`flutter`版本，首先非常感谢`鸿洋`提供的api，然后就是这个项目目前还在完善中，但是常用的`widget`也基本都用到了，没用到的后续也会强行用到的 :satisfied::satisfied::satisfied:。
 
 ![](https://img.shields.io/badge/language-dart-orange.svg)
 ![](https://img.shields.io/hexpm/l/plug.svg)
@@ -32,22 +32,22 @@
 <br>
 
 ## 涉及到的知识点
-* [BottomNavigationBar](https://blog.csdn.net/yechaoa/article/details/89880284)
-* [FlutterJsonBeanFactory](https://blog.csdn.net/yechaoa/article/details/90035254)
-* [加载WebView](https://blog.csdn.net/yechaoa/article/details/90175271)
-* [网络请求](https://blog.csdn.net/yechaoa/article/details/90234708)
-* [ExpansionPanelList](https://blog.csdn.net/yechaoa/article/details/90376584)
-* [Wrap](https://blog.csdn.net/yechaoa/article/details/90403760)
-* [Chip](https://blog.csdn.net/yechaoa/article/details/90405997)
-* [TabBar](https://blog.csdn.net/yechaoa/article/details/90482127)
-* [Card](https://blog.csdn.net/yechaoa/article/details/90483097)
-* [banner](https://blog.csdn.net/yechaoa/article/details/90643476)
-* [Drawer](https://blog.csdn.net/yechaoa/article/details/90607772)
-* [SliverAppBar](https://blog.csdn.net/yechaoa/article/details/90701321)
-* [PopupMenuButton](https://blog.csdn.net/yechaoa/article/details/90704165)
-* [Share](https://blog.csdn.net/yechaoa/article/details/93980749)
-* [TextField](https://blog.csdn.net/yechaoa/article/details/90906689)
-
+* [BottomNavigationBar底部菜单](https://blog.csdn.net/yechaoa/article/details/89880284)
+* [FlutterJsonBeanFactory Json解析](https://blog.csdn.net/yechaoa/article/details/90035254)
+* [WebView加载](https://blog.csdn.net/yechaoa/article/details/90175271)
+* [网络请求dio](https://blog.csdn.net/yechaoa/article/details/90234708)
+* [ExpansionPanelList可折叠列表](https://blog.csdn.net/yechaoa/article/details/90376584)
+* [Wrap流布局](https://blog.csdn.net/yechaoa/article/details/90403760)
+* [Chip标签](https://blog.csdn.net/yechaoa/article/details/90405997)
+* [TabBar顶部菜单](https://blog.csdn.net/yechaoa/article/details/90482127)
+* [Card卡片](https://blog.csdn.net/yechaoa/article/details/90483097)
+* [banner轮播图](https://blog.csdn.net/yechaoa/article/details/90643476)
+* [Drawer侧边栏](https://blog.csdn.net/yechaoa/article/details/90607772)
+* [SliverAppBar可滑动折叠的AppBar](https://blog.csdn.net/yechaoa/article/details/90701321)
+* [PopupMenuButton菜单popup](https://blog.csdn.net/yechaoa/article/details/90704165)
+* [Share分享功能](https://blog.csdn.net/yechaoa/article/details/93980749)
+* [TextField输入框](https://blog.csdn.net/yechaoa/article/details/90906689)
+* [自定义字体](https://blog.csdn.net/yechaoa/article/details/90906689)
 
 ## todo
 
