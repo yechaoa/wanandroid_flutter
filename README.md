@@ -6,10 +6,6 @@
 ![](https://img.shields.io/hexpm/l/plug.svg)
 ![](https://img.shields.io/badge/CSDN-yechaoa-green.svg)
 
-<br>
-
-> 最近进度有点慢，一来事情太多缠身；二来呢flutter学习资料也不是很健全，很多都是查看源码或者自己探索；其实主要是最近身体也抱恙了，成了医院的常客，不可逆的慢性病，说实话还是很影响心态的，还在调整中。。最后，祝你们都有一个好身体。
-
 ## 【兄dei】  随手点个star支持一下呗
 
 <br>
