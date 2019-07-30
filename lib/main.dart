@@ -13,18 +13,20 @@ import 'package:wanandroid_flutter/res/colors.dart';
 import 'package:wanandroid_flutter/res/strings.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
 import 'package:wanandroid_flutter/util/favoriteProvide.dart';
+import 'package:wanandroid_flutter/util/themeProvide.dart';
 
 import 'common/api.dart';
 import 'http/httpUtil.dart';
 
 void main() {
-
   //初始化
+  var theme = ThemeProvide();
   var favorite = FavoriteProvide();
   var providers = Providers();
-  //将favorite加到providers中
+  //将theme,favorite加到providers中
   providers
-  ..provide(Provider.function((context) => favorite));
+    ..provide(Provider.function((context) => theme))
+    ..provide(Provider.function((context) => favorite));
 
   runApp(ProviderNode(
     providers: providers,
@@ -35,22 +37,31 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: YStrings.appName,
-      theme: ThemeData(
-        // This is the theme of your application.
+    return
+      Provide<ThemeProvide>(
+        builder: (context, child, theme) {
+          return MaterialApp(
+            title: YStrings.appName,
+            theme: ThemeData(
+              // This is the theme of your application.
+
+              primaryColor: YColors.themeList[theme.value]
 
 //        primarySwatch: Colors.blue,
-        primaryColor: YColors.colorPrimary,
-        primaryColorDark: YColors.colorPrimaryDark,
-        accentColor: YColors.colorAccent,
-        dividerColor: YColors.dividerColor,
-      ),
-      home: MyHomePage(title: YStrings.appName),
-    );
+
+//              primaryColor: YColors.colorPrimary,
+//              primaryColorDark: YColors.colorPrimaryDark,
+//              accentColor: YColors.colorAccent,
+//              dividerColor: YColors.dividerColor,
+            ),
+            home: MyHomePage(title: YStrings.appName),
+          );
+        },
+      );
   }
 }
 
@@ -244,6 +255,15 @@ class _MyHomePageState extends State<MyHomePage> {
 //              Share.share('【玩安卓Flutter版】\nhttps://github.com/yechaoa/wanandroid_flutter');
             },
           ),
+          ListTile(
+            leading: new Icon(Icons.color_lens),
+            title: Text("主题"),
+            trailing: new Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).pop();
+              showThemeDialog();
+            },
+          ),
 
           Divider(),
 
@@ -293,6 +313,69 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         );
+      },
+    );
+  }
+
+  void showThemeDialog() {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text("设置主题"),
+          children: YColors.themeList.map((Color color) {
+            return SimpleDialogOption(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(10, 8, 10, 8),
+                height: 35,
+                color: color,
+              ),
+              onPressed: () {
+                Provide.value<ThemeProvide>(context).changeTheme(3);
+                Navigator.of(context).pop();
+              },
+            );
+          }).toList(),
+        );
+//        return AlertDialog(
+//          title: Text('切换主题'),
+//          content: SingleChildScrollView(
+//            child: ListView.builder(
+//                shrinkWrap: true,
+//                itemCount: YColors.themeList.length,
+//                itemBuilder: (BuildContext context, int position) {
+//                  return GestureDetector(
+//                    child: Container(
+//                        padding: EdgeInsets.all(10.0),
+//                        child: ListTile(
+//                          title: Text(
+//                            "aaaa",style: TextStyle(color: YColors.themeList[position]),
+//                          ),
+//                        )),
+//                    onTap: () {
+//                      Provide.value<ThemeProvide>(context).changeTheme(position);
+//                    },
+//                  );
+//                }),
+//          ),
+//          actions: <Widget>[
+//            FlatButton(
+//              child: Text('取消', style: TextStyle(color: YColors.primaryText)),
+//              onPressed: () {
+//                Navigator.of(context).pop();
+//              },
+//            ),
+//            FlatButton(
+//              child: Text('确定'),
+//              onPressed: () {
+//                //退出
+//                HttpUtil().get(Api.LOGOUT);
+//                Navigator.of(context).pop();
+//              },
+//            ),
+//          ],
+//        );
       },
     );
   }

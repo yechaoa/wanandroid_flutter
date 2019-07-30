@@ -21,4 +21,16 @@ class YColors {
   static const Color color_f1f1f1 = Color(0xfff1f1f1);
   static const Color color_fff = Color(0xffffffff);
 
+  static const List<Color> themeList = [
+    Colors.black,
+    Colors.red,
+    Colors.teal,
+    Colors.pink,
+    Colors.orange,
+    Colors.green,
+    Colors.blue,
+    Colors.cyan,
+    Colors.grey,
+  ];
+
 }
