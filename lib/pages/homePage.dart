@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:provide/provide.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/article_entity.dart';
 import 'package:wanandroid_flutter/entity/banner_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/pages/articleDetail.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
+import 'package:wanandroid_flutter/util/favoriteProvide.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -119,7 +121,20 @@ class _HomePageState extends State<HomePage> {
       child: Container(
           padding: EdgeInsets.all(10.0),
           child: ListTile(
-            leading: Icon(Icons.android),
+            leading: Provide<FavoriteProvide>(
+              builder: (context, child, favorite) {
+                return IconButton(
+                  icon: Provide.value<FavoriteProvide>(context).value
+                      ? Icon(Icons.favorite)
+                      : Icon(Icons.favorite_border),
+                  tooltip: '收藏',
+                  onPressed: () {
+                    Provide.value<FavoriteProvide>(context).changeFavorite(
+                        !Provide.value<FavoriteProvide>(context).value);
+                  },
+                );
+              },
+            ),
             title: Text(
               articleDatas[i].title,
               maxLines: 2,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provide/provide.dart';
 import 'package:wanandroid_flutter/pages/CollectPage.dart';
 import 'package:wanandroid_flutter/pages/about.dart';
 import 'package:wanandroid_flutter/pages/homePage.dart';
@@ -11,11 +12,27 @@ import 'package:wanandroid_flutter/pages/treePage.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
 import 'package:wanandroid_flutter/res/strings.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
+import 'package:wanandroid_flutter/util/favoriteProvide.dart';
 
 import 'common/api.dart';
 import 'http/httpUtil.dart';
 
-void main() => runApp(MyApp());
+void main() {
+
+  //初始化
+  var favorite = FavoriteProvide();
+  var providers = Providers();
+  //将favorite加到providers中
+  providers
+  ..provide(Provider.function((context) => favorite));
+
+  runApp(ProviderNode(
+    providers: providers,
+    child: MyApp(),
+  ));
+
+//  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

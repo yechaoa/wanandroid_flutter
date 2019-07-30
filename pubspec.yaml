@@ -36,6 +36,8 @@ dependencies:
   flutter_swiper : ^1.1.6
   # https://github.com/flutter/plugins/tree/master/packages/share
   share: ^0.6.1+1
+  # https://github.com/google/flutter-provide
+  provide: ^1.0.2
 
 dev_dependencies:
   flutter_test:

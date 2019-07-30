@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:provide/provide.dart';
 import 'package:share/share.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
+import 'package:wanandroid_flutter/util/favoriteProvide.dart';
 
 // ignore: must_be_immutable
 class ArticleDetail extends StatelessWidget {
@@ -29,6 +31,22 @@ class ArticleDetail extends StatelessWidget {
                     }),
                 title: new Text("$title"),
                 actions: <Widget>[
+                  Provide<FavoriteProvide>(
+                    builder: (context, child, favorite) {
+                      return IconButton(
+                        icon: Provide.value<FavoriteProvide>(context).value
+                            ? Icon(Icons.favorite)
+                            : Icon(Icons.favorite_border),
+                        tooltip: '收藏',
+                        onPressed: () {
+                          Provide.value<FavoriteProvide>(context)
+                              .changeFavorite(
+                                  !Provide.value<FavoriteProvide>(context)
+                                      .value);
+                        },
+                      );
+                    },
+                  ),
                   IconButton(
                     icon: const Icon(Icons.share),
                     tooltip: '分享',
