@@ -20,14 +20,14 @@
 | :--: | :--: | :--: |
 | 左右菜单 | 左右滑动列表 | 登录注册 |
 
-| <img src="/screenshot/7.png" width="285"/> | <img src="/screenshot/8.png" width="285"/> |
-| :--: | :--: |
-| 搜索 | 分享 |
+| <img src="/screenshot/7.png" width="285"/> | <img src="/screenshot/8.png" width="285"/> | <img src="/screenshot/9.png" width="285"/> |
+| :--: | :--: | :--: |
+| 搜索 | 分享 | 切换主题 |
 
 
 <br>
 
-## 涉及到的知识点
+## 你能学到
 * [BottomNavigationBar底部菜单](https://blog.csdn.net/yechaoa/article/details/89880284)
 * [FlutterJsonBeanFactory Json解析](https://blog.csdn.net/yechaoa/article/details/90035254)
 * [WebView加载](https://blog.csdn.net/yechaoa/article/details/90175271)
@@ -44,6 +44,8 @@
 * [Share分享功能](https://blog.csdn.net/yechaoa/article/details/93980749)
 * [TextField输入框](https://blog.csdn.net/yechaoa/article/details/90906689)
 * [自定义字体](https://blog.csdn.net/yechaoa/article/details/90906689)
+* [provide状态管理](https://blog.csdn.net/yechaoa/article/details/97790854)
+* [切换主题](https://blog.csdn.net/yechaoa/article/details/97918930)
 
 ## todo
 
@@ -56,7 +58,7 @@
 - 分页
 - 体系列表点击
 - 界面美化
-- 切换主题
+- ~~切换主题~~
 - ~~添加字体~~
 
 
@@ -67,6 +69,8 @@
 * [flutter_webview_plugin](https://pub.dev/packages/flutter_webview_plugin#-readme-tab)
 * [flutter_swiper](https://github.com/best-flutter/flutter_swiper)
 * [share](https://github.com/flutter/plugins/tree/master/packages/share)
+* [provide](https://github.com/google/flutter-provide)
+* [shared_preferences](https://github.com/flutter/plugins/tree/master/packages/shared_preferences)
 
 ## 环境配置
 * [Flutter macOS 环境配置](https://blog.csdn.net/yechaoa/article/details/95389931)
