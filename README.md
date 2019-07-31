@@ -46,6 +46,7 @@
 * [自定义字体](https://blog.csdn.net/yechaoa/article/details/90906689)
 * [provide状态管理](https://blog.csdn.net/yechaoa/article/details/97790854)
 * [切换主题](https://blog.csdn.net/yechaoa/article/details/97918930)
+* [本地存储shared_preferences](https://blog.csdn.net/yechaoa/article/details/97939357)
 
 ## todo
 
