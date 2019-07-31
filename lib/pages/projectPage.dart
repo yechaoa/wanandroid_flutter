@@ -11,7 +11,7 @@ import 'package:wanandroid_flutter/res/colors.dart';
 class ProjectPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _ProjectPageState();
+    return _ProjectPageState();
   }
 }
 
@@ -90,7 +90,7 @@ class _ProjectPageState extends State<ProjectPage>
         appBar: TabBar(
           controller: _controller,
           //控制器
-          labelColor: YColors.colorPrimaryDark,
+          labelColor: Theme.of(context).primaryColor,
           //选中的颜色
           labelStyle: TextStyle(fontSize: 16),
           //选中的样式
@@ -98,7 +98,7 @@ class _ProjectPageState extends State<ProjectPage>
           //未选中的颜色
           unselectedLabelStyle: TextStyle(fontSize: 14),
           //未选中的样式
-          indicatorColor: YColors.colorPrimary,
+          indicatorColor: Theme.of(context).primaryColor,
           //下划线颜色
           isScrollable: true,
           //是否可滑动
@@ -134,7 +134,7 @@ class _ProjectPageState extends State<ProjectPage>
         padding: EdgeInsets.all(10),
         child: Card(
           elevation: 5,
-          shape: const RoundedRectangleBorder(
+          shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
           color: Colors.white,
           child: Padding(
@@ -154,7 +154,7 @@ class _ProjectPageState extends State<ProjectPage>
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: new Text(
+                        child: Text(
                           _listDatas[i].title,
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),

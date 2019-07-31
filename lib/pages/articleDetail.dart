@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:provide/provide.dart';
 import 'package:share/share.dart';
-import 'package:wanandroid_flutter/res/colors.dart';
 import 'package:wanandroid_flutter/util/favoriteProvide.dart';
 
 // ignore: must_be_immutable
@@ -14,22 +13,21 @@ class ArticleDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       theme: ThemeData(
-        primaryColor: YColors.colorPrimary,
-        primaryColorDark: YColors.colorPrimaryDark,
+        primaryColor: Theme.of(context).primaryColor,
       ),
       routes: {
         "/": (_) => new WebviewScaffold(
               url: "$url",
-              appBar: new AppBar(
+              appBar: AppBar(
                 //返回键 点击关闭
-                leading: new IconButton(
+                leading: IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
                       Navigator.maybePop(context);
                     }),
-                title: new Text("$title"),
+                title: Text("$title"),
                 actions: <Widget>[
                   Provide<FavoriteProvide>(
                     builder: (context, child, favorite) {
@@ -48,7 +46,7 @@ class ArticleDetail extends StatelessWidget {
                     },
                   ),
                   IconButton(
-                    icon: const Icon(Icons.share),
+                    icon: Icon(Icons.share),
                     tooltip: '分享',
                     onPressed: () {
                       Share.share('【$title】\n$url');

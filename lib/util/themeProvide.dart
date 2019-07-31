@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ThemeProvide with ChangeNotifier {
-  int _themeIndex = 0;
+  int _themeIndex;
 
   int get value => _themeIndex;
 
   ThemeProvide();
 
-  void changeTheme(int index) async {
+  void setTheme(int index) async {
     _themeIndex = index;
     notifyListeners();
   }
-
 }

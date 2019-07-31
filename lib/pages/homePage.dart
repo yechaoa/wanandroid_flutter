@@ -148,11 +148,11 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.symmetric(horizontal: 6),
                     decoration: BoxDecoration(
                       border:
-                          Border.all(color: YColors.colorPrimary, width: 1.0),
+                          Border.all(color: Theme.of(context).primaryColor, width: 1.0),
                       borderRadius: BorderRadius.circular((20.0)), // 圆角度
                     ),
                     child: Text(articleDatas[i].superChapterName,
-                        style: TextStyle(color: YColors.colorAccent)),
+                        style: TextStyle(color: Theme.of(context).primaryColor)),
                   ),
                   Container(
                     margin: EdgeInsets.only(left: 15),

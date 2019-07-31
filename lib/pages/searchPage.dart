@@ -151,11 +151,11 @@ class MySearchDelegate extends SearchDelegate<String> {
                           padding: EdgeInsets.symmetric(horizontal: 6),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: YColors.colorPrimary, width: 1.0),
+                                color: Theme.of(context).primaryColor, width: 1.0),
                             borderRadius: BorderRadius.circular((20.0)), // 圆角度
                           ),
                           child: Text(articleDatas[position].superChapterName,
-                              style: TextStyle(color: YColors.colorAccent)),
+                              style: TextStyle(color: Theme.of(context).primaryColor)),
                         ),
                         Container(
                           margin: EdgeInsets.only(left: 15),
@@ -250,7 +250,7 @@ class MySearchDelegate extends SearchDelegate<String> {
     final ThemeData theme = Theme.of(context);
     assert(theme != null);
     return Theme.of(context).copyWith(
-      primaryColor: YColors.colorPrimary,
+      primaryColor: theme.primaryColor,
       //主题色
       primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.white),
       //图标颜色

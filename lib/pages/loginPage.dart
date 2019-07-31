@@ -1,24 +1,25 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provide/provide.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/user_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/main.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
+import 'package:wanandroid_flutter/util/themeProvide.dart';
 
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _LoginPagePageState();
+    return _LoginPagePageState();
   }
 }
 
 class _LoginPagePageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
   TabController controller; //tab控制器
-  int _currentIndex = 0; //选中下标
 
   var tabs = <Tab>[];
   String btnText = "立即登录";
@@ -62,56 +63,68 @@ class _LoginPagePageState extends State<LoginPage>
 
   @override
   Widget build(BuildContext context) {
-    return new DefaultTabController(
-      length: tabs.length,
-      child: Container(
-        alignment: Alignment.topCenter,
-        padding: EdgeInsets.only(top: 120, left: 20, right: 20),
-        decoration: new BoxDecoration(
-          gradient: const LinearGradient(
+    return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Theme.of(context).primaryColor,
+        accentColor: Theme.of(context).accentColor,
+        primaryColorDark: Theme.of(context).primaryColorDark,
+      ),
+
+      home: DefaultTabController(
+        length: tabs.length,
+        child: Container(
+          alignment: Alignment.topCenter,
+          padding: EdgeInsets.only(top: 120, left: 20, right: 20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [YColors.colorAccent, YColors.colorPrimaryDark]),
-        ),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: new Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: new TabBar(
-              indicatorSize: TabBarIndicatorSize.label,
-              //TabBarIndicatorSize.label：indicator与文字同宽，TabBarIndicatorSize.tab：与tab同宽
-              indicatorPadding: EdgeInsets.symmetric(vertical: -5),
-              controller: controller,
-              labelColor: Colors.white,
-              labelStyle: TextStyle(fontSize: 30),
-              unselectedLabelColor: Colors.white54,
-              unselectedLabelStyle: TextStyle(fontSize: 20),
-              indicatorColor: Colors.white,
-              //是否可滑动,false：tab宽度则等比，true：tab宽度则包裹item
-              isScrollable: false,
-              tabs: tabs.map((Tab choice) {
-                return new Tab(
-                  text: choice.text,
-                );
-              }).toList(),
-              onTap: (int i) {
-                setState(() {
-                  if (0 == i) {
-                    btnText = "立即登录";
-                    visible = true;
-                  } else {
-                    btnText = "立即注册";
-                    visible = false;
-                  }
-                });
-              },
+              colors: [
+                Theme.of(context).accentColor,
+                Theme.of(context).primaryColorDark,
+              ],
             ),
-            body: new TabBarView(
-              controller: controller,
-              children: tabs.map((Tab choice) {
-                return getTabBarView();
-              }).toList(),
+          ),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: new Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: new TabBar(
+                indicatorSize: TabBarIndicatorSize.label,
+                //TabBarIndicatorSize.label：indicator与文字同宽，TabBarIndicatorSize.tab：与tab同宽
+                indicatorPadding: EdgeInsets.symmetric(vertical: -5),
+                controller: controller,
+                labelColor: Colors.white,
+                labelStyle: TextStyle(fontSize: 30),
+                unselectedLabelColor: Colors.white54,
+                unselectedLabelStyle: TextStyle(fontSize: 20),
+                indicatorColor: Colors.white,
+                //是否可滑动,false：tab宽度则等比，true：tab宽度则包裹item
+                isScrollable: false,
+                tabs: tabs.map((Tab choice) {
+                  return new Tab(
+                    text: choice.text,
+                  );
+                }).toList(),
+                onTap: (int i) {
+                  setState(() {
+                    if (0 == i) {
+                      btnText = "立即登录";
+                      visible = true;
+                    } else {
+                      btnText = "立即注册";
+                      visible = false;
+                    }
+                  });
+                },
+              ),
+              body: new TabBarView(
+                controller: controller,
+                children: tabs.map((Tab choice) {
+                  return getTabBarView();
+                }).toList(),
+              ),
             ),
           ),
         ),
@@ -124,7 +137,6 @@ class _LoginPagePageState extends State<LoginPage>
     return ListView(
       children: <Widget>[
         Container(
-
           padding: EdgeInsets.all(20),
           child: Card(
             elevation: 5,
@@ -220,8 +232,8 @@ class _LoginPagePageState extends State<LoginPage>
                           borderRadius: BorderRadius.all(Radius.circular(50)),
                           gradient: LinearGradient(
                             colors: <Color>[
-                              YColors.colorAccent,
-                              YColors.colorPrimaryDark,
+                              Theme.of(context).accentColor,
+                              Theme.of(context).primaryColorDark,
                             ],
                           ),
                         ),
@@ -297,7 +309,7 @@ class _LoginPagePageState extends State<LoginPage>
     Map userMap = json.decode(response.toString());
     var userEntity = new UserEntity.fromJson(userMap);
     if (userEntity.errorCode == 0) {
-      YToast.show(msg: visible ? "登录成功~" : "注册成功~");
+      YToast.show(context: context, msg: visible ? "登录成功~" : "注册成功~");
       //跳转并关闭当前页面
       Navigator.pushAndRemoveUntil(
         context,
@@ -305,6 +317,6 @@ class _LoginPagePageState extends State<LoginPage>
         (route) => route == null,
       );
     } else
-      YToast.show(msg: userMap['errorMsg']);
+      YToast.show(context: context, msg: userMap['errorMsg']);
   }
 }

@@ -55,7 +55,7 @@ class AboutPage extends StatelessWidget {
                           '【玩安卓Flutter版】\nhttps://github.com/yechaoa/wanandroid_flutter');
                       break;
                     case "2":
-                      YToast.show(msg: "设置");
+                      YToast.show(context: context, msg: "设置");
                       break;
                   }
                 },
@@ -83,8 +83,8 @@ class AboutPage extends StatelessWidget {
                           padding: EdgeInsets.all(10),
                           child: Text(
                             "wanandroid_flutter V1.0",
-                            style: TextStyle(
-                                fontSize: 25, fontFamily: 'mononoki'),
+                            style:
+                                TextStyle(fontSize: 25, fontFamily: 'mononoki'),
                           ),
                         ),
                         Divider(),

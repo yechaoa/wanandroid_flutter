@@ -10,7 +10,7 @@ import 'package:wanandroid_flutter/res/colors.dart';
 class NaviPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _NaviPageState();
+    return _NaviPageState();
   }
 }
 
@@ -73,15 +73,14 @@ class _NaviPageState extends State<NaviPage> {
     );
   }
 
-  Color textColor = YColors.colorPrimary; //字体颜色
-
   Widget getRow(int i) {
+    Color textColor = Theme.of(context).primaryColor; //字体颜色
     return new GestureDetector(
       child: new Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         color: index == i ? YColors.color_F9F9F9 : Colors.white,
-        child: new Text(_datas[i].name,
+        child: Text(_datas[i].name,
             style: TextStyle(
                 color: index == i ? textColor : YColors.color_666,
                 fontWeight: index == i ? FontWeight.w600 : FontWeight.w400,

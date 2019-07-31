@@ -45,9 +45,9 @@ class _TreePageState extends State<TreePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new SingleChildScrollView(
-        child: new ExpansionPanelList(
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: ExpansionPanelList(
           //开关动画时长
           animationDuration: Duration(milliseconds: 500),
           //开关回调
@@ -58,19 +58,19 @@ class _TreePageState extends State<TreePage> {
           },
           //内容区
           children: _datas.map<ExpansionPanel>((TreeData treeData) {
-            return new ExpansionPanel(
+            return ExpansionPanel(
               //标题
               headerBuilder: (context, isExpanded) {
-                return new ListTile(
+                return ListTile(
                   contentPadding: EdgeInsets.all(10.0),
-                  title: new Text(treeData.name),
+                  title: Text(treeData.name),
                 );
               },
               //展开内容
               body: Container(
                 height: 200,
                 padding: EdgeInsets.symmetric(horizontal: 5.0),
-                child: new ListView.builder(
+                child: ListView.builder(
                     itemCount: treeData.children.length,
                     itemBuilder: (BuildContext context, int position) {
                       return getRow(position, treeData);
@@ -86,12 +86,13 @@ class _TreePageState extends State<TreePage> {
   }
 
   Widget getRow(int i, TreeData treeData) {
-    return new GestureDetector(
-      child: new Container(
+    return GestureDetector(
+      child: Container(
           padding: EdgeInsets.symmetric(horizontal: 5.0),
-          child: new ListTile(
-            title: new Text(treeData.children[i].name, style: TextStyle(color: YColors.color_999)),
-            trailing: new Icon(
+          child: ListTile(
+            title: Text(treeData.children[i].name,
+                style: TextStyle(color: YColors.color_999)),
+            trailing: Icon(
               Icons.chevron_right,
               color: YColors.color_999,
             ),
@@ -104,7 +105,7 @@ class _TreePageState extends State<TreePage> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIos: 1,
-            backgroundColor: YColors.colorPrimaryDark,
+            backgroundColor: Theme.of(context).primaryColor,
             textColor: Colors.white,
             fontSize: 16.0);
       },

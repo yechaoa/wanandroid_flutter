@@ -5,7 +5,7 @@ import 'package:wanandroid_flutter/util/ToastUtil.dart';
 class CollectPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _CollectPagePageState();
+    return _CollectPagePageState();
   }
 }
 
@@ -23,7 +23,7 @@ class _CollectPagePageState extends State<CollectPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(20),
@@ -83,7 +83,7 @@ class _CollectPagePageState extends State<CollectPage> {
                   validateName(controller.text);
 
                   //controller.text 也可以获取输入内容
-                  YToast.show(msg: "登录" + controller.text);
+                  YToast.show(context: context, msg: "登录" + controller.text);
                 },
                 elevation: 5,
                 highlightElevation: 10,
