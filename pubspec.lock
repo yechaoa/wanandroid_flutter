@@ -116,6 +116,13 @@ packages:
       url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn/"
     source: hosted
     version: "1.5.0"
+  provide:
+    dependency: "direct main"
+    description:
+      name: provide
+      url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn/"
+    source: hosted
+    version: "1.0.2"
   quiver:
     dependency: transitive
     description:
@@ -130,6 +137,13 @@ packages:
       url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn/"
     source: hosted
     version: "0.6.1+1"
+  shared_preferences:
+    dependency: "direct main"
+    description:
+      name: shared_preferences
+      url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn/"
+    source: hosted
+    version: "0.5.3+4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -200,4 +214,4 @@ packages:
     version: "2.0.8"
 sdks:
   dart: ">=2.2.0 <3.0.0"
-  flutter: ">=0.1.4 <2.0.0"
+  flutter: ">=1.5.0 <2.0.0"
