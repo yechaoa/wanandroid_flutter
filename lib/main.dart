@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provide/provide.dart';
+import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wanandroid_flutter/pages/CollectPage.dart';
 import 'package:wanandroid_flutter/pages/about.dart';
 import 'package:wanandroid_flutter/pages/homePage.dart';
-import 'package:wanandroid_flutter/pages/loginPage.dart';
 import 'package:wanandroid_flutter/pages/naviPage.dart';
 import 'package:wanandroid_flutter/pages/projectPage.dart';
 import 'package:wanandroid_flutter/pages/searchPage.dart';
 import 'package:wanandroid_flutter/pages/treePage.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
 import 'package:wanandroid_flutter/res/strings.dart';
-import 'package:wanandroid_flutter/util/ToastUtil.dart';
 import 'package:wanandroid_flutter/util/favoriteProvide.dart';
 import 'package:wanandroid_flutter/util/themeProvide.dart';
 
@@ -58,7 +57,9 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
               // This is the theme of your application.
 
-              primaryColor: YColors.themeColor[theme.value != null ? theme.value: themeIndex]["primaryColor"]
+              primaryColor: YColors.themeColor[theme.value != null
+                  ? theme.value
+                  : themeIndex]["primaryColor"]
 
 //              primaryColor: YColors.colorPrimary,
 //              primaryColorDark: YColors.colorPrimaryDark,
@@ -227,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ///功能列表
           ListTile(
             leading: new Icon(Icons.favorite_border),
-            title: Text("收藏"),
+            title: Text("我的收藏"),
             trailing: new Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).pop();
@@ -238,8 +239,27 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
           ListTile(
+            leading: new Icon(Icons.color_lens),
+            title: Text("切换主题"),
+            trailing: new Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).pop();
+              showThemeDialog();
+            },
+          ),
+          ListTile(
+            leading: new Icon(Icons.share),
+            title: Text("我要分享"),
+            trailing: new Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).pop();
+              Share.share(
+                  '【玩安卓Flutter版】\nhttps://github.com/yechaoa/wanandroid_flutter');
+            },
+          ),
+          ListTile(
             leading: new Icon(Icons.info_outline),
-            title: Text("关于"),
+            title: Text("关于我们"),
             trailing: new Icon(Icons.chevron_right),
             onTap: () {
               //先关闭再跳转
@@ -248,27 +268,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 context,
                 new MaterialPageRoute(builder: (context) => new AboutPage()),
               );
-            },
-          ),
-          ListTile(
-            leading: new Icon(Icons.share),
-            title: Text("分享"),
-            trailing: new Icon(Icons.chevron_right),
-            onTap: () {
-              YToast.show(context: context, msg: "分享");
-              Navigator.push(
-                context,
-                new MaterialPageRoute(builder: (context) => new LoginPage()),
-              );
-            },
-          ),
-          ListTile(
-            leading: new Icon(Icons.color_lens),
-            title: Text("主题"),
-            trailing: new Icon(Icons.chevron_right),
-            onTap: () {
-              Navigator.of(context).pop();
-              showThemeDialog();
             },
           ),
 
