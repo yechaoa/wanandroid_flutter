@@ -81,12 +81,13 @@ class ArticleDataData {
 	int chapterId;
 	int superChapterId;
 	int id;
+	int originId;
 	bool fresh;
 	bool collect;
 	int courseId;
 	String desc;
 
-	ArticleDataData({this.superChapterName, this.publishTime, this.visible, this.niceDate, this.projectLink, this.author, this.prefix, this.zan, this.origin, this.chapterName, this.link, this.title, this.type, this.userId, this.tags, this.apkLink, this.envelopePic, this.chapterId, this.superChapterId, this.id, this.fresh, this.collect, this.courseId, this.desc});
+	ArticleDataData({this.superChapterName, this.publishTime, this.visible, this.niceDate, this.projectLink, this.author, this.prefix, this.zan, this.origin, this.chapterName, this.link, this.title, this.type, this.userId, this.tags, this.apkLink, this.envelopePic, this.chapterId, this.superChapterId, this.id,this.originId, this.fresh, this.collect, this.courseId, this.desc});
 
 	ArticleDataData.fromJson(Map<String, dynamic> json) {
 		superChapterName = json['superChapterName'];
@@ -111,6 +112,7 @@ class ArticleDataData {
 		chapterId = json['chapterId'];
 		superChapterId = json['superChapterId'];
 		id = json['id'];
+		originId = json['originId'];
 		fresh = json['fresh'];
 		collect = json['collect'];
 		courseId = json['courseId'];
@@ -141,6 +143,7 @@ class ArticleDataData {
 		data['chapterId'] = this.chapterId;
 		data['superChapterId'] = this.superChapterId;
 		data['id'] = this.id;
+		data['originId'] = this.originId;
 		data['fresh'] = this.fresh;
 		data['collect'] = this.collect;
 		data['courseId'] = this.courseId;

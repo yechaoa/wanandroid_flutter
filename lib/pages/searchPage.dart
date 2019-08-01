@@ -73,6 +73,8 @@ class _SearchPageState extends State<SearchPage> {
 }
 
 class MySearchDelegate extends SearchDelegate<String> {
+  BuildContext get context => context;
+
   /// 搜索框右边的操作 返回的是一个Widget集合
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -120,9 +122,9 @@ class MySearchDelegate extends SearchDelegate<String> {
 
   /// 搜索结果
   /// 源码
-  /// onSubmitted: (String _) {
-  ///              widget.delegate.showResults(context);
-  ///            },
+  ///     onSubmitted: (String _) {
+  ///        widget.delegate.showResults(context);
+  ///     },
   @override
   Widget buildResults(BuildContext context) {
     return ListView.builder(
@@ -134,7 +136,6 @@ class MySearchDelegate extends SearchDelegate<String> {
             child: Container(
                 padding: EdgeInsets.all(10.0),
                 child: ListTile(
-                  leading: Icon(Icons.android),
                   title: Text(
                     articleDatas[position]
                         .title
@@ -151,11 +152,13 @@ class MySearchDelegate extends SearchDelegate<String> {
                           padding: EdgeInsets.symmetric(horizontal: 6),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: Theme.of(context).primaryColor, width: 1.0),
+                                color: Theme.of(context).primaryColor,
+                                width: 1.0),
                             borderRadius: BorderRadius.circular((20.0)), // 圆角度
                           ),
                           child: Text(articleDatas[position].superChapterName,
-                              style: TextStyle(color: Theme.of(context).primaryColor)),
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor)),
                         ),
                         Container(
                           margin: EdgeInsets.only(left: 15),

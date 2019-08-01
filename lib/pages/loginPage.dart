@@ -1,14 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:provide/provide.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/user_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/main.dart';
-import 'package:wanandroid_flutter/res/colors.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
-import 'package:wanandroid_flutter/util/themeProvide.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -69,7 +66,6 @@ class _LoginPagePageState extends State<LoginPage>
         accentColor: Theme.of(context).accentColor,
         primaryColorDark: Theme.of(context).primaryColorDark,
       ),
-
       home: DefaultTabController(
         length: tabs.length,
         child: Container(

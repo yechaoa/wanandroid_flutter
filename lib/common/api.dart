@@ -38,4 +38,16 @@ class Api {
   //搜索
   static const String QUERY = "article/query/0/json";
 
+  //收藏文章列表
+  static const String COLLECT_LIST = "lg/collect/list/0/json";
+
+  //收藏站内文章
+  static const String COLLECT = "lg/collect/";
+
+  //取消收藏-文章列表
+  static const String UN_COLLECT_ORIGIN_ID = "lg/uncollect_originId/";
+
+  //取消收藏-收藏页面
+  static const String UN_COLLECT = "lg/uncollect/";
+
 }

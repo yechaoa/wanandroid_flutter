@@ -230,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text("收藏"),
             trailing: new Icon(Icons.chevron_right),
             onTap: () {
-              YToast.show(context: context, msg: "收藏");
+              Navigator.of(context).pop();
               Navigator.push(
                 context,
                 new MaterialPageRoute(builder: (context) => new CollectPage()),
@@ -327,7 +327,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void showThemeDialog() {
     showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('切换主题'),

@@ -1,6 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:wanandroid_flutter/res/colors.dart';
+import 'package:wanandroid_flutter/common/api.dart';
+import 'package:wanandroid_flutter/entity/article_entity.dart';
+import 'package:wanandroid_flutter/entity/common_entity.dart';
+import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
+
+import 'articleDetail.dart';
+import 'loginPage.dart';
 
 class CollectPage extends StatefulWidget {
   @override
@@ -10,121 +18,141 @@ class CollectPage extends StatefulWidget {
 }
 
 class _CollectPagePageState extends State<CollectPage> {
-  FocusNode userFocusNode = FocusNode();
-
-  var controller;
+  List<ArticleDataData> articleDatas = List();
 
   @override
   void initState() {
     super.initState();
-    controller = TextEditingController();
-    controller.addListener(() {});
+    getHttp();
+  }
+
+  void getHttp() async {
+    try {
+      var response = await HttpUtil().get(Api.COLLECT_LIST);
+      Map map = json.decode(response.toString());
+      var articleEntity = ArticleEntity.fromJson(map);
+
+      print(response);
+
+      if (articleEntity.errorCode == -1001) {
+        YToast.show(context: context, msg: articleEntity.errorMsg);
+        Navigator.push(
+          context,
+          new MaterialPageRoute(builder: (context) => new LoginPage()),
+        );
+      } else {
+        setState(() {
+          articleDatas = articleEntity.data.datas;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                autofocus: true,
-                obscureText: false,
-                enabled: true,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.done,
-                textCapitalization: TextCapitalization.words,
-                cursorColor: Colors.orange,
-                cursorWidth: 5,
-                maxLines: 1,
-                maxLength: 8,
-                style: TextStyle(fontSize: 20),
-                focusNode: userFocusNode,
-                controller: controller,
-                onChanged: (text) {
-                  print("输入改变时" + text);
-                },
-                onEditingComplete: () {
-                  print("输入完成");
-                },
-                onSubmitted: (text) {
-                  print("提交时" + text);
-                },
-                onTap: () {
-                  print("点击了");
-                },
-                decoration: InputDecoration(
-                  icon: Icon(Icons.person),
-                  prefixIcon: Icon(Icons.phone_android),
-                  suffixIcon: IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () {
-                        //controller.text = "";
-                        controller.clear();
-                      }),
-                  hintText: '请输入账号aaa',
-                  labelText: '请输入账号',
-                  helperText: "请输入账号",
-                  helperStyle: TextStyle(color: Colors.blue),
-                ),
-              ),
-              SizedBox(height: 20),
-              RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
-                ),
-                onPressed: () {
-                  userFocusNode.unfocus(); //清除焦点，即隐藏键盘
+      appBar: AppBar(
+        title: Text("我的收藏"),
+      ),
+      body: ListView.builder(
+        shrinkWrap: true,
+        itemCount: articleDatas.length,
+        itemBuilder: (BuildContext context, int position) {
+          if (position.isOdd) Divider();
+          final item = articleDatas[position];
+          return Dismissible(
+            // Show a red background as the item is swiped away
+            background: new Container(color: Theme.of(context).primaryColor),
+            // Each Dismissible must contain a Key. Keys allow Flutter to
+            // uniquely identify Widgets.
+            key: new Key(item.title),
+            // We also need to provide a function that will tell our app
+            // what to do after an item has been swiped away.
+            onDismissed: (direction) {
+              // Remove the item from our data source
+              articleDatas.removeAt(position);
 
-                  //简单模拟校验
-                  validateName(controller.text);
+              cancelCollect(
+                  item.id, item.originId == null ? -1 : item.originId);
 
-                  //controller.text 也可以获取输入内容
-                  YToast.show(context: context, msg: "登录" + controller.text);
-                },
-                elevation: 5,
-                highlightElevation: 10,
-                textColor: Colors.white,
-                padding: EdgeInsets.all(0.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    gradient: LinearGradient(
-                      colors: <Color>[
-                        YColors.colorAccent,
-                        YColors.colorPrimaryDark,
-                      ],
+              // Show a snackbar! This snackbar could also contain "Undo" actions.
+              Scaffold.of(context).showSnackBar(SnackBar(content: Text("已移除")));
+            },
+            child: getRow(position),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget getRow(int i) {
+    return GestureDetector(
+      child: Container(
+          padding: EdgeInsets.all(10.0),
+          child: ListTile(
+            title: Text(
+              articleDatas[i].title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Padding(
+              padding: EdgeInsets.only(top: 10.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 6),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).primaryColor,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular((20.0)), // 圆角度
+                    ),
+                    child: Text(
+                      articleDatas[i].chapterName,
+                      style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                   ),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    "登录",
-                    style: TextStyle(fontSize: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 15),
+                    child: Text(articleDatas[i].author),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
+            trailing: Icon(Icons.chevron_right),
+          )),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ArticleDetail(
+                  title: articleDatas[i].title,
+                  url: articleDatas[i].link,
+                ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
   }
 
-  String validateName(String value) {
-    if (value.isEmpty) {
-      return "请输入账号哦";
+  Future cancelCollect(int id, int originId) async {
+    var data = {'originId': originId};
+    var collectResponse =
+        await HttpUtil().post(Api.UN_COLLECT + '$id/json', data: data);
+    Map map = json.decode(collectResponse.toString());
+    var entity = CommonEntity.fromJson(map);
+    if (entity.errorCode == -1001) {
+      YToast.show(context: context, msg: entity.errorMsg);
+    } else {
+      //getHttp();
     }
-    return null;
   }
 }

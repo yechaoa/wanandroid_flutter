@@ -94,7 +94,7 @@ class HttpUtil {
       print('post error---------$e');
       formatError(e);
     }
-    return response.data;
+    return response;
   }
 
   /*

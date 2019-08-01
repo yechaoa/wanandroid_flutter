@@ -2,14 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:provide/provide.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/article_entity.dart';
 import 'package:wanandroid_flutter/entity/banner_entity.dart';
+import 'package:wanandroid_flutter/entity/common_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/pages/articleDetail.dart';
-import 'package:wanandroid_flutter/res/colors.dart';
-import 'package:wanandroid_flutter/util/favoriteProvide.dart';
+import 'package:wanandroid_flutter/util/ToastUtil.dart';
+
+import 'loginPage.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -121,18 +122,20 @@ class _HomePageState extends State<HomePage> {
       child: Container(
           padding: EdgeInsets.all(10.0),
           child: ListTile(
-            leading: Provide<FavoriteProvide>(
-              builder: (context, child, favorite) {
-                return IconButton(
-                  icon: Provide.value<FavoriteProvide>(context).value
-                      ? Icon(Icons.favorite)
-                      : Icon(Icons.favorite_border),
-                  tooltip: '收藏',
-                  onPressed: () {
-                    Provide.value<FavoriteProvide>(context).changeFavorite(
-                        !Provide.value<FavoriteProvide>(context).value);
-                  },
-                );
+            leading: IconButton(
+              icon: articleDatas[i].collect
+                  ? Icon(
+                      Icons.favorite,
+                      color: Theme.of(context).primaryColor,
+                    )
+                  : Icon(Icons.favorite_border),
+              tooltip: '收藏',
+              onPressed: () {
+                if (articleDatas[i].collect) {
+                  cancelCollect(articleDatas[i].id);
+                } else {
+                  addCollect(articleDatas[i].id);
+                }
               },
             ),
             title: Text(
@@ -147,12 +150,16 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 6),
                     decoration: BoxDecoration(
-                      border:
-                          Border.all(color: Theme.of(context).primaryColor, width: 1.0),
+                      border: Border.all(
+                        color: Theme.of(context).primaryColor,
+                        width: 1.0,
+                      ),
                       borderRadius: BorderRadius.circular((20.0)), // 圆角度
                     ),
-                    child: Text(articleDatas[i].superChapterName,
-                        style: TextStyle(color: Theme.of(context).primaryColor)),
+                    child: Text(
+                      articleDatas[i].superChapterName,
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(left: 15),
@@ -180,5 +187,38 @@ class _HomePageState extends State<HomePage> {
     _swiperController.stopAutoplay();
     _swiperController.dispose();
     super.dispose();
+  }
+
+  Future addCollect(int id) async {
+    var collectResponse = await HttpUtil().post(Api.COLLECT + '$id/json');
+    Map map = json.decode(collectResponse.toString());
+    var entity = CommonEntity.fromJson(map);
+    if (entity.errorCode == -1001) {
+      YToast.show(context: context, msg: entity.errorMsg);
+      Navigator.push(
+        context,
+        new MaterialPageRoute(builder: (context) => new LoginPage()),
+      );
+    } else {
+      YToast.show(context: context, msg: "收藏成功");
+      getHttp();
+    }
+  }
+
+  Future cancelCollect(int id) async {
+    var collectResponse =
+        await HttpUtil().post(Api.UN_COLLECT_ORIGIN_ID + '$id/json');
+    Map map = json.decode(collectResponse.toString());
+    var entity = CommonEntity.fromJson(map);
+    if (entity.errorCode == -1001) {
+      YToast.show(context: context, msg: entity.errorMsg);
+      Navigator.push(
+        context,
+        new MaterialPageRoute(builder: (context) => new LoginPage()),
+      );
+    } else {
+      YToast.show(context: context, msg: "取消成功");
+      getHttp();
+    }
   }
 }
