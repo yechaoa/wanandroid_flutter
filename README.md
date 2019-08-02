@@ -10,7 +10,7 @@
 
 <br>
 
-先截几个图稍微看下效果：
+# 截图
 
 | <img src="/screenshot/1.png" width="285"/> | <img src="/screenshot/2.png" width="285"/> | <img src="/screenshot/3.png" width="285"/> |
 | :--: | :--: | :--: |
@@ -31,6 +31,7 @@
 <br>
 
 # 你能学到
+
 * [BottomNavigationBar 底部菜单](https://blog.csdn.net/yechaoa/article/details/89880284)
 * [FlutterJsonBeanFactory Json解析](https://blog.csdn.net/yechaoa/article/details/90035254)
 * [WebView 加载网页](https://blog.csdn.net/yechaoa/article/details/90175271)
@@ -68,6 +69,7 @@
 
 
 # 感谢
+
 * [fluttertoast](https://github.com/PonnamKarthik/FlutterToast)
 * [dio](https://github.com/flutterchina/dio)
 * [cookie_jar](https://github.com/flutterchina/cookie_jar)
@@ -78,6 +80,7 @@
 * [shared_preferences](https://github.com/flutter/plugins/tree/master/packages/shared_preferences)
 
 # 环境配置
+
 * [Flutter macOS 环境配置](https://blog.csdn.net/yechaoa/article/details/95389931)
 * [Flutter Windows 环境配置](https://blog.csdn.net/yechaoa/article/details/89150852)
 
