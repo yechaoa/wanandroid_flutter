@@ -80,6 +80,7 @@ class _HomePageState extends State<HomePage> {
       width: MediaQuery.of(context).size.width,
       //1.8是banner宽高比，0.8是viewportFraction的值
       height: MediaQuery.of(context).size.width / 1.8 * 0.8,
+      padding: EdgeInsets.only(top: 10),
       child: Swiper(
         itemCount: bannerDatas.length,
         itemBuilder: (BuildContext context, int index) {
