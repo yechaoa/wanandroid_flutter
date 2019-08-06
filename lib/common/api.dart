@@ -21,7 +21,7 @@ class Api {
   static const String PROJECT = "project/tree/json";
 
   //项目列表数据
-  static const String PROJECT_LIST = "project/list/1/json";
+  static const String PROJECT_LIST = "project/list/";
 
   //登录
   static const String LOGIN = "user/login";

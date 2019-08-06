@@ -7,6 +7,9 @@ import 'package:wanandroid_flutter/entity/project_list_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/pages/articleDetail.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:wanandroid_flutter/widget/my_taurus_footer.dart';
+import 'package:wanandroid_flutter/widget/my_taurus_header.dart';
 
 class ProjectPage extends StatefulWidget {
   @override
@@ -22,6 +25,8 @@ class _ProjectPageState extends State<ProjectPage>
 
   List<ProjectData> _datas = new List(); //tab集合
   List<ProjectListDataData> _listDatas = new List(); //内容集合
+
+  int _page = 1;
 
   @override
   void initState() {
@@ -70,7 +75,7 @@ class _ProjectPageState extends State<ProjectPage>
   void getDetail() async {
     try {
       var data = {"cid": _datas[_currentIndex].id};
-      var response = await HttpUtil().get(Api.PROJECT_LIST, data: data);
+      var response = await HttpUtil().get(Api.PROJECT_LIST+ "$_page/json", data: data);
       Map userMap = json.decode(response.toString());
       var projectListEntity = new ProjectListEntity.fromJson(userMap);
 
@@ -88,20 +93,20 @@ class _ProjectPageState extends State<ProjectPage>
       length: _datas.length,
       child: Scaffold(
         appBar: TabBar(
-          controller: _controller,
           //控制器
-          labelColor: Theme.of(context).primaryColor,
+          controller: _controller,
           //选中的颜色
-          labelStyle: TextStyle(fontSize: 16),
+          labelColor: Theme.of(context).primaryColor,
           //选中的样式
-          unselectedLabelColor: YColors.color_666,
+          labelStyle: TextStyle(fontSize: 16),
           //未选中的颜色
-          unselectedLabelStyle: TextStyle(fontSize: 14),
+          unselectedLabelColor: YColors.color_666,
           //未选中的样式
-          indicatorColor: Theme.of(context).primaryColor,
+          unselectedLabelStyle: TextStyle(fontSize: 14),
           //下划线颜色
-          isScrollable: true,
+          indicatorColor: Theme.of(context).primaryColor,
           //是否可滑动
+          isScrollable: true,
           //tab标签
           tabs: _datas.map((ProjectData choice) {
             return Tab(
@@ -116,11 +121,44 @@ class _ProjectPageState extends State<ProjectPage>
         body: TabBarView(
           controller: _controller,
           children: _datas.map((ProjectData choice) {
-            return ListView.builder(
-                itemCount: _listDatas.length,
-                itemBuilder: (BuildContext context, int position) {
-                  return getRow(position);
-                });
+            return EasyRefresh.custom(
+                header: TaurusHeader(),
+                footer: TaurusFooter(),
+                onRefresh: () async {
+                  await Future.delayed(Duration(seconds: 1), () {
+                    setState(() {
+                      _page = 1;
+                    });
+                    getHttp();
+                  });
+                },
+                onLoad: () async {
+                  await Future.delayed(Duration(seconds: 1), () async {
+                    setState(() {
+                      _page++;
+                    });
+                    getMoreData();
+                  });
+                },
+                slivers: <Widget>[
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                          return getRow(index);
+                      },
+                      childCount: _listDatas.length,
+                    ),
+                  ),
+                ],
+              );
+
+//              ListView.builder(
+//                itemCount: _listDatas.length,
+//                itemBuilder: (BuildContext context, int position) {
+//                  return getRow(position);
+//                }
+//                );
+
           }).toList(),
         ),
       ),
@@ -208,11 +246,22 @@ class _ProjectPageState extends State<ProjectPage>
         Navigator.push(
           context,
           new MaterialPageRoute(
-              builder: (context) => new ArticleDetail(
-                  title: _listDatas[i].title, url: _listDatas[i].link)),
+            builder: (context) => new ArticleDetail(
+                title: _listDatas[i].title, url: _listDatas[i].link),
+          ),
         );
       },
     );
+  }
+
+  Future getMoreData() async {
+    var data = {"cid": _datas[_currentIndex].id};
+    var response = await HttpUtil().get(Api.PROJECT_LIST+ "$_page/json", data: data);
+    Map userMap = json.decode(response.toString());
+    var projectListEntity = new ProjectListEntity.fromJson(userMap);
+    setState(() {
+      _listDatas.addAll( projectListEntity.data.datas);
+    });
   }
 
   @override
@@ -220,4 +269,6 @@ class _ProjectPageState extends State<ProjectPage>
     _controller.dispose();
     super.dispose();
   }
+
+
 }

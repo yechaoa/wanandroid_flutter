@@ -7,8 +7,8 @@ import 'package:wanandroid_flutter/entity/article_entity.dart';
 import 'package:wanandroid_flutter/entity/common_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
-import 'package:wanandroid_flutter/widget/my_pgoenix_footer.dart';
-import 'package:wanandroid_flutter/widget/my_pgoenix_header.dart';
+import 'package:wanandroid_flutter/widget/my_phoenix_footer.dart';
+import 'package:wanandroid_flutter/widget/my_phoenix_header.dart';
 
 import 'articleDetail.dart';
 import 'loginPage.dart';

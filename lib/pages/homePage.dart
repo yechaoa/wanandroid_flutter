@@ -10,8 +10,8 @@ import 'package:wanandroid_flutter/entity/common_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/pages/articleDetail.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
-import 'package:wanandroid_flutter/widget/my_pgoenix_footer.dart';
-import 'package:wanandroid_flutter/widget/my_pgoenix_header.dart';
+import 'package:wanandroid_flutter/widget/my_phoenix_footer.dart';
+import 'package:wanandroid_flutter/widget/my_phoenix_header.dart';
 
 import 'loginPage.dart';
 
@@ -68,39 +68,40 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: EasyRefresh.custom(
-      header: PhoenixHeader(),
-      footer: PhoenixFooter(),
-      onRefresh: () async {
-        await Future.delayed(Duration(seconds: 1), () {
-          setState(() {
-            _page = 0;
+      body: EasyRefresh.custom(
+        header: PhoenixHeader(),
+        footer: PhoenixFooter(),
+        onRefresh: () async {
+          await Future.delayed(Duration(seconds: 1), () {
+            setState(() {
+              _page = 0;
+            });
+            getHttp();
           });
-          getHttp();
-        });
-      },
-      onLoad: () async {
-        await Future.delayed(Duration(seconds: 1), () async {
-          setState(() {
-            _page++;
+        },
+        onLoad: () async {
+          await Future.delayed(Duration(seconds: 1), () async {
+            setState(() {
+              _page++;
+            });
+            getMoreData();
           });
-          getMoreData();
-        });
-      },
-      slivers: <Widget>[
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              if (index == 0) return getBanner();
-              if (index < articleDatas.length - 1) //减去banner位置
-                return getRow(index);
-              return null;
-            },
-            childCount: articleDatas.length + 1, //+1 添加banner显示
+        },
+        slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == 0) return getBanner();
+                if (index < articleDatas.length - 1) //减去banner位置
+                  return getRow(index);
+                return null;
+              },
+              childCount: articleDatas.length + 1, //+1 添加banner显示
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
   }
 
   Widget getBanner() {
