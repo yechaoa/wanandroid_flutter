@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/article_entity.dart';
@@ -9,6 +10,8 @@ import 'package:wanandroid_flutter/entity/common_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/pages/articleDetail.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
+import 'package:wanandroid_flutter/widget/my_pgoenix_footer.dart';
+import 'package:wanandroid_flutter/widget/my_pgoenix_header.dart';
 
 import 'loginPage.dart';
 
@@ -25,6 +28,8 @@ class _HomePageState extends State<HomePage> {
 
   ScrollController _scrollController;
   SwiperController _swiperController;
+
+  int _page = 0;
 
   @override
   void initState() {
@@ -44,7 +49,8 @@ class _HomePageState extends State<HomePage> {
       var bannerEntity = BannerEntity.fromJson(bannerMap);
 
       //article
-      var articleResponse = await HttpUtil().get(Api.ARTICLE_LIST);
+      var articleResponse =
+          await HttpUtil().get(Api.ARTICLE_LIST + "$_page/json");
       Map articleMap = json.decode(articleResponse.toString());
       var articleEntity = ArticleEntity.fromJson(articleMap);
 
@@ -62,17 +68,39 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-          controller: _scrollController,
-          shrinkWrap: true,
-          itemCount: articleDatas.length + 1, //+1 添加banner显示
-          itemBuilder: (BuildContext context, int position) {
-            if (position == 0) return getBanner();
-            if (position < articleDatas.length - 1) //减去banner位置
-              return getRow(position);
-            return null;
-          }),
-    );
+        body: EasyRefresh.custom(
+      header: PhoenixHeader(),
+      footer: PhoenixFooter(),
+      onRefresh: () async {
+        await Future.delayed(Duration(seconds: 1), () {
+          setState(() {
+            _page = 0;
+          });
+          getHttp();
+        });
+      },
+      onLoad: () async {
+        await Future.delayed(Duration(seconds: 1), () async {
+          setState(() {
+            _page++;
+          });
+          getMoreData();
+        });
+      },
+      slivers: <Widget>[
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              if (index == 0) return getBanner();
+              if (index < articleDatas.length - 1) //减去banner位置
+                return getRow(index);
+              return null;
+            },
+            childCount: articleDatas.length + 1, //+1 添加banner显示
+          ),
+        ),
+      ],
+    ));
   }
 
   Widget getBanner() {
@@ -86,15 +114,12 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (BuildContext context, int index) {
           return Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular((10.0)), // 圆角度
-                image: DecorationImage(
-                  image: NetworkImage(bannerDatas[index].imagePath),
-                  fit: BoxFit.fill,
-                )),
-//            child: Image.network(
-//              bannerDatas[index].imagePath,
-//              fit: BoxFit.fill,
-//            ),
+              borderRadius: BorderRadius.circular((10.0)), // 圆角度
+              image: DecorationImage(
+                image: NetworkImage(bannerDatas[index].imagePath),
+                fit: BoxFit.fill,
+              ),
+            ),
           );
         },
         loop: false,
@@ -183,19 +208,12 @@ class _HomePageState extends State<HomePage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ArticleDetail(
-                  title: articleDatas[i].title, url: articleDatas[i].link)),
+            builder: (context) => ArticleDetail(
+                title: articleDatas[i].title, url: articleDatas[i].link),
+          ),
         );
       },
     );
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    _swiperController.stopAutoplay();
-    _swiperController.dispose();
-    super.dispose();
   }
 
   Future addCollect(int id) async {
@@ -229,5 +247,22 @@ class _HomePageState extends State<HomePage> {
       YToast.show(context: context, msg: "取消成功");
       getHttp();
     }
+  }
+
+  Future getMoreData() async {
+    var response = await HttpUtil().get(Api.ARTICLE_LIST + "$_page/json");
+    Map map = json.decode(response.toString());
+    var articleEntity = ArticleEntity.fromJson(map);
+    setState(() {
+      articleDatas.addAll(articleEntity.data.datas);
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _swiperController.stopAutoplay();
+    _swiperController.dispose();
+    super.dispose();
   }
 }

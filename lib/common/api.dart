@@ -9,7 +9,7 @@ class Api {
   static const String BANNER = "banner/json";
 
   //首页文章列表
-  static const String ARTICLE_LIST = "article/list/1/json";
+  static const String ARTICLE_LIST = "article/list/";
 
   //体系数据
   static const String TREE = "tree/json";
