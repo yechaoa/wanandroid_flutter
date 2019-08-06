@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/article_entity.dart';
 import 'package:wanandroid_flutter/entity/common_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
+import 'package:wanandroid_flutter/widget/my_pgoenix_footer.dart';
+import 'package:wanandroid_flutter/widget/my_pgoenix_header.dart';
 
 import 'articleDetail.dart';
 import 'loginPage.dart';
@@ -19,6 +22,7 @@ class CollectPage extends StatefulWidget {
 
 class _CollectPagePageState extends State<CollectPage> {
   List<ArticleDataData> articleDatas = List();
+  int _page = 0;
 
   @override
   void initState() {
@@ -28,11 +32,9 @@ class _CollectPagePageState extends State<CollectPage> {
 
   void getHttp() async {
     try {
-      var response = await HttpUtil().get(Api.COLLECT_LIST);
+      var response = await HttpUtil().get(Api.COLLECT_LIST + "$_page/json");
       Map map = json.decode(response.toString());
       var articleEntity = ArticleEntity.fromJson(map);
-
-      print(response);
 
       if (articleEntity.errorCode == -1001) {
         YToast.show(context: context, msg: articleEntity.errorMsg);
@@ -56,34 +58,59 @@ class _CollectPagePageState extends State<CollectPage> {
       appBar: AppBar(
         title: Text("我的收藏"),
       ),
-      body: ListView.builder(
-        shrinkWrap: true,
-        itemCount: articleDatas.length,
-        itemBuilder: (BuildContext context, int position) {
-          if (position.isOdd) Divider();
-          final item = articleDatas[position];
-          return Dismissible(
-            // Show a red background as the item is swiped away
-            background: new Container(color: Theme.of(context).primaryColor),
-            // Each Dismissible must contain a Key. Keys allow Flutter to
-            // uniquely identify Widgets.
-            key: new Key(item.title),
-            // We also need to provide a function that will tell our app
-            // what to do after an item has been swiped away.
-            onDismissed: (direction) {
-              // Remove the item from our data source
-              articleDatas.removeAt(position);
-
-              cancelCollect(
-                  item.id, item.originId == null ? -1 : item.originId);
-
-              // Show a snackbar! This snackbar could also contain "Undo" actions.
-              Scaffold.of(context).showSnackBar(SnackBar(content: Text("已移除")));
-            },
-            child: getRow(position),
-          );
+      body: EasyRefresh.custom(
+        header: PhoenixHeader(),
+        footer: PhoenixFooter(),
+        onRefresh: () async {
+          await Future.delayed(Duration(seconds: 1), () {
+            setState(() {
+              _page = 0;
+            });
+            getHttp();
+          });
         },
+        onLoad: () async {
+          await Future.delayed(Duration(seconds: 1), () async {
+            setState(() {
+              _page++;
+            });
+            getMoreData();
+          });
+        },
+        slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return getItem(index);
+              },
+              childCount: articleDatas.length,
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget getItem(int index) {
+    final item = articleDatas[index];
+    return Dismissible(
+      // Show a red background as the item is swiped away
+      background: new Container(color: Theme.of(context).primaryColor),
+      // Each Dismissible must contain a Key. Keys allow Flutter to
+      // uniquely identify Widgets.
+      key: new Key(item.title),
+      // We also need to provide a function that will tell our app
+      // what to do after an item has been swiped away.
+      onDismissed: (direction) {
+        // Remove the item from our data source
+        articleDatas.removeAt(index);
+
+        cancelCollect(item.id, item.originId == null ? -1 : item.originId);
+
+        // Show a snackbar! This snackbar could also contain "Undo" actions.
+        Scaffold.of(context).showSnackBar(SnackBar(content: Text("已移除")));
+      },
+      child: getRow(index),
     );
   }
 
@@ -154,5 +181,14 @@ class _CollectPagePageState extends State<CollectPage> {
     } else {
       //getHttp();
     }
+  }
+
+  Future getMoreData() async {
+    var response = await HttpUtil().get(Api.COLLECT_LIST + "$_page/json");
+    Map map = json.decode(response.toString());
+    var articleEntity = ArticleEntity.fromJson(map);
+    setState(() {
+      articleDatas.addAll(articleEntity.data.datas);
+    });
   }
 }

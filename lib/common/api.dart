@@ -39,7 +39,7 @@ class Api {
   static const String QUERY = "article/query/0/json";
 
   //收藏文章列表
-  static const String COLLECT_LIST = "lg/collect/list/0/json";
+  static const String COLLECT_LIST = "lg/collect/list/";
 
   //收藏站内文章
   static const String COLLECT = "lg/collect/";

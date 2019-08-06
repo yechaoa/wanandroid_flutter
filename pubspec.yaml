@@ -40,6 +40,8 @@ dependencies:
   provide: ^1.0.2
   # https://github.com/flutter/plugins/tree/master/packages/shared_preferences
   shared_preferences: ^0.5.3+4
+  # https://github.com/xuelongqy/flutter_easyrefresh
+  flutter_easyrefresh: ^2.0.0
 
 dev_dependencies:
   flutter_test:
