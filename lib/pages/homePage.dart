@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
   Widget getRow(int i) {
     return GestureDetector(
       child: Container(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: ListTile(
             leading: IconButton(
               icon: articleDatas[i].collect
@@ -191,15 +191,12 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular((20.0)), // 圆角度
                     ),
                     child: Text(
-                      articleDatas[i].superChapterName.length > 6
-                          ? articleDatas[i].superChapterName.substring(0, 7) +
-                              "..."
-                          : articleDatas[i].superChapterName,
+                      articleDatas[i].superChapterName,
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 15),
+                    margin: EdgeInsets.only(left: 10),
                     child: Text(articleDatas[i].author),
                   ),
                 ],
