@@ -61,12 +61,12 @@ flutter:
 
 
   assets:
-    - images/a.jpg
+    - lib/res/images/a.jpg
 
   fonts:
     - family: mononoki
       fonts:
-        - asset: fonts/mononoki-Regular.ttf
+        - asset: lib/res/fonts/mononoki-Regular.ttf
           weight: 500
 
   # To add assets to your application, add an assets section, like this:
