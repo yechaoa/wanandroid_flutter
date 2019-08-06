@@ -12,19 +12,19 @@
 
 # :fire:截图
 
-| <img src="/screenshot/1.png" width="285"/> | <img src="/screenshot/2.png" width="285"/> | <img src="/screenshot/3.png" width="285"/> |
+| <img src="/screenshot/android/1.png" width="285"/> | <img src="/screenshot/android/2.png" width="285"/> | <img src="/screenshot/android/3.png" width="285"/> |
 | :--: | :--: | :--: |
 | 侧滑菜单 | 首页 | 合并列表 |
 
-| <img src="/screenshot/4.png" width="285"/> | <img src="/screenshot/5.png" width="285"/> | <img src="/screenshot/6.png" width="285"/> |
+| <img src="/screenshot/android/4.png" width="285"/> | <img src="/screenshot/android/5.png" width="285"/> | <img src="/screenshot/android/6.png" width="285"/> |
 | :--: | :--: | :--: |
 | 左右菜单 | 左右滑动列表 | 登录注册 |
 
-| <img src="/screenshot/7.png" width="285"/> | <img src="/screenshot/8.png" width="285"/> | <img src="/screenshot/9.png" width="285"/> |
+| <img src="/screenshot/android/7.png" width="285"/> | <img src="/screenshot/android/8.png" width="285"/> | <img src="/screenshot/android/9.png" width="285"/> |
 | :--: | :--: | :--: |
 | 搜索 | 分享 | 切换主题 |
 
-| <img src="/screenshot/10.png" width="285"/> |
+| <img src="/screenshot/android/10.png" width="285"/> |
 | :--: | 
 | 收藏 | 
 
@@ -64,7 +64,7 @@
 - ~~搜索~~
 - ~~切换主题~~
 - ~~添加字体~~
-- 分页
+- ~~分页~~
 - 体系列表点击
 - 界面美化
 
@@ -79,6 +79,7 @@
 * [share](https://github.com/flutter/plugins/tree/master/packages/share)
 * [provide](https://github.com/google/flutter-provide)
 * [shared_preferences](https://github.com/flutter/plugins/tree/master/packages/shared_preferences)
+* [flutter_easyrefresh](https://github.com/xuelongqy/flutter_easyrefresh)
 
 # :package:环境配置
 
