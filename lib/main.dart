@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                new MaterialPageRoute(builder: (context) => new SearchPage()),
+                MaterialPageRoute(builder: (context) => SearchPage()),
               );
             },
           ),
@@ -202,13 +202,14 @@ class _MyHomePageState extends State<MyHomePage> {
             currentAccountPicture: GestureDetector(
               //圆形头像
               child: ClipOval(
-                  child: Image.network(
-                      "https://avatars3.githubusercontent.com/u/19725223?s=400&u=f399a2d73fd0445be63ee6bc1ea4a408a62454f5&v=4")),
+                child: Image.network(
+                    "https://avatars3.githubusercontent.com/u/19725223?s=400&u=f399a2d73fd0445be63ee6bc1ea4a408a62454f5&v=4"),
+              ),
               onTap: () {
                 Navigator.of(context).pop();
                 Navigator.push(
                   context,
-                  new MaterialPageRoute(builder: (context) => new AboutPage()),
+                  MaterialPageRoute(builder: (context) => AboutPage()),
                 );
               },
             ),
@@ -220,10 +221,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.white,
                   ),
                   onPressed: () {
+                    Navigator.of(context).pop();
                     Navigator.push(
                       context,
-                      new MaterialPageRoute(
-                        builder: (context) => new ArticleDetail(
+                      MaterialPageRoute(
+                        builder: (context) => ArticleDetail(
                             title: "点个star",
                             url:
                                 "https://github.com/yechaoa/wanandroid_flutter"),
@@ -240,30 +242,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
           ///功能列表
           ListTile(
-            leading: new Icon(Icons.favorite_border),
+            leading: Icon(Icons.favorite_border),
             title: Text("我的收藏"),
-            trailing: new Icon(Icons.chevron_right),
+            trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.push(
                 context,
-                new MaterialPageRoute(builder: (context) => new CollectPage()),
+                MaterialPageRoute(builder: (context) => CollectPage()),
               );
             },
           ),
           ListTile(
-            leading: new Icon(Icons.color_lens),
+            leading: Icon(Icons.color_lens),
             title: Text("切换主题"),
-            trailing: new Icon(Icons.chevron_right),
+            trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).pop();
               showThemeDialog();
             },
           ),
           ListTile(
-            leading: new Icon(Icons.share),
+            leading: Icon(Icons.share),
             title: Text("我要分享"),
-            trailing: new Icon(Icons.chevron_right),
+            trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).pop();
               Share.share(
@@ -271,15 +273,15 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
           ListTile(
-            leading: new Icon(Icons.info_outline),
-            title: Text("关于我们"),
-            trailing: new Icon(Icons.chevron_right),
+            leading: Icon(Icons.info_outline),
+            title: Text("关于项目"),
+            trailing: Icon(Icons.chevron_right),
             onTap: () {
               //先关闭再跳转
               Navigator.of(context).pop();
               Navigator.push(
                 context,
-                new MaterialPageRoute(builder: (context) => new AboutPage()),
+                MaterialPageRoute(builder: (context) => AboutPage()),
               );
             },
           ),
@@ -287,9 +289,9 @@ class _MyHomePageState extends State<MyHomePage> {
           Divider(),
 
           ListTile(
-            leading: new Icon(Icons.block),
+            leading: Icon(Icons.block),
             title: Text("退出"),
-            trailing: new Icon(Icons.chevron_right),
+            trailing: Icon(Icons.chevron_right),
             onTap: () {
               //关闭drawer
               Navigator.of(context).pop();

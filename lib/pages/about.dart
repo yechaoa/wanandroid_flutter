@@ -14,12 +14,15 @@ class AboutPage extends StatelessWidget {
       "flutter_webview_plugin",
       "flutter_swiper",
       "share",
+      "provide",
+      "shared_preferences",
+      "flutter_easyrefresh",
     ];
     return Scaffold(
-      body: new CustomScrollView(
+      body: CustomScrollView(
         slivers: <Widget>[
-          new SliverAppBar(
-            title: Text("关于"),
+          SliverAppBar(
+            title: Text("关于项目"),
             expandedHeight: 230.0,
             floating: false,
             pinned: true,
@@ -64,16 +67,16 @@ class AboutPage extends StatelessWidget {
                 },
               ),
             ],
-            flexibleSpace: new FlexibleSpaceBar(
+            flexibleSpace: FlexibleSpaceBar(
               //background: Image.asset("images/a.jpg", fit: BoxFit.fill),
               background: Image.network(
                   "https://avatars3.githubusercontent.com/u/19725223?s=400&u=f399a2d73fd0445be63ee6bc1ea4a408a62454f5&v=4",
                   fit: BoxFit.cover),
             ),
           ),
-          new SliverFixedExtentList(
+          SliverFixedExtentList(
             itemExtent: 800.0,
-            delegate: new SliverChildBuilderDelegate(
+            delegate: SliverChildBuilderDelegate(
               (context, index) => Padding(
                     padding: EdgeInsets.all(20),
                     child: Column(
@@ -109,8 +112,8 @@ class AboutPage extends StatelessWidget {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    new MaterialPageRoute(
-                                      builder: (context) => new ArticleDetail(
+                                    MaterialPageRoute(
+                                      builder: (context) => ArticleDetail(
                                           title: "wanandroid_flutter",
                                           url:
                                               "https://github.com/yechaoa/wanandroid_flutter"),
@@ -145,8 +148,8 @@ class AboutPage extends StatelessWidget {
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      new MaterialPageRoute(
-                                        builder: (context) => new ArticleDetail(
+                                      MaterialPageRoute(
+                                        builder: (context) => ArticleDetail(
                                             title: "CSDN ：yechaoa",
                                             url:
                                                 "https://blog.csdn.net/yechaoa"),
@@ -170,10 +173,15 @@ class AboutPage extends StatelessWidget {
                           itemCount: _list.length,
                           shrinkWrap: true,
                           //禁掉ListView的滑动，跟CustomScrollView滑动冲突
-                          physics: new NeverScrollableScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int position) {
-                            return ListTile(
-                              title: new Text(_list[position].toString()),
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 30),
+                              child: Text(
+                                _list[position].toString(),
+                                style: TextStyle(fontFamily: 'mononoki'),
+                              ),
                             );
                           },
                         ),
