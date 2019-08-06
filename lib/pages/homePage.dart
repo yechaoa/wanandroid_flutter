@@ -191,7 +191,10 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular((20.0)), // 圆角度
                     ),
                     child: Text(
-                      articleDatas[i].superChapterName,
+                      articleDatas[i].superChapterName.length > 6
+                          ? articleDatas[i].superChapterName.substring(0, 7) +
+                              "..."
+                          : articleDatas[i].superChapterName,
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                   ),
