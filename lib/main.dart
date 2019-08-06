@@ -5,6 +5,7 @@ import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wanandroid_flutter/pages/CollectPage.dart';
 import 'package:wanandroid_flutter/pages/about.dart';
+import 'package:wanandroid_flutter/pages/articleDetail.dart';
 import 'package:wanandroid_flutter/pages/homePage.dart';
 import 'package:wanandroid_flutter/pages/naviPage.dart';
 import 'package:wanandroid_flutter/pages/projectPage.dart';
@@ -213,10 +214,22 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             //其他头像
             otherAccountsPictures: <Widget>[
-              Icon(
-                Icons.stars,
-                color: Colors.white,
-              ),
+              IconButton(
+                  icon: Icon(
+                    Icons.stars,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                        builder: (context) => new ArticleDetail(
+                            title: "点个star",
+                            url:
+                                "https://github.com/yechaoa/wanandroid_flutter"),
+                      ),
+                    );
+                  })
             ],
             accountName: Text(
               YStrings.proName,
