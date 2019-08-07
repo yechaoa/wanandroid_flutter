@@ -50,7 +50,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     pageContext = context;
-    return new Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       body: null,
     );
@@ -235,8 +235,12 @@ class MySearchDelegate extends SearchDelegate<String> {
                     showResults(context);
                   },
                   elevation: 3,
-                  backgroundColor: Color.fromARGB(180, Random().nextInt(255),
-                      Random().nextInt(255), Random().nextInt(255)),
+                  backgroundColor: Color.fromARGB(
+                    180,
+                    Random().nextInt(255),
+                    Random().nextInt(255),
+                    Random().nextInt(255),
+                  ),
                 );
               },
             ).toList(),
@@ -253,17 +257,16 @@ class MySearchDelegate extends SearchDelegate<String> {
     final ThemeData theme = Theme.of(context);
     assert(theme != null);
     return Theme.of(context).copyWith(
-      primaryColor: theme.primaryColor,
       //主题色
-      primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.white),
+      primaryColor: theme.primaryColor,
       //图标颜色
-      primaryColorBrightness: Brightness.dark,
+      primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.white),
       //状态栏
-      hintColor: Colors.amber,
-      highlightColor: Colors.amberAccent,
-      cursorColor: Colors.amber,
+      primaryColorBrightness: Brightness.dark,
+      //文字主题
       textTheme: TextTheme(
-          title: TextStyle(color: Colors.white, fontSize: 20.0)), //文字主题
+        title: TextStyle(color: Colors.white, fontSize: 20.0),
+      ),
     );
   }
 }

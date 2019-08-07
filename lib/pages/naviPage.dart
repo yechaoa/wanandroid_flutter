@@ -15,8 +15,8 @@ class NaviPage extends StatefulWidget {
 }
 
 class _NaviPageState extends State<NaviPage> {
-  List<NaviData> _datas = new List(); //一级分类集合
-  List<NaviDataArticle> articles = new List(); //二级分类集合
+  List<NaviData> _datas = List(); //一级分类集合
+  List<NaviDataArticle> articles = List(); //二级分类集合
   int index; //一级分类下标
 
   @override
@@ -29,7 +29,7 @@ class _NaviPageState extends State<NaviPage> {
     try {
       var response = await HttpUtil().get(Api.NAVI);
       Map userMap = json.decode(response.toString());
-      var naviEntity = new NaviEntity.fromJson(userMap);
+      var naviEntity = NaviEntity.fromJson(userMap);
 
       /// 初始化
       setState(() {
@@ -43,20 +43,20 @@ class _NaviPageState extends State<NaviPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        new Expanded(
+        Expanded(
             flex: 2,
             child: Container(
               color: YColors.color_fff,
-              child: new ListView.builder(
+              child: ListView.builder(
                   itemCount: _datas.length,
                   itemBuilder: (BuildContext context, int position) {
                     return getRow(position);
                   }),
             )),
-        new Expanded(
+        Expanded(
             flex: 5,
             child: ListView(
               children: <Widget>[
@@ -75,8 +75,8 @@ class _NaviPageState extends State<NaviPage> {
 
   Widget getRow(int i) {
     Color textColor = Theme.of(context).primaryColor; //字体颜色
-    return new GestureDetector(
-      child: new Container(
+    return GestureDetector(
+      child: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         color: index == i ? YColors.color_F9F9F9 : Colors.white,
@@ -113,8 +113,8 @@ class _NaviPageState extends State<NaviPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                new MaterialPageRoute(
-                    builder: (context) => new ArticleDetail(
+                MaterialPageRoute(
+                    builder: (context) => ArticleDetail(
                         title: articles[index].title,
                         url: articles[index].link)),
               );

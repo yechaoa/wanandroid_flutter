@@ -9,10 +9,10 @@ class HttpUtil {
   Dio dio;
   BaseOptions options;
 
-  CancelToken cancelToken = new CancelToken();
+  CancelToken cancelToken = CancelToken();
 
   static HttpUtil getInstance() {
-    if (null == instance) instance = new HttpUtil();
+    if (null == instance) instance = HttpUtil();
     return instance;
   }
 
@@ -21,7 +21,7 @@ class HttpUtil {
    */
   HttpUtil() {
     //BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
-    options = new BaseOptions(
+    options = BaseOptions(
       //请求基地址,可以包含子路径
       baseUrl: Api.BASE_URL,
       //连接服务器超时时间，单位是毫秒.
@@ -39,13 +39,14 @@ class HttpUtil {
       responseType: ResponseType.plain,
     );
 
-    dio = new Dio(options);
+    dio = Dio(options);
 
     //Cookie管理
     dio.interceptors.add(CookieManager(CookieJar()));
 
     //添加拦截器
-    dio.interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions options) {
+    dio.interceptors
+        .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
       print("请求之前");
       // Do something before request is sent
       return options; //continue
@@ -66,7 +67,8 @@ class HttpUtil {
   get(url, {data, options, cancelToken}) async {
     Response response;
     try {
-      response = await dio.get(url, queryParameters: data, options: options, cancelToken: cancelToken);
+      response = await dio.get(url,
+          queryParameters: data, options: options, cancelToken: cancelToken);
       print('get success---------${response.statusCode}');
       print('get success---------${response.data}');
 
@@ -88,7 +90,8 @@ class HttpUtil {
   post(url, {data, options, cancelToken}) async {
     Response response;
     try {
-      response = await dio.post(url, queryParameters: data, options: options, cancelToken: cancelToken);
+      response = await dio.post(url,
+          queryParameters: data, options: options, cancelToken: cancelToken);
       print('post success---------${response.data}');
     } on DioError catch (e) {
       print('post error---------$e');
@@ -103,7 +106,8 @@ class HttpUtil {
   downloadFile(urlPath, savePath) async {
     Response response;
     try {
-      response = await dio.download(urlPath, savePath,onReceiveProgress: (int count, int total){
+      response = await dio.download(urlPath, savePath,
+          onReceiveProgress: (int count, int total) {
         //进度
         print("$count $total");
       });

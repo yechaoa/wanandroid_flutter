@@ -225,7 +225,7 @@ class _HomePageState extends State<HomePage> {
       YToast.show(context: context, msg: entity.errorMsg);
       Navigator.push(
         context,
-        new MaterialPageRoute(builder: (context) => new LoginPage()),
+        MaterialPageRoute(builder: (context) => LoginPage()),
       );
     } else {
       YToast.show(context: context, msg: "收藏成功");
@@ -242,7 +242,7 @@ class _HomePageState extends State<HomePage> {
       YToast.show(context: context, msg: entity.errorMsg);
       Navigator.push(
         context,
-        new MaterialPageRoute(builder: (context) => new LoginPage()),
+        MaterialPageRoute(builder: (context) => LoginPage()),
       );
     } else {
       YToast.show(context: context, msg: "取消成功");

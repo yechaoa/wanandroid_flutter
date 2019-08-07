@@ -21,7 +21,7 @@ class _LoginPagePageState extends State<LoginPage>
   var tabs = <Tab>[];
   String btnText = "立即登录";
   bool visible = true;
-  GlobalKey<FormState> _key = new GlobalKey();
+  GlobalKey<FormState> _key = GlobalKey();
   bool autoValidate = false;
   String username, password, rePassword;
 
@@ -84,9 +84,9 @@ class _LoginPagePageState extends State<LoginPage>
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: new Scaffold(
+            child: Scaffold(
               backgroundColor: Colors.transparent,
-              appBar: new TabBar(
+              appBar: TabBar(
                 indicatorSize: TabBarIndicatorSize.label,
                 //TabBarIndicatorSize.label：indicator与文字同宽，TabBarIndicatorSize.tab：与tab同宽
                 indicatorPadding: EdgeInsets.symmetric(vertical: -5),
@@ -99,7 +99,7 @@ class _LoginPagePageState extends State<LoginPage>
                 //是否可滑动,false：tab宽度则等比，true：tab宽度则包裹item
                 isScrollable: false,
                 tabs: tabs.map((Tab choice) {
-                  return new Tab(
+                  return Tab(
                     text: choice.text,
                   );
                 }).toList(),
@@ -115,7 +115,7 @@ class _LoginPagePageState extends State<LoginPage>
                   });
                 },
               ),
-              body: new TabBarView(
+              body: TabBarView(
                 controller: controller,
                 children: tabs.map((Tab choice) {
                   return getTabBarView();
@@ -157,10 +157,6 @@ class _LoginPagePageState extends State<LoginPage>
                           borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
                         labelText: '请输入账号',
-//                        suffixIcon: IconButton(
-//                          icon: Icon(Icons.close),
-//                          onPressed: () {},
-//                        ),
                       ),
                       validator: validateUsername,
                       onSaved: (text) {
@@ -303,13 +299,13 @@ class _LoginPagePageState extends State<LoginPage>
     var response =
         await HttpUtil().post(visible ? Api.LOGIN : Api.REGISTER, data: data);
     Map userMap = json.decode(response.toString());
-    var userEntity = new UserEntity.fromJson(userMap);
+    var userEntity = UserEntity.fromJson(userMap);
     if (userEntity.errorCode == 0) {
       YToast.show(context: context, msg: visible ? "登录成功~" : "注册成功~");
       //跳转并关闭当前页面
       Navigator.pushAndRemoveUntil(
         context,
-        new MaterialPageRoute(builder: (context) => new MyHomePage()),
+        MaterialPageRoute(builder: (context) => MyHomePage()),
         (route) => route == null,
       );
     } else

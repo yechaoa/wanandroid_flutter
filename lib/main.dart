@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   String title = YStrings.appName;
 
-  var _pageController = new PageController(initialPage: 0);
+  var _pageController = PageController(initialPage: 0);
 
   var pages = <Widget>[
     HomePage(),
@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: new PageView.builder(
+      body: PageView.builder(
         onPageChanged: _pageChange,
         controller: _pageController,
         itemCount: pages.length,
@@ -125,21 +125,30 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.home), title: Text(YStrings.home)),
+            icon: Icon(Icons.home),
+            title: Text(YStrings.home),
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.filter_list), title: Text(YStrings.tree)),
+            icon: Icon(Icons.filter_list),
+            title: Text(YStrings.tree),
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.low_priority), title: Text(YStrings.navi)),
+            icon: Icon(Icons.low_priority),
+            title: Text(YStrings.navi),
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.apps), title: Text(YStrings.project)),
+            icon: Icon(Icons.apps),
+            title: Text(YStrings.project),
+          ),
         ],
-        currentIndex: _selectedIndex,
         //当前选中下标
-        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
         //显示模式
-        fixedColor: Theme.of(context).primaryColor,
+        type: BottomNavigationBarType.fixed,
         //选中颜色
-        onTap: _onItemTapped, //点击事件
+        fixedColor: Theme.of(context).primaryColor,
+        //点击事件
+        onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
@@ -154,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onItemTapped(int index) {
     //bottomNavigationBar 和 PageView 关联
     _pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 300), curve: Curves.ease);
+        duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
   void _pageChange(int index) {

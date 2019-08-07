@@ -40,7 +40,7 @@ class _CollectPagePageState extends State<CollectPage> {
         YToast.show(context: context, msg: articleEntity.errorMsg);
         Navigator.push(
           context,
-          new MaterialPageRoute(builder: (context) => new LoginPage()),
+          MaterialPageRoute(builder: (context) => LoginPage()),
         );
       } else {
         setState(() {
@@ -95,10 +95,10 @@ class _CollectPagePageState extends State<CollectPage> {
     final item = articleDatas[index];
     return Dismissible(
       // Show a red background as the item is swiped away
-      background: new Container(color: Theme.of(context).primaryColor),
+      background: Container(color: Theme.of(context).primaryColor),
       // Each Dismissible must contain a Key. Keys allow Flutter to
       // uniquely identify Widgets.
-      key: new Key(item.title),
+      key: Key(item.title),
       // We also need to provide a function that will tell our app
       // what to do after an item has been swiped away.
       onDismissed: (direction) {
@@ -156,9 +156,9 @@ class _CollectPagePageState extends State<CollectPage> {
           context,
           MaterialPageRoute(
             builder: (context) => ArticleDetail(
-                  title: articleDatas[i].title,
-                  url: articleDatas[i].link,
-                ),
+              title: articleDatas[i].title,
+              url: articleDatas[i].link,
+            ),
           ),
         );
       },

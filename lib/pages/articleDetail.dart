@@ -16,7 +16,7 @@ class ArticleDetail extends StatelessWidget {
         primaryColor: Theme.of(context).primaryColor,
       ),
       routes: {
-        "/": (_) => new WebviewScaffold(
+        "/": (_) =>  WebviewScaffold(
               url: "$url",
               appBar: AppBar(
                 //返回键 点击关闭
