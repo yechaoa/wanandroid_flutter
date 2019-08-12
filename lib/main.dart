@@ -60,7 +60,12 @@ class MyApp extends StatelessWidget {
 
               primaryColor: YColors.themeColor[theme.value != null
                   ? theme.value
-                  : themeIndex]["primaryColor"]
+                  : themeIndex]["primaryColor"],
+              primaryColorDark: YColors.themeColor[theme.value != null
+                  ? theme.value
+                  : themeIndex]["primaryColorDark"],
+              accentColor: YColors.themeColor[
+                  theme.value != null ? theme.value : themeIndex]["colorAccent"]
 
 //              primaryColor: YColors.colorPrimary,
 //              primaryColorDark: YColors.colorPrimaryDark,

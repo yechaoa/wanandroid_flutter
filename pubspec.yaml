@@ -62,6 +62,7 @@ flutter:
 
   assets:
     - lib/res/images/a.jpg
+    - lib/res/images/ic_logo.png
 
   fonts:
     - family: mononoki
