@@ -157,6 +157,18 @@ class _LoginPagePageState extends State<LoginPage>
                   image: DecorationImage(
                     image: AssetImage("lib/res/images/ic_logo.png"),
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      //左右、上下阴影的距离
+                      offset: Offset(0, 0),
+                      //阴影颜色
+                      color: Colors.grey,
+                      //模糊距离
+                      blurRadius: 8,
+                      //不模糊距离
+                      spreadRadius: 1,
+                    ),
+                  ],
                 ),
               ),
             ),
