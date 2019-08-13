@@ -53,6 +53,8 @@
 * [shared_preferences 本地存储](https://blog.csdn.net/yechaoa/article/details/97939357)
 * [Dismissible 滑动删除](https://blog.csdn.net/yechaoa/article/details/98081275)
 * [RefreshIndicator 下拉刷新](https://blog.csdn.net/yechaoa/article/details/98193911)
+* [Stack 重叠布局](https://blog.csdn.net/yechaoa/article/details/99302810)
+* 图片缓存
 
 # :pencil:Todo
 
@@ -80,6 +82,7 @@
 * [provide](https://github.com/google/flutter-provide)
 * [shared_preferences](https://github.com/flutter/plugins/tree/master/packages/shared_preferences)
 * [flutter_easyrefresh](https://github.com/xuelongqy/flutter_easyrefresh)
+* [cached_network_image](https://pub.dev/packages/cached_network_image)
 
 # :package:环境配置
 
