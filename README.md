@@ -12,21 +12,26 @@
 
 # :fire:截图
 
-| <img src="/screenshot/android/1.png" width="285"/> | <img src="/screenshot/android/2.png" width="285"/> | <img src="/screenshot/android/3.png" width="285"/> |
-| :--: | :--: | :--: |
-| 侧滑菜单 | 首页 | 合并列表 |
+### IOS
 
-| <img src="/screenshot/android/4.png" width="285"/> | <img src="/screenshot/android/5.png" width="285"/> | <img src="/screenshot/android/6.png" width="285"/> |
-| :--: | :--: | :--: |
-| 左右菜单 | 左右滑动列表 | 登录注册 |
+| <img src="/screenshot/ios/1.png" width="285"/> | <img src="/screenshot/ios/2.png" width="285"/> | <img src="/screenshot/ios/3.png" width="285"/> | <img src="/screenshot/ios/4.png" width="285"/> |
+| :--: | :--: | :--: | :--: |
+| 登录注册 | 首页 | 合并列表 | 左右菜单 |
 
-| <img src="/screenshot/android/7.png" width="285"/> | <img src="/screenshot/android/8.png" width="285"/> | <img src="/screenshot/android/9.png" width="285"/> |
-| :--: | :--: | :--: |
-| 搜索 | 分享 | 切换主题 |
+| <img src="/screenshot/ios/5.png" width="285"/> | <img src="/screenshot/ios/6.png" width="285"/> | <img src="/screenshot/ios/7.png" width="285"/> | <img src="/screenshot/ios/8.png" width="285"/> |
+| :--: | :--: | :--: | :--: |
+| 左右滑动列表 | 搜索 | 侧边栏 | 关于 |
 
-| <img src="/screenshot/android/10.png" width="285"/> |
-| :--: | 
-| 收藏 | 
+### Android
+
+| <img src="/screenshot/android/1.png" width="285"/> | <img src="/screenshot/android/2.png" width="285"/> | <img src="/screenshot/android/3.png" width="285"/> | <img src="/screenshot/android/4.png" width="285"/> |
+| :--: | :--: | :--: | :--: |
+| 侧滑菜单 | 首页 | 合并列表 | 左右菜单 |
+
+| <img src="/screenshot/android/5.png" width="285"/> | <img src="/screenshot/android/6.png" width="285"/> | <img src="/screenshot/android/7.png" width="285"/> | <img src="/screenshot/android/8.png" width="285"/> | 
+| :--: | :--: | :--: | :--: |
+| 左右滑动列表 | 登录注册 | 搜索 | 分享 |
+
 
 <br>
 
