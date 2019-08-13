@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:wanandroid_flutter/common/api.dart';
@@ -17,6 +18,13 @@ class TreePage extends StatefulWidget {
 class _TreePageState extends State<TreePage> {
   List<TreeData> _datas = List();
   ScrollController _scrollController = ScrollController();
+  List<IconData> _icons = [
+    Icons.star_border,
+    Icons.child_care,
+    Icons.cloud_queue,
+    Icons.ac_unit,
+    Icons.lightbulb_outline,
+  ];
 
   @override
   void initState() {
@@ -41,7 +49,7 @@ class _TreePageState extends State<TreePage> {
       Map userMap = json.decode(response.toString());
       var treeEntity = TreeEntity.fromJson(userMap);
 
-      //遍历赋值isExpanded标识
+      //遍历赋值isExpanded标识，默认全部合并
       for (int i = 0; i < treeEntity.data.length; i++) {
         treeEntity.data[i].isExpanded = false;
       }
@@ -80,7 +88,12 @@ class _TreePageState extends State<TreePage> {
                 headerBuilder: (context, isExpanded) {
                   return ListTile(
                     contentPadding: EdgeInsets.all(10.0),
-                    title: Text(treeData.name),
+                    title: Text(
+                      treeData.name,
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                    //取随机icon
+                    leading: Icon(_icons[Random().nextInt(_icons.length)]),
                   );
                 },
                 //展开内容

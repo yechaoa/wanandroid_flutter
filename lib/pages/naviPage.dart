@@ -79,7 +79,16 @@ class _NaviPageState extends State<NaviPage> {
       child: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-        color: index == i ? YColors.color_F9F9F9 : Colors.white,
+        //Container下的color属性会与decoration下的border属性冲突，所以要用decoration下的color属性
+        decoration: BoxDecoration(
+          color: index == i ? YColors.color_F9F9F9 : Colors.white,
+          border: Border(
+            left: BorderSide(
+                width: 5,
+                color:
+                    index == i ? Theme.of(context).primaryColor : Colors.white),
+          ),
+        ),
         child: Text(_datas[i].name,
             style: TextStyle(
                 color: index == i ? textColor : YColors.color_666,
