@@ -81,7 +81,6 @@
 * [provide](https://github.com/google/flutter-provide)
 * [shared_preferences](https://github.com/flutter/plugins/tree/master/packages/shared_preferences)
 * [flutter_easyrefresh](https://github.com/xuelongqy/flutter_easyrefresh)
-* [cached_network_image](https://pub.dev/packages/cached_network_image)
 
 # :package:环境配置
 
