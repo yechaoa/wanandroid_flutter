@@ -217,7 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
               //圆形头像
               child: ClipOval(
                 child: Image.network(
-                    "https://avatars3.githubusercontent.com/u/19725223?s=400&u=f399a2d73fd0445be63ee6bc1ea4a408a62454f5&v=4"),
+                    'https://avatar.csdnimg.cn/C/0/1/1_yechaoa.jpg'),
               ),
               onTap: () {
                 Navigator.of(context).pop();
