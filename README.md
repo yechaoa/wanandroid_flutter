@@ -12,7 +12,7 @@
 
 # :fire:截图
 
-### IOS
+### IOS效果
 
 | <img src="/screenshot/ios/1.png" width="285"/> | <img src="/screenshot/ios/2.png" width="285"/> | <img src="/screenshot/ios/3.png" width="285"/> | <img src="/screenshot/ios/4.png" width="285"/> |
 | :--: | :--: | :--: | :--: |
@@ -22,7 +22,7 @@
 | :--: | :--: | :--: | :--: |
 | 左右滑动列表 | 搜索 | 侧边栏 | 关于 |
 
-### Android
+### Android效果
 
 | <img src="/screenshot/android/1.png" width="285"/> | <img src="/screenshot/android/2.png" width="285"/> | <img src="/screenshot/android/3.png" width="285"/> | <img src="/screenshot/android/4.png" width="285"/> |
 | :--: | :--: | :--: | :--: |
