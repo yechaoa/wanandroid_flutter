@@ -19,7 +19,7 @@ class ProjectPage extends StatefulWidget {
 }
 
 class _ProjectPageState extends State<ProjectPage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   TabController _controller; //tab控制器
   int _currentIndex = 0; //选中下标
 
@@ -31,6 +31,8 @@ class _ProjectPageState extends State<ProjectPage>
   @override
   void initState() {
     super.initState();
+    //初始化controller
+    _controller = TabController(vsync: this, length: 0);
     getHttp();
   }
 
@@ -42,12 +44,12 @@ class _ProjectPageState extends State<ProjectPage>
 
       setState(() {
         _datas = projectEntity.data;
+        _controller = TabController(vsync: this, length: _datas.length);
       });
 
       getDetail();
 
-      //初始化controller并添加监听
-      _controller = TabController(vsync: this, length: _datas.length);
+      //controller添加监听
       _controller.addListener(() => _onTabChanged());
     } catch (e) {
       print(e);
@@ -90,70 +92,67 @@ class _ProjectPageState extends State<ProjectPage>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: _datas.length,
-      child: Scaffold(
-        appBar: TabBar(
-          //控制器
-          controller: _controller,
-          //选中的颜色
-          labelColor: Theme.of(context).primaryColor,
-          //选中的样式
-          labelStyle: TextStyle(fontSize: 16),
-          //未选中的颜色
-          unselectedLabelColor: YColors.color_666,
-          //未选中的样式
-          unselectedLabelStyle: TextStyle(fontSize: 14),
-          //下划线颜色
-          indicatorColor: Theme.of(context).primaryColor,
-          //是否可滑动
-          isScrollable: true,
-          //tab标签
-          tabs: _datas.map((ProjectData choice) {
-            return Tab(
-              text: choice.name,
-            );
-          }).toList(),
-          //点击事件
-          onTap: (int i) {
-            print(i);
-          },
-        ),
-        body: TabBarView(
-          controller: _controller,
-          children: _datas.map((ProjectData choice) {
-            return EasyRefresh.custom(
-              header: TaurusHeader(),
-              footer: TaurusFooter(),
-              onRefresh: () async {
-                await Future.delayed(Duration(seconds: 1), () {
-                  setState(() {
-                    _page = 1;
-                  });
-                  getHttp();
+    return Scaffold(
+      appBar: TabBar(
+        //控制器
+        controller: _controller,
+        //选中的颜色
+        labelColor: Theme.of(context).primaryColor,
+        //选中的样式
+        labelStyle: TextStyle(fontSize: 16),
+        //未选中的颜色
+        unselectedLabelColor: YColors.color_666,
+        //未选中的样式
+        unselectedLabelStyle: TextStyle(fontSize: 14),
+        //下划线颜色
+        indicatorColor: Theme.of(context).primaryColor,
+        //是否可滑动
+        isScrollable: true,
+        //tab标签
+        tabs: _datas.map((ProjectData choice) {
+          return Tab(
+            text: choice.name,
+          );
+        }).toList(),
+        //点击事件
+        onTap: (int i) {
+          print(i);
+        },
+      ),
+      body: TabBarView(
+        controller: _controller,
+        children: _datas.map((ProjectData choice) {
+          return EasyRefresh.custom(
+            header: TaurusHeader(),
+            footer: TaurusFooter(),
+            onRefresh: () async {
+              await Future.delayed(Duration(seconds: 1), () {
+                setState(() {
+                  _page = 1;
                 });
-              },
-              onLoad: () async {
-                await Future.delayed(Duration(seconds: 1), () async {
-                  setState(() {
-                    _page++;
-                  });
-                  getMoreData();
+                getHttp();
+              });
+            },
+            onLoad: () async {
+              await Future.delayed(Duration(seconds: 1), () async {
+                setState(() {
+                  _page++;
                 });
-              },
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return getRow(index);
-                    },
-                    childCount: _listDatas.length,
-                  ),
+                getMoreData();
+              });
+            },
+            slivers: <Widget>[
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return getRow(index);
+                  },
+                  childCount: _listDatas.length,
                 ),
-              ],
-            );
-          }).toList(),
-        ),
+              ),
+            ],
+          );
+        }).toList(),
       ),
     );
   }
