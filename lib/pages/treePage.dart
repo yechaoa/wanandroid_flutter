@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/tree_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
+import 'package:wanandroid_flutter/pages/treeDetailPage.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
 
@@ -18,6 +19,7 @@ class TreePage extends StatefulWidget {
 class _TreePageState extends State<TreePage> {
   List<TreeData> _datas = List();
   ScrollController _scrollController = ScrollController();
+  int _panelIndex = 0; //展开下标
   List<IconData> _icons = [
     Icons.star_border,
     Icons.child_care,
@@ -78,6 +80,7 @@ class _TreePageState extends State<TreePage> {
             //开关回调
             expansionCallback: (panelIndex, isExpanded) {
               setState(() {
+                _panelIndex = panelIndex;
                 _datas[panelIndex].isExpanded = !isExpanded;
               });
             },
@@ -139,7 +142,13 @@ class _TreePageState extends State<TreePage> {
             ),
           )),
       onTap: () {
-        YToast.show(context: context, msg: treeData.children[i].name);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                TreeDetailPage(panelIndex: _panelIndex, index: i),
+          ),
+        );
       },
     );
   }
