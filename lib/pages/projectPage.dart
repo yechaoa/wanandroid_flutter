@@ -60,14 +60,12 @@ class _ProjectPageState extends State<ProjectPage>
   /// tab改变监听
   ///
   _onTabChanged() {
-    if (_controller.indexIsChanging) {
-      if (this.mounted) {
-        //赋值 并更新数据
-        this.setState(() {
-          _currentIndex = _controller.index;
-        });
-        getDetail();
-      }
+    if (_controller.index.toDouble() == _controller.animation.value) {
+      //赋值 并更新数据
+      this.setState(() {
+        _currentIndex = _controller.index;
+      });
+      getDetail();
     }
   }
 
