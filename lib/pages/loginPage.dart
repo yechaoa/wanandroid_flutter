@@ -22,7 +22,6 @@ class _LoginPagePageState extends State<LoginPage>
   var tabs = <Tab>[];
   String btnText = "登录";
   String bottomText = "没有账号？注册";
-  String f = "没有账号？注册";
   bool visible = true;
   GlobalKey<FormState> _key = GlobalKey();
   bool autoValidate = false;
