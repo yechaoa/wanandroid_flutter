@@ -72,6 +72,7 @@ class _TreeDetailPageState extends State<TreeDetailPage>
 
   /// tab改变监听
   /// 滑动切换_controller.indexIsChanging一直返回false，所以这种判断方式不适用了
+  /// 修改如下
   _onTabChanged() {
     if (_controller.index.toDouble() == _controller.animation.value) {
       //赋值 并更新数据
@@ -169,58 +170,58 @@ class _TreeDetailPageState extends State<TreeDetailPage>
   Widget getRow(int i) {
     return GestureDetector(
       child: Container(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-          child: ListTile(
-            leading: IconButton(
-              icon: articleDatas[i].collect
-                  ? Icon(
-                      Icons.favorite,
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        child: ListTile(
+          leading: IconButton(
+            icon: articleDatas[i].collect
+                ? Icon(
+                    Icons.favorite,
+                    color: Theme.of(context).primaryColor,
+                  )
+                : Icon(Icons.favorite_border),
+            tooltip: '收藏',
+            onPressed: () {
+              if (articleDatas[i].collect) {
+                cancelCollect(articleDatas[i].id);
+              } else {
+                addCollect(articleDatas[i].id);
+              }
+            },
+          ),
+          title: Text(
+            articleDatas[i].title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: Padding(
+            padding: EdgeInsets.only(top: 10.0),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 6),
+                  decoration: BoxDecoration(
+                    border: Border.all(
                       color: Theme.of(context).primaryColor,
-                    )
-                  : Icon(Icons.favorite_border),
-              tooltip: '收藏',
-              onPressed: () {
-                if (articleDatas[i].collect) {
-                  cancelCollect(articleDatas[i].id);
-                } else {
-                  addCollect(articleDatas[i].id);
-                }
-              },
-            ),
-            title: Text(
-              articleDatas[i].title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            subtitle: Padding(
-              padding: EdgeInsets.only(top: 10.0),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 6),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Theme.of(context).primaryColor,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular((20.0)), // 圆角度
+                      width: 1.0,
                     ),
-                    child: Text(
-                      articleDatas[i].superChapterName,
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
+                    borderRadius: BorderRadius.circular((20.0)), // 圆角度
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: Text(articleDatas[i].author),
+                  child: Text(
+                    articleDatas[i].superChapterName,
+                    style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
-                ],
-              ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 10),
+                  child: Text(articleDatas[i].author),
+                ),
+              ],
             ),
-            trailing: Icon(Icons.chevron_right),
-          )),
+          ),
+          trailing: Icon(Icons.chevron_right),
+        ),
+      ),
       onTap: () {
-        if (0 == 1) return;
         Navigator.push(
           context,
           MaterialPageRoute(

@@ -26,7 +26,7 @@ class _ProjectPageState extends State<ProjectPage>
   List<ProjectData> _datas = List(); //tab集合
   List<ProjectListDataData> _listDatas = List(); //内容集合
 
-  int _page = 1;
+  int _page = 1; //看文档时要注意page是从0还是1开始
 
   @override
   void initState() {
@@ -163,7 +163,8 @@ class _ProjectPageState extends State<ProjectPage>
         child: Card(
           elevation: 5,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10))),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
           color: Colors.white,
           child: Padding(
             padding: EdgeInsets.all(10),
@@ -208,8 +209,10 @@ class _ProjectPageState extends State<ProjectPage>
                               flex: 1,
                               child: Padding(
                                 padding: EdgeInsets.all(10),
-                                child: Text(_listDatas[i].niceDate,
-                                    style: TextStyle(fontSize: 14)),
+                                child: Text(
+                                  _listDatas[i].niceDate,
+                                  style: TextStyle(fontSize: 14),
+                                ),
                               ),
                             ),
                             Padding(

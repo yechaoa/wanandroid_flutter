@@ -47,15 +47,17 @@ class _NaviPageState extends State<NaviPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Expanded(
-            flex: 2,
-            child: Container(
-              color: YColors.color_fff,
-              child: ListView.builder(
-                  itemCount: _datas.length,
-                  itemBuilder: (BuildContext context, int position) {
-                    return getRow(position);
-                  }),
-            )),
+          flex: 2,
+          child: Container(
+            color: YColors.color_fff,
+            child: ListView.builder(
+              itemCount: _datas.length,
+              itemBuilder: (BuildContext context, int position) {
+                return getRow(position);
+              },
+            ),
+          ),
+        ),
         Expanded(
             flex: 5,
             child: ListView(
@@ -89,11 +91,14 @@ class _NaviPageState extends State<NaviPage> {
                     index == i ? Theme.of(context).primaryColor : Colors.white),
           ),
         ),
-        child: Text(_datas[i].name,
-            style: TextStyle(
-                color: index == i ? textColor : YColors.color_666,
-                fontWeight: index == i ? FontWeight.w600 : FontWeight.w400,
-                fontSize: 16)),
+        child: Text(
+          _datas[i].name,
+          style: TextStyle(
+            color: index == i ? textColor : YColors.color_666,
+            fontWeight: index == i ? FontWeight.w600 : FontWeight.w400,
+            fontSize: 16,
+          ),
+        ),
       ),
       onTap: () {
         setState(() {
@@ -116,16 +121,18 @@ class _NaviPageState extends State<NaviPage> {
         (int index) {
           return ActionChip(
             //标签文字
-            label: Text(articles[index].title,
-                style: TextStyle(fontSize: 16, color: YColors.color_666)),
+            label: Text(
+              articles[index].title,
+              style: TextStyle(fontSize: 16, color: YColors.color_666),
+            ),
             //点击事件
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ArticleDetail(
-                        title: articles[index].title,
-                        url: articles[index].link)),
+                  builder: (context) => ArticleDetail(
+                      title: articles[index].title, url: articles[index].link),
+                ),
               );
             },
             elevation: 3,

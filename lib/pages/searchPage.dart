@@ -156,9 +156,12 @@ class MySearchDelegate extends SearchDelegate<String> {
                                 width: 1.0),
                             borderRadius: BorderRadius.circular((20.0)), // 圆角度
                           ),
-                          child: Text(articleDatas[position].superChapterName,
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor)),
+                          child: Text(
+                            articleDatas[position].superChapterName,
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                         ),
                         Container(
                           margin: EdgeInsets.only(left: 15),
@@ -173,12 +176,13 @@ class MySearchDelegate extends SearchDelegate<String> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ArticleDetail(
-                        title: articleDatas[position]
-                            .title
-                            .replaceAll("<em class='highlight'>", "")
-                            .replaceAll("<\/em>", ""),
-                        url: articleDatas[position].link)),
+                  builder: (context) => ArticleDetail(
+                      title: articleDatas[position]
+                          .title
+                          .replaceAll("<em class='highlight'>", "")
+                          .replaceAll("<\/em>", ""),
+                      url: articleDatas[position].link),
+                ),
               );
             },
           );
@@ -196,9 +200,10 @@ class MySearchDelegate extends SearchDelegate<String> {
           Text(
             "大家都在搜：",
             style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: YColors.color_666),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: YColors.color_666,
+            ),
           ),
           SizedBox(height: 10),
           Wrap(

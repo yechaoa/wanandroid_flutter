@@ -104,10 +104,11 @@ class _TreePageState extends State<TreePage> {
                   height: 200,
                   padding: EdgeInsets.symmetric(horizontal: 5.0),
                   child: ListView.builder(
-                      itemCount: treeData.children.length,
-                      itemBuilder: (BuildContext context, int position) {
-                        return getRow(position, treeData);
-                      }),
+                    itemCount: treeData.children.length,
+                    itemBuilder: (BuildContext context, int position) {
+                      return getRow(position, treeData);
+                    },
+                  ),
                 ),
                 //是否展开
                 isExpanded: treeData.isExpanded,
@@ -130,17 +131,18 @@ class _TreePageState extends State<TreePage> {
   Widget getRow(int i, TreeData treeData) {
     return GestureDetector(
       child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 5.0),
-          child: ListTile(
-            title: Text(
-              treeData.children[i].name,
-              style: TextStyle(color: YColors.color_999),
-            ),
-            trailing: Icon(
-              Icons.chevron_right,
-              color: YColors.color_999,
-            ),
-          )),
+        padding: EdgeInsets.symmetric(horizontal: 5.0),
+        child: ListTile(
+          title: Text(
+            treeData.children[i].name,
+            style: TextStyle(color: YColors.color_999),
+          ),
+          trailing: Icon(
+            Icons.chevron_right,
+            color: YColors.color_999,
+          ),
+        ),
+      ),
       onTap: () {
         Navigator.push(
           context,
