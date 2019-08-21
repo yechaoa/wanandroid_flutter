@@ -63,7 +63,7 @@
 * [Dismissible 滑动删除](https://blog.csdn.net/yechaoa/article/details/98081275)
 * [RefreshIndicator 下拉刷新](https://blog.csdn.net/yechaoa/article/details/98193911)
 * [Stack 重叠布局](https://blog.csdn.net/yechaoa/article/details/99302810)
-* [Flutter 打包](https://blog.csdn.net/yechaoa/article/details/99941335)
+* [Flutter 打包发布](https://blog.csdn.net/yechaoa/article/details/99941335)
 * 等等
 
 # :pencil:Todo
