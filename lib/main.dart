@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           title: YStrings.appName,
           theme: ThemeData(
               // This is the theme of your application.
-
+              //除了primaryColor，还有brightness、iconTheme、textTheme等等可以设置
               primaryColor: YColors.themeColor[theme.value != null
                   ? theme.value
                   : themeIndex]["primaryColor"],
