@@ -10,7 +10,7 @@
 * [玩安卓 Java版本](https://github.com/yechaoa/WanAndroidClient)
 * [玩安卓 小程序版本](https://github.com/yechaoa/wanandroid_mini)
 
-# 【兄dei】  随手点个star支持一下呗:kiss:
+# 老铁，点个star:kiss:
 
 <br>
 
