@@ -6,6 +6,10 @@
 ![](https://img.shields.io/hexpm/l/plug.svg)
 ![](https://img.shields.io/badge/CSDN-yechaoa-green.svg)
 
+* [玩安卓 Flutter版本](https://github.com/yechaoa/wanandroid_flutter)
+* [玩安卓 Java版本](https://github.com/yechaoa/WanAndroidClient)
+* [玩安卓 小程序版本](https://github.com/yechaoa/wanandroid_mini)
+
 # 【兄dei】  随手点个star支持一下呗:kiss:
 
 <br>
