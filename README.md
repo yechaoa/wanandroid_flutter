@@ -1,6 +1,7 @@
 # :collision:wanandroid_flutter
 
-玩安卓的`flutter`版本，首先非常感谢`鸿洋`提供的api，然后就是这个项目目前还在完善中，但是常用的`widget`也基本都用到了，没用到的后续也会强行用到的 :satisfied::satisfied::satisfied:。
+玩安卓的`flutter`版本，非常感谢`鸿洋`提供的api。
+这个项目中常用的`widget`基本都用到了，没用到的后续也会强行用到的 :satisfied::satisfied::satisfied:。
 
 ![](https://img.shields.io/badge/language-dart-orange.svg)
 ![](https://img.shields.io/hexpm/l/plug.svg)
