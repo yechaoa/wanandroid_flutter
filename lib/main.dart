@@ -20,6 +20,10 @@ import 'common/api.dart';
 import 'http/httpUtil.dart';
 
 void main() async {
+
+  //runApp前调用，初始化绑定，手势、渲染、服务等
+  WidgetsFlutterBinding.ensureInitialized();
+
   //初始化
   var theme = ThemeProvide();
   var favorite = FavoriteProvide();
