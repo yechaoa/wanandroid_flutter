@@ -8,7 +8,7 @@
 ![](https://img.shields.io/badge/CSDN-yechaoa-green.svg)
 
 * [玩安卓 Flutter版本](https://github.com/yechaoa/wanandroid_flutter)
-* [玩安卓 Java版本](https://github.com/yechaoa/WanAndroidClient)
+* [玩安卓 Java版本](https://github.com/yechaoa/wanandroid_java)
 * [玩安卓 小程序版本](https://github.com/yechaoa/wanandroid_mini)
 
 # 老铁，点个star:kiss:
