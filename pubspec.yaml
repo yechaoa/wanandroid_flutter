@@ -26,20 +26,28 @@ dependencies:
 
   # https://github.com/PonnamKarthik/FlutterToast
   fluttertoast: ^3.0.4
+
   # https://github.com/flutterchina/dio
-  dio: ^2.1.3
+  dio: ^3.0.9
+
+  # https://pub.dev/packages/dio_cookie_manager
+  dio_cookie_manager: 1.0.0
+
   # https://pub.dev/packages/flutter_webview_plugin#-readme-tab
   flutter_webview_plugin: ^0.3.5
-  # https://github.com/flutterchina/cookie_jar
-  cookie_jar: ^1.0.0
+
   # https://github.com/best-flutter/flutter_swiper
-  flutter_swiper : ^1.1.6
+  flutter_swiper: ^1.1.6
+
   # https://github.com/flutter/plugins/tree/master/packages/share
   share: ^0.6.1+1
+
   # https://github.com/google/flutter-provide
   provide: ^1.0.2
+
   # https://github.com/flutter/plugins/tree/master/packages/shared_preferences
   shared_preferences: ^0.5.3+4
+
   # https://github.com/xuelongqy/flutter_easyrefresh
   flutter_easyrefresh: ^2.0.0
 
