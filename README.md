@@ -11,12 +11,7 @@
 * [玩安卓 Java版本](https://github.com/yechaoa/wanandroid_java)
 * [玩安卓 小程序版本](https://github.com/yechaoa/wanandroid_mini)
 * [玩安卓 Kotlin版本](https://github.com/yechaoa/wanandroid_kotlin)
-
-# 老铁，点个star:kiss:
-
-<br>
-
-## [apk地址](https://github.com/yechaoa/wanandroid_flutter/blob/master/android/key/app-release.apk)
+* [玩安卓 Jetpack版本](https://github.com/yechaoa/wanandroid_jetpack)
 
 <br>
 
