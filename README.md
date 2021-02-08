@@ -1,7 +1,6 @@
-# :collision:wanandroid_flutter
+# :collision:玩安卓 Flutter版本
 
-玩安卓的`flutter`版本，非常感谢`鸿洋`提供的api。
-这个项目中常用的`widget`基本都用到了，没用到的后续也会强行用到的 :satisfied::satisfied::satisfied:。
+感谢`鸿洋`提供的api。
 
 ![](https://img.shields.io/badge/language-dart-orange.svg)
 ![](https://img.shields.io/hexpm/l/plug.svg)
@@ -67,20 +66,6 @@
 * [Flutter 打包发布](https://blog.csdn.net/yechaoa/article/details/99941335)
 * 等等
 
-# :pencil:Todo
-
-- ~~登录~~
-- ~~注册~~
-- ~~退出~~
-- ~~收藏~~
-- ~~分享~~
-- ~~搜索~~
-- ~~切换主题~~
-- ~~添加字体~~
-- ~~分页~~
-- ~~体系列表点击~~
-- 界面美化
-
 
 # :point_right:感谢
 
@@ -101,7 +86,6 @@
 
 
 <br>
-
 
 
 ```
