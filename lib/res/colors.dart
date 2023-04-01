@@ -21,6 +21,9 @@ class YColors {
   static const Color color_f1f1f1 = Color(0xfff1f1f1);
   static const Color color_fff = Color(0xffffffff);
 
+  // 主题下标key
+  static const String themeIndexKey = "themeIndex";
+
   /* 主题列表 */
   static const Map themeColor = {
     0: {//green

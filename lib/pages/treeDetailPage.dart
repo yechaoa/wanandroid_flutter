@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/article_entity.dart';
 import 'package:wanandroid_flutter/entity/common_entity.dart';
@@ -9,8 +9,6 @@ import 'package:wanandroid_flutter/entity/tree_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/pages/articleDetail.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
-import 'package:wanandroid_flutter/widget/my_taurus_footer.dart';
-import 'package:wanandroid_flutter/widget/my_taurus_header.dart';
 
 import 'loginPage.dart';
 
@@ -18,8 +16,7 @@ class TreeDetailPage extends StatefulWidget {
   final int panelIndex; //一级分类选中下标
   final int index; //二级分类选中下标
 
-  TreeDetailPage({Key key, @required this.panelIndex, @required this.index})
-      : super(key: key);
+  TreeDetailPage({Key key, @required this.panelIndex, @required this.index}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -27,8 +24,7 @@ class TreeDetailPage extends StatefulWidget {
   }
 }
 
-class _TreeDetailPageState extends State<TreeDetailPage>
-    with TickerProviderStateMixin {
+class _TreeDetailPageState extends State<TreeDetailPage> with TickerProviderStateMixin {
   TabController _controller; //tab控制器
   int _currentIndex = 0; //选中下标
 
@@ -90,8 +86,7 @@ class _TreeDetailPageState extends State<TreeDetailPage>
       _page = 0;
     });
     var data = {"cid": _tabDatas[_currentIndex].id};
-    var response =
-        await HttpUtil().get(Api.ARTICLE_LIST + "$_page/json", data: data);
+    var response = await HttpUtil().get(Api.ARTICLE_LIST + "$_page/json", data: data);
     Map articleMap = json.decode(response.toString());
     var articleEntity = ArticleEntity.fromJson(articleMap);
 
@@ -108,6 +103,7 @@ class _TreeDetailPageState extends State<TreeDetailPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text(_title),
         bottom: TabBar(
           controller: _controller,
@@ -132,7 +128,7 @@ class _TreeDetailPageState extends State<TreeDetailPage>
       body: TabBarView(
         controller: _controller,
         children: _tabDatas.map((TreeDatachild choice) {
-          return EasyRefresh.custom(
+          return EasyRefresh(
             header: TaurusHeader(),
             footer: TaurusFooter(),
             onRefresh: () async {
@@ -151,16 +147,14 @@ class _TreeDetailPageState extends State<TreeDetailPage>
                 getMoreData();
               });
             },
-            slivers: <Widget>[
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return getRow(index);
-                  },
-                  childCount: articleDatas.length,
-                ),
-              ),
-            ],
+            child: CustomScrollView(
+              slivers: [
+                SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                  return getRow(index);
+                }, childCount: articleDatas.length)),
+              ],
+            ),
           );
         }).toList(),
       ),
@@ -225,8 +219,7 @@ class _TreeDetailPageState extends State<TreeDetailPage>
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ArticleDetail(
-                title: articleDatas[i].title, url: articleDatas[i].link),
+            builder: (context) => ArticleDetail(title: articleDatas[i].title, url: articleDatas[i].link),
           ),
         );
       },
@@ -250,8 +243,7 @@ class _TreeDetailPageState extends State<TreeDetailPage>
   }
 
   Future cancelCollect(int id) async {
-    var collectResponse =
-        await HttpUtil().post(Api.UN_COLLECT_ORIGIN_ID + '$id/json');
+    var collectResponse = await HttpUtil().post(Api.UN_COLLECT_ORIGIN_ID + '$id/json');
     Map map = json.decode(collectResponse.toString());
     var entity = CommonEntity.fromJson(map);
     if (entity.errorCode == -1001) {
@@ -268,8 +260,7 @@ class _TreeDetailPageState extends State<TreeDetailPage>
 
   Future getMoreData() async {
     var data = {"cid": _tabDatas[_currentIndex].id};
-    var response =
-        await HttpUtil().get(Api.ARTICLE_LIST + "$_page/json", data: data);
+    var response = await HttpUtil().get(Api.ARTICLE_LIST + "$_page/json", data: data);
     Map articleMap = json.decode(response.toString());
     var articleEntity = ArticleEntity.fromJson(articleMap);
     setState(() {

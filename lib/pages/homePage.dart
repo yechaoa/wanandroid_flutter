@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/article_entity.dart';
@@ -10,13 +10,12 @@ import 'package:wanandroid_flutter/entity/common_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/pages/articleDetail.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
-import 'package:wanandroid_flutter/widget/my_phoenix_footer.dart';
-import 'package:wanandroid_flutter/widget/my_phoenix_header.dart';
 
+import '../res/colors.dart';
 import 'loginPage.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -26,16 +25,20 @@ class _HomePageState extends State<HomePage> {
   List<BannerData> bannerDatas = List();
   List<ArticleDataData> articleDatas = List();
 
-  ScrollController _scrollController;
+  EasyRefreshController _easyRefreshController;
   SwiperController _swiperController;
 
   int _page = 0;
+  bool hasMore = true;
 
   @override
   void initState() {
     super.initState();
 
-    _scrollController = ScrollController()..addListener(() {});
+    _easyRefreshController = EasyRefreshController(
+      controlFinishRefresh: true,
+      controlFinishLoad: true,
+    );
     _swiperController = SwiperController();
 
     getHttp();
@@ -49,8 +52,7 @@ class _HomePageState extends State<HomePage> {
       var bannerEntity = BannerEntity.fromJson(bannerMap);
 
       //article
-      var articleResponse =
-          await HttpUtil().get(Api.ARTICLE_LIST + "$_page/json");
+      var articleResponse = await HttpUtil().get(Api.ARTICLE_LIST + "$_page/json");
       Map articleMap = json.decode(articleResponse.toString());
       var articleEntity = ArticleEntity.fromJson(articleMap);
 
@@ -68,38 +70,67 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: EasyRefresh.custom(
-        header: PhoenixHeader(),
-        footer: PhoenixFooter(),
+      body: EasyRefresh.builder(
+        controller: _easyRefreshController,
+        header: PhoenixHeader(
+          skyColor: YColors.colorPrimary,
+          position: IndicatorPosition.locator,
+          safeArea: false,
+        ),
+        footer: PhoenixFooter(
+          skyColor: YColors.colorPrimary,
+          position: IndicatorPosition.locator,
+        ),
         onRefresh: () async {
           await Future.delayed(Duration(seconds: 1), () {
+            if (!mounted) {
+              return;
+            }
             setState(() {
               _page = 0;
             });
             getHttp();
+
+            _easyRefreshController.finishRefresh();
+            _easyRefreshController.resetFooter();
           });
         },
         onLoad: () async {
-          await Future.delayed(Duration(seconds: 1), () async {
+          await Future.delayed(Duration(seconds: 1), () {
+            if (!mounted) {
+              return;
+            }
             setState(() {
               _page++;
             });
             getMoreData();
+
+            _easyRefreshController.finishLoad(hasMore ? IndicatorResult.success : IndicatorResult.noMore);
           });
         },
-        slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                if (index == 0) return getBanner();
-                if (index < articleDatas.length - 1) //减去banner位置
-                  return getRow(index);
-                return null;
-              },
-              childCount: articleDatas.length + 1, //+1 添加banner显示
-            ),
-          ),
-        ],
+
+        childBuilder: (context, physics) {
+          return CustomScrollView(
+            physics: physics,
+            slivers: [
+              SliverAppBar(
+                backgroundColor: Theme.of(context).primaryColor,
+                expandedHeight: MediaQuery.of(context).size.width / 1.8 * 0.8 + 20, // +20 是上下的padding值
+                pinned: false,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: getBanner(),
+                ),
+              ),
+              const HeaderLocator.sliver(),
+              SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  return getRow(index, articleDatas.length);
+                }, childCount: articleDatas.length),
+              ),
+              const FooterLocator.sliver(),
+            ],
+          );
+        },
       ),
     );
   }
@@ -109,7 +140,7 @@ class _HomePageState extends State<HomePage> {
       width: MediaQuery.of(context).size.width,
       //1.8是banner宽高比，0.8是viewportFraction的值
       height: MediaQuery.of(context).size.width / 1.8 * 0.8,
-      padding: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.only(top: 10, bottom: 10),
       child: Swiper(
         itemCount: bannerDatas.length,
         itemBuilder: (BuildContext context, int index) {
@@ -130,7 +161,6 @@ class _HomePageState extends State<HomePage> {
         autoplayDisableOnInteraction: true,
         duration: 600,
         //默认分页按钮
-//        control: SwiperControl(),
         controller: _swiperController,
         //默认指示器
         pagination: SwiperPagination(
@@ -151,13 +181,20 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget getRow(int i) {
+  Widget getRow(int i, int length) {
+    // print("debug  >>>>>");
+    // print(i);
+    // print("debug  <<<<<");
+
+    // 防止接口慢的情况
+    if (length == 0) return null;
+
     return GestureDetector(
       child: Container(
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: ListTile(
             leading: IconButton(
-              icon: articleDatas[i].collect
+              icon: articleDatas != null && articleDatas[i].collect
                   ? Icon(
                       Icons.favorite,
                       color: Theme.of(context).primaryColor,
@@ -182,19 +219,19 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 6),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Theme.of(context).primaryColor,
-                        width: 1.0,
+                      constraints: BoxConstraints(maxWidth: 150),
+                      padding: EdgeInsets.symmetric(horizontal: 6),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Theme.of(context).primaryColor,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular((20.0)), // 圆角度
                       ),
-                      borderRadius: BorderRadius.circular((20.0)), // 圆角度
-                    ),
-                    child: Text(
-                      articleDatas[i].superChapterName,
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                  ),
+                      child: Text(articleDatas[i].superChapterName,
+                          style: TextStyle(color: Theme.of(context).primaryColor),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1)),
                   Container(
                     margin: EdgeInsets.only(left: 10),
                     child: Text(articleDatas[i].author),
@@ -209,8 +246,7 @@ class _HomePageState extends State<HomePage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ArticleDetail(
-                title: articleDatas[i].title, url: articleDatas[i].link),
+            builder: (context) => ArticleDetail(title: articleDatas[i].title, url: articleDatas[i].link),
           ),
         );
       },
@@ -222,20 +258,19 @@ class _HomePageState extends State<HomePage> {
     Map map = json.decode(collectResponse.toString());
     var entity = CommonEntity.fromJson(map);
     if (entity.errorCode == -1001) {
-      YToast.show(context: context, msg: entity.errorMsg);
+      YToast.showBottom(context: context, msg: entity.errorMsg);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoginPage()),
       );
     } else {
-      YToast.show(context: context, msg: "收藏成功");
+      YToast.showBottom(context: context, msg: "收藏成功");
       getHttp();
     }
   }
 
   Future cancelCollect(int id) async {
-    var collectResponse =
-        await HttpUtil().post(Api.UN_COLLECT_ORIGIN_ID + '$id/json');
+    var collectResponse = await HttpUtil().post(Api.UN_COLLECT_ORIGIN_ID + '$id/json');
     Map map = json.decode(collectResponse.toString());
     var entity = CommonEntity.fromJson(map);
     if (entity.errorCode == -1001) {
@@ -256,12 +291,15 @@ class _HomePageState extends State<HomePage> {
     var articleEntity = ArticleEntity.fromJson(map);
     setState(() {
       articleDatas.addAll(articleEntity.data.datas);
+      if (articleEntity.data.datas.length < 10) {
+        hasMore = false;
+      }
     });
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _easyRefreshController.dispose();
     _swiperController.stopAutoplay();
     _swiperController.dispose();
     super.dispose();

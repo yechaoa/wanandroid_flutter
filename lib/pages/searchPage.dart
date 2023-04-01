@@ -41,7 +41,7 @@ class _SearchPageState extends State<SearchPage> {
       });
 
       //3个参数：上下文，搜索代理，关键词,其中前两个必传，query可选
-      showSearch(context: context, delegate: MySearchDelegate());
+      showSearch(context: context, delegate: MySearchDelegate("输入你想搜的内容~"));
     } catch (e) {
       print(e);
     }
@@ -75,11 +75,22 @@ class _SearchPageState extends State<SearchPage> {
 class MySearchDelegate extends SearchDelegate<String> {
   BuildContext get context => context;
 
+  MySearchDelegate(
+    String hintText,
+  ) : super(
+          searchFieldLabel: hintText,
+          keyboardType: TextInputType.text,
+          // 软键盘快捷键
+          textInputAction: TextInputAction.search,
+          // 输入的字体颜色
+          searchFieldStyle: TextStyle(color: Colors.white),
+        );
+
   /// 搜索框右边的操作 返回的是一个Widget集合
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
-      FlatButton(
+      TextButton(
         child: Text(
           "搜索",
           style: TextStyle(fontSize: 18, color: YColors.color_fff),
@@ -137,23 +148,20 @@ class MySearchDelegate extends SearchDelegate<String> {
                 padding: EdgeInsets.all(10.0),
                 child: ListTile(
                   title: Text(
-                    articleDatas[position]
-                        .title
-                        .replaceAll("<em class='highlight'>", "【")
-                        .replaceAll("<\/em>", "】"),
+                    articleDatas[position].title.replaceAll("<em class='highlight'>", "【").replaceAll("<\/em>", "】"),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.black54),
                   ),
                   subtitle: Padding(
                     padding: EdgeInsets.only(top: 10.0),
                     child: Row(
                       children: <Widget>[
                         Container(
+                          constraints: BoxConstraints(maxWidth: 150),
                           padding: EdgeInsets.symmetric(horizontal: 6),
                           decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                                width: 1.0),
+                            border: Border.all(color: Theme.of(context).primaryColor, width: 1.0),
                             borderRadius: BorderRadius.circular((20.0)), // 圆角度
                           ),
                           child: Text(
@@ -161,6 +169,8 @@ class MySearchDelegate extends SearchDelegate<String> {
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                             ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           ),
                         ),
                         Container(
@@ -229,8 +239,7 @@ class MySearchDelegate extends SearchDelegate<String> {
 
                     /// 请求数据
                     var data = {'k': key};
-                    var articleResponse =
-                        await HttpUtil().post(Api.QUERY, data: data);
+                    var articleResponse = await HttpUtil().post(Api.QUERY, data: data);
                     Map articleMap = json.decode(articleResponse.toString());
                     var articleEntity = ArticleEntity.fromJson(articleMap);
 
@@ -256,12 +265,16 @@ class MySearchDelegate extends SearchDelegate<String> {
   }
 
   /// 主题样式
+  /// 光标的颜色改不了，主题的颜色也无法覆盖 fuck 参考如下issue
+  /// https://github.com/flutter/flutter/issues/45498
+  /// https://github.com/flutter/flutter/issues/48857
   @override
   ThemeData appBarTheme(BuildContext context) {
+
     assert(context != null);
     final ThemeData theme = Theme.of(context);
     assert(theme != null);
-    return Theme.of(context).copyWith(
+    return theme.copyWith(
       //主题色
       primaryColor: theme.primaryColor,
       //图标颜色
@@ -269,8 +282,24 @@ class MySearchDelegate extends SearchDelegate<String> {
       //状态栏
       primaryColorBrightness: Brightness.dark,
       //文字主题
-      textTheme: TextTheme(
-        title: TextStyle(color: Colors.white, fontSize: 20.0),
+      textTheme: theme.textTheme.copyWith(
+        // 不生效
+        // subtitle1: TextStyle(color: Colors.red, fontSize: 20.0),
+        headline1: theme.textTheme.headline1.copyWith(color: theme.primaryTextTheme.headline1.color),
+        subtitle1: TextStyle(
+          color: Colors.red,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
+      ),
+
+      // 不生效
+      backgroundColor: theme.primaryColor,
+
+      // hintStyle
+      inputDecorationTheme:  InputDecorationTheme(
+        hintStyle: TextStyle(color: Colors.white60),
+        border: InputBorder.none,
       ),
     );
   }

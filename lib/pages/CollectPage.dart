@@ -1,14 +1,12 @@
 import 'dart:convert';
 
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/article_entity.dart';
 import 'package:wanandroid_flutter/entity/common_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/util/ToastUtil.dart';
-import 'package:wanandroid_flutter/widget/my_phoenix_footer.dart';
-import 'package:wanandroid_flutter/widget/my_phoenix_header.dart';
 
 import 'articleDetail.dart';
 import 'loginPage.dart';
@@ -37,7 +35,8 @@ class _CollectPagePageState extends State<CollectPage> {
       var articleEntity = ArticleEntity.fromJson(map);
 
       if (articleEntity.errorCode == -1001) {
-        YToast.show(context: context, msg: articleEntity.errorMsg);
+        YToast.showBottom(context: context, msg: articleEntity.errorMsg);
+        Navigator.of(context).pop();
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
@@ -56,9 +55,10 @@ class _CollectPagePageState extends State<CollectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text("我的收藏"),
       ),
-      body: EasyRefresh.custom(
+      body: EasyRefresh(
         header: PhoenixHeader(),
         footer: PhoenixFooter(),
         onRefresh: () async {
@@ -77,16 +77,14 @@ class _CollectPagePageState extends State<CollectPage> {
             getMoreData();
           });
         },
-        slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return getItem(index);
-              },
-              childCount: articleDatas.length,
-            ),
-          ),
-        ],
+        child: CustomScrollView(
+          slivers: [
+            SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+              return getItem(index);
+            }, childCount: articleDatas.length)),
+          ],
+        ),
       ),
     );
   }
@@ -108,7 +106,7 @@ class _CollectPagePageState extends State<CollectPage> {
         cancelCollect(item.id, item.originId == null ? -1 : item.originId);
 
         // Show a snackbar! This snackbar could also contain "Undo" actions.
-        Scaffold.of(context).showSnackBar(SnackBar(content: Text("已移除")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("已移除")));
       },
       child: getRow(index),
     );
@@ -172,8 +170,7 @@ class _CollectPagePageState extends State<CollectPage> {
 
   Future cancelCollect(int id, int originId) async {
     var data = {'originId': originId};
-    var collectResponse =
-        await HttpUtil().post(Api.UN_COLLECT + '$id/json', data: data);
+    var collectResponse = await HttpUtil().post(Api.UN_COLLECT + '$id/json', data: data);
     Map map = json.decode(collectResponse.toString());
     var entity = CommonEntity.fromJson(map);
     if (entity.errorCode == -1001) {

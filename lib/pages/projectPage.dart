@@ -1,15 +1,13 @@
 import 'dart:convert';
 
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:wanandroid_flutter/common/api.dart';
 import 'package:wanandroid_flutter/entity/project_entity.dart';
 import 'package:wanandroid_flutter/entity/project_list_entity.dart';
 import 'package:wanandroid_flutter/http/httpUtil.dart';
 import 'package:wanandroid_flutter/pages/articleDetail.dart';
 import 'package:wanandroid_flutter/res/colors.dart';
-import 'package:wanandroid_flutter/widget/my_taurus_footer.dart';
-import 'package:wanandroid_flutter/widget/my_taurus_header.dart';
 
 class ProjectPage extends StatefulWidget {
   @override
@@ -18,8 +16,7 @@ class ProjectPage extends StatefulWidget {
   }
 }
 
-class _ProjectPageState extends State<ProjectPage>
-    with TickerProviderStateMixin {
+class _ProjectPageState extends State<ProjectPage> with TickerProviderStateMixin {
   TabController _controller; //tab控制器
   int _currentIndex = 0; //选中下标
 
@@ -75,8 +72,7 @@ class _ProjectPageState extends State<ProjectPage>
   void getDetail() async {
     try {
       var data = {"cid": _datas[_currentIndex].id};
-      var response =
-          await HttpUtil().get(Api.PROJECT_LIST + "$_page/json", data: data);
+      var response = await HttpUtil().get(Api.PROJECT_LIST + "$_page/json", data: data);
       Map userMap = json.decode(response.toString());
       var projectListEntity = ProjectListEntity.fromJson(userMap);
 
@@ -120,7 +116,7 @@ class _ProjectPageState extends State<ProjectPage>
       body: TabBarView(
         controller: _controller,
         children: _datas.map((ProjectData choice) {
-          return EasyRefresh.custom(
+          return EasyRefresh(
             header: TaurusHeader(),
             footer: TaurusFooter(),
             onRefresh: () async {
@@ -139,16 +135,14 @@ class _ProjectPageState extends State<ProjectPage>
                 getMoreData();
               });
             },
-            slivers: <Widget>[
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return getRow(index);
-                  },
-                  childCount: _listDatas.length,
-                ),
-              ),
-            ],
+            child: CustomScrollView(
+              slivers: [
+                SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                  return getRow(index);
+                }, childCount: _listDatas.length)),
+              ],
+            ),
           );
         }).toList(),
       ),
@@ -185,8 +179,7 @@ class _ProjectPageState extends State<ProjectPage>
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           _listDatas[i].title,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -195,8 +188,7 @@ class _ProjectPageState extends State<ProjectPage>
                         padding: EdgeInsets.all(10),
                         child: Text(
                           _listDatas[i].desc,
-                          style:
-                              TextStyle(fontSize: 14, color: YColors.color_666),
+                          style: TextStyle(fontSize: 14, color: YColors.color_666),
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -239,8 +231,7 @@ class _ProjectPageState extends State<ProjectPage>
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ArticleDetail(
-                title: _listDatas[i].title, url: _listDatas[i].link),
+            builder: (context) => ArticleDetail(title: _listDatas[i].title, url: _listDatas[i].link),
           ),
         );
       },
@@ -249,8 +240,7 @@ class _ProjectPageState extends State<ProjectPage>
 
   Future getMoreData() async {
     var data = {"cid": _datas[_currentIndex].id};
-    var response =
-        await HttpUtil().get(Api.PROJECT_LIST + "$_page/json", data: data);
+    var response = await HttpUtil().get(Api.PROJECT_LIST + "$_page/json", data: data);
     Map userMap = json.decode(response.toString());
     var projectListEntity = ProjectListEntity.fromJson(userMap);
     setState(() {

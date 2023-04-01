@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wanandroid_flutter/pages/CollectPage.dart';
@@ -20,30 +20,24 @@ import 'common/api.dart';
 import 'http/httpUtil.dart';
 
 void main() async {
-
   //runApp前调用，初始化绑定，手势、渲染、服务等
   WidgetsFlutterBinding.ensureInitialized();
 
-  //初始化
-  var theme = ThemeProvide();
-  var favorite = FavoriteProvide();
-  var providers = Providers();
-  //将theme,favorite加到providers中
-  providers
-    ..provide(Provider.function((context) => theme))
-    ..provide(Provider.function((context) => favorite));
-
   int themeIndex = await getTheme();
 
-  runApp(ProviderNode(
-    providers: providers,
+  runApp(MultiProvider(
+    providers: [
+      //将theme,favorite加到providers中
+      ChangeNotifierProvider(create: (ctx) => ThemeProvide()),
+      ChangeNotifierProvider(create: (ctx) => FavoriteProvide())
+    ],
     child: MyApp(themeIndex),
   ));
 }
 
 Future<int> getTheme() async {
   SharedPreferences sp = await SharedPreferences.getInstance();
-  int themeIndex = sp.getInt("themeIndex");
+  int themeIndex = sp.getInt(YColors.themeIndexKey);
   return null == themeIndex ? 0 : themeIndex;
 }
 
@@ -55,30 +49,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provide<ThemeProvide>(
-      builder: (context, child, theme) {
-        return MaterialApp(
-          title: YStrings.appName,
-          theme: ThemeData(
-              // This is the theme of your application.
-              //除了primaryColor，还有brightness、iconTheme、textTheme等等可以设置
-              primaryColor: YColors.themeColor[theme.value != null
-                  ? theme.value
-                  : themeIndex]["primaryColor"],
-              primaryColorDark: YColors.themeColor[theme.value != null
-                  ? theme.value
-                  : themeIndex]["primaryColorDark"],
-              accentColor: YColors.themeColor[
-                  theme.value != null ? theme.value : themeIndex]["colorAccent"]
+    // Calls `context.watch` to make [Count] rebuild when [Counter] changes.
+    final int themeValue = context.watch<ThemeProvide>().value;
 
-//              primaryColor: YColors.colorPrimary,
-//              primaryColorDark: YColors.colorPrimaryDark,
-//              accentColor: YColors.colorAccent,
-//              dividerColor: YColors.dividerColor,
-              ),
-          home: MyHomePage(title: YStrings.appName),
-        );
-      },
+    return MaterialApp(
+      title: YStrings.appName,
+      theme: ThemeData(
+          // This is the theme of your application.
+          //除了primaryColor，还有brightness、iconTheme、textTheme等等可以设置
+          primaryColor: YColors.themeColor[themeValue != null ? themeValue : themeIndex]["primaryColor"],
+          primaryColorDark: YColors.themeColor[themeValue != null ? themeValue : themeIndex]["primaryColorDark"],
+          accentColor: YColors.themeColor[themeValue != null ? themeValue : themeIndex]["colorAccent"]
+
+          // primaryColor: YColors.colorPrimary,
+          // primaryColorDark: YColors.colorPrimaryDark,
+          // accentColor: YColors.colorAccent,
+          // dividerColor: YColors.dividerColor,
+          ),
+      home: MyHomePage(title: YStrings.appName),
     );
   }
 }
@@ -109,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text(title),
         actions: <Widget>[
           IconButton(
@@ -135,19 +124,19 @@ class _MyHomePageState extends State<MyHomePage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text(YStrings.home),
+            label: YStrings.home,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.filter_list),
-            title: Text(YStrings.tree),
+            label: YStrings.tree,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.low_priority),
-            title: Text(YStrings.navi),
+            label: YStrings.navi,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.apps),
-            title: Text(YStrings.project),
+            label: YStrings.project,
           ),
         ],
         //当前选中下标
@@ -171,8 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onItemTapped(int index) {
     //bottomNavigationBar 和 PageView 关联
-    _pageController.animateToPage(index,
-        duration: Duration(milliseconds: 300), curve: Curves.ease);
+    _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
   void _pageChange(int index) {
@@ -201,8 +189,8 @@ class _MyHomePageState extends State<MyHomePage> {
       msg: "选中最后一个",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
-      timeInSecForIos: 1,
-      backgroundColor: YColors.colorPrimaryDark,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Theme.of(context).primaryColor,
       textColor: Colors.white,
       fontSize: 16.0,
     );
@@ -216,12 +204,14 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
+            // 顶部背景颜色
+            decoration: BoxDecoration(color: Theme.of(context).primaryColor),
             //头像
             currentAccountPicture: GestureDetector(
               //圆形头像
               child: ClipOval(
-                child: Image.network(
-                    'https://avatar.csdnimg.cn/C/0/1/1_yechaoa.jpg'),
+                child:
+                    Image.network('https://profile-avatar.csdnimg.cn/f81b97e9519148ac9d7eca7681fb8698_yechaoa.jpg!1'),
               ),
               onTap: () {
                 Navigator.of(context).pop();
@@ -243,10 +233,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ArticleDetail(
-                            title: "点个star",
-                            url:
-                                "https://github.com/yechaoa/wanandroid_flutter"),
+                        builder: (context) =>
+                            ArticleDetail(title: "来都来了，点个star吧🌹", url: "https://github.com/yechaoa/wanandroid_flutter"),
                       ),
                     );
                   })
@@ -286,8 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
             trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).pop();
-              Share.share(
-                  '【玩安卓Flutter版】\nhttps://github.com/yechaoa/wanandroid_flutter');
+              Share.share('【玩安卓Flutter版】\nhttps://github.com/yechaoa/wanandroid_flutter');
             },
           ),
           ListTile(
@@ -336,13 +323,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text('取消', style: TextStyle(color: YColors.primaryText)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text('确定'),
               onPressed: () {
                 //退出
@@ -379,11 +366,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       color: YColors.themeColor[position]["primaryColor"],
                     ),
                     onTap: () async {
-                      Provide.value<ThemeProvide>(context).setTheme(position);
+                      // Calls `context.read` instead of `context.watch` so that it does not rebuild when [Counter] changes.
+                      context.read<ThemeProvide>().setTheme(position);
+
                       //存储主题下标
-                      SharedPreferences sp =
-                          await SharedPreferences.getInstance();
-                      sp.setInt("themeIndex", position);
+                      SharedPreferences sp = await SharedPreferences.getInstance();
+                      sp.setInt(YColors.themeIndexKey, position);
                       Navigator.of(context).pop();
                     },
                   );
@@ -392,9 +380,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
-              child: Text('关闭',
-                  style: TextStyle(color: Theme.of(context).primaryColor)),
+            TextButton(
+              child: Text('关闭', style: TextStyle(color: Theme.of(context).primaryColor)),
               onPressed: () {
                 Navigator.of(context).pop();
               },

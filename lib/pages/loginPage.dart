@@ -15,9 +15,7 @@ class LoginPage extends StatefulWidget {
   }
 }
 
-class _LoginPagePageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
-  TabController controller; //tab控制器
+class _LoginPagePageState extends State<LoginPage> with SingleTickerProviderStateMixin {
 
   var tabs = <Tab>[];
   String btnText = "登录";
@@ -77,7 +75,7 @@ class _LoginPagePageState extends State<LoginPage>
               child: Padding(
                 padding: EdgeInsets.all(20),
                 child: Form(
-                  autovalidate: autoValidate,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   key: _key,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,32 +174,13 @@ class _LoginPagePageState extends State<LoginPage>
             bottom: 20,
             left: 130,
             right: 130,
-            child: RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(50),
-                ),
-              ),
-              elevation: 5,
-              highlightElevation: 10,
-              textColor: Colors.white,
-              padding: EdgeInsets.all(0.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
               child: Container(
-                width: MediaQuery.of(context).size.width,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
-                  gradient: LinearGradient(
-                    colors: <Color>[
-                      Theme.of(context).accentColor,
-                      Theme.of(context).primaryColorDark,
-                    ],
-                  ),
-                ),
                 padding: EdgeInsets.all(10.0),
                 child: Text(
                   btnText,
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(color: YColors.color_fff, fontSize: 20),
                 ),
               ),
               onPressed: () {
@@ -245,7 +224,6 @@ class _LoginPagePageState extends State<LoginPage>
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
   }
 
   String validateUsername(String value) {
@@ -275,14 +253,9 @@ class _LoginPagePageState extends State<LoginPage>
     if (visible)
       data = {'username': username, 'password': password};
     else
-      data = {
-        'username': username,
-        'password': password,
-        'repassword': rePassword
-      };
+      data = {'username': username, 'password': password, 'repassword': rePassword};
 
-    var response =
-        await HttpUtil().post(visible ? Api.LOGIN : Api.REGISTER, data: data);
+    var response = await HttpUtil().post(visible ? Api.LOGIN : Api.REGISTER, data: data);
     Map userMap = json.decode(response.toString());
     var userEntity = UserEntity.fromJson(userMap);
     if (userEntity.errorCode == 0) {

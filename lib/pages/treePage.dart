@@ -118,7 +118,7 @@ class _TreePageState extends State<TreePage> {
         ),
         //下拉刷新回调
         onRefresh: () async {
-          await Future.delayed(Duration(seconds: 2), () {
+          await Future.delayed(Duration(seconds: 1), () {
             YToast.show(context: context, msg: "下拉刷新");
             // do something
             //getData();

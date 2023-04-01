@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:share/share.dart';
+import 'package:wanandroid_flutter/res/colors.dart';
 
 // ignore: must_be_immutable
 class ArticleDetail extends StatelessWidget {
@@ -19,6 +20,7 @@ class ArticleDetail extends StatelessWidget {
         "/": (_) =>  WebviewScaffold(
               url: "$url",
               appBar: AppBar(
+                backgroundColor: Theme.of(context).primaryColor,
                 //返回键 点击关闭
                 leading: IconButton(
                     icon: Icon(Icons.arrow_back),

@@ -25,16 +25,18 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   # https://github.com/PonnamKarthik/FlutterToast
-  fluttertoast: ^3.0.4
+  fluttertoast: ^8.2.1
 
   # https://github.com/flutterchina/dio
-  dio: ^3.0.9
+  dio: ^5.1.1
 
   # https://pub.dev/packages/dio_cookie_manager
-  dio_cookie_manager: 1.0.0
+  dio_cookie_manager: ^2.0.0
 
   # https://pub.dev/packages/flutter_webview_plugin#-readme-tab
-  flutter_webview_plugin: ^0.3.5
+#  flutter_webview_/\plugin: ^0.4.0
+  flutter_webview_plugin:
+    git: https://github.com/nuc134r/flutter_webview_plugin.git
 
   # https://github.com/best-flutter/flutter_swiper
   flutter_swiper: ^1.1.6
@@ -43,13 +45,16 @@ dependencies:
   share: ^0.6.1+1
 
   # https://github.com/google/flutter-provide
-  provide: ^1.0.2
+#  provide: ^1.0.2
+
+  # https://pub.dev/packages/provider
+  provider: ^6.0.0
 
   # https://github.com/flutter/plugins/tree/master/packages/shared_preferences
-  shared_preferences: ^0.5.3+4
+  shared_preferences: ^2.0.20
 
   # https://github.com/xuelongqy/flutter_easyrefresh
-  flutter_easyrefresh: ^2.0.0
+  easy_refresh: ^3.3.1
 
 dev_dependencies:
   flutter_test:
