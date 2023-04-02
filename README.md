@@ -1,10 +1,10 @@
 # :collision:玩安卓 Flutter版本
 
-`微信`：y819423475
-
+![](https://img.shields.io/badge/CSDN-yechaoa-green.svg)
+![](https://img.shields.io/badge/掘金-yechaoa-green.svg)
 ![](https://img.shields.io/badge/language-dart-orange.svg)
 ![](https://img.shields.io/hexpm/l/plug.svg)
-![](https://img.shields.io/badge/CSDN-yechaoa-green.svg)
+
 
 * [玩安卓 Flutter版本](https://github.com/yechaoa/wanandroid_flutter)
 * [玩安卓 Java版本](https://github.com/yechaoa/wanandroid_java)
@@ -12,9 +12,18 @@
 * [玩安卓 Kotlin版本](https://github.com/yechaoa/wanandroid_kotlin)
 * [玩安卓 Jetpack版本](https://github.com/yechaoa/wanandroid_jetpack)
 
-感谢`鸿洋`提供的api。
 
-<br>
+`微信`：y819423475，感谢`鸿洋`提供的api。
+
+
+# ✍更新记录【2023-04-02】
+* Flutter：1.7.8+hotfix.3 -> 3.7.9
+* Dart：2.4.0 -> 2.19.6
+* 升级记录文档，[点这里](https://juejin.cn/post/7217435047489404985/)
+* 下载APK体验，[点这里](https://github.com/yechaoa/wanandroid_flutter/blob/master/apk/app-debug.apk)
+
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9fdd35b9e3d24088a6e2d53aaef5ff92~tplv-k3u1fbpfcp-zoom-1.image)
 
 # :fire:截图
 
@@ -39,7 +48,6 @@
 | 左右滑动列表 | 登录注册 | 搜索 | 分享 |
 
 
-<br>
 
 # :beers:你能学到
 
